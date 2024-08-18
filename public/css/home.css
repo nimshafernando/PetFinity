@@ -1,0 +1,255 @@
+body {
+    background-color: #f8fafc;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+.logo-container {
+    height: 48px;
+    margin: 0 auto 1.5rem;
+    background-color: #e2e8f0;
+}
+
+.space-y-4 > * + * {
+    margin-top: 1rem;
+
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    color: #4a5568;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: #3182ce;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.5rem;
+    margin-bottom: 10px;
+}
+
+.content {
+    flex: 1;
+    padding: 1.5rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.header-title {
+    font-size: 1.875rem;
+    font-weight: bold;
+}
+
+.account-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.account-icon {
+    width: 24px;
+    height: 24px;
+    background-color: #cbd5e0;
+}
+
+.account-text {
+    color: #4a5568;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.main-content .reminder-box,
+.reminder-section .reminder-box {
+    background-color: #ebf8ff;
+    padding: 1.5rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.button-yellow {
+    margin-top: 1rem;
+    background-color: #ecc94b;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+}
+
+.subgrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.subgrid-item {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.subgrid-icon {
+    height: 48px;
+    margin: 0 auto 0.5rem;
+    background-color: #e2e8f0;
+}
+
+.subgrid-title {
+    font-weight: bold;
+}
+
+.vet-section {
+    margin-top: 1.5rem;
+}
+
+.vet-box {
+    background-color: #ebf8ff;
+    padding: 1.5rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vet-title {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.button-blue {
+    margin-top: 1rem;
+    background-color: #3182ce;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+}
+
+/* .vet-icon {
+    height: 96px;
+} */
+
+img {
+    height: 150px;
+    width: 200px;
+}
+
+.pets-section {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.pets-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.pet-circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border: 3px solid #3182ce;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pet-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #e2e8f0;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+}
+
+.pet-title {
+    font-weight: bold;
+    font-size: 0.875rem;
+}
+
+
+.reminder-section {
+    margin-top: 1.5rem;
+}
+
+.date-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.date-button {
+    background-color: #ed64a6;
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+}
+
+.date-button.active {
+    background-color: #ed64a6;
+}
+
+.reminder-content {
+    text-align: center;
+}
+
+.reminder-icon {
+    height: 96px;
+    margin: 0 auto 1rem;
+    background-color: #e2e8f0;
+}
+
+.reminder-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+
+.reminder-text {
+    color: #4a5568;
+    margin: 0.5rem 0 1rem;
+}
+
+.button-pink {
+    margin-top: 0.5rem;
+    color: #ed64a6;
+}

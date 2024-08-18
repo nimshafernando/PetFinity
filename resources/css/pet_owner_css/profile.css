@@ -1,0 +1,131 @@
+/* profile.css */
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ff6600, #ff9933);
+    color: #333;
+    overflow-x: hidden; /* Allow vertical scrolling */
+}
+
+.container-main {
+    display: flex;
+    flex-direction: row;
+    max-width: 1495px;
+    width: 100%;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    height: calc(100vh - 100px); /* Adjust height to fit the viewport */
+    overflow-y: auto; /* Enable vertical scrolling */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+}
+
+.container-main::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+.content {
+    margin-left: 250px;
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+}
+
+.content::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+.container-form {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 70px; /* Add margin to push content below the top navbar */
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #ff6600;
+    border-color: #ff6600;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #cc5200;
+}
+
+.error {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 5px;
+}
+
+.header-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container-main {
+        flex-direction: column;
+        margin: 0;
+        padding: 10px;
+        box-shadow: none;
+        border-radius: 0;
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0;
+        margin-top: 60px;
+        padding: 10px;
+    }
+
+    .container-form {
+        margin-top: 20px;
+    }
+}

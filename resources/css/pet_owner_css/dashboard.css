@@ -1,0 +1,331 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ff6600, #ff9933);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    color: #333;
+    overflow: hidden;
+}
+
+
+.content {
+    margin-left: 250px;
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+}
+
+.content::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+    max-width: 1495px;
+    width: 100%;
+    margin: 50px auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #ff6600, #ff9933);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    height: calc(100vh - 100px); /* Adjust height to fit the viewport */
+    overflow-y: auto; /* Enable vertical scrolling */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+}
+
+.container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+.header {
+    margin-top: 100px;
+}
+
+.greeting-box {
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.greeting-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.greeting-box h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.greeting-box .button-add-pet {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.greeting-box .button-add-pet:hover {
+    background-color: #cc5200;
+}
+
+.services-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.services-box {
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.services-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.services-box p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.services-box .button-view-places {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.services-box .button-view-places:hover {
+    background-color: #cc5200;
+}
+
+.accepted-appointments-container {
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.accepted-appointments-container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.header-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.accepted-appointments-container .card {
+    margin-bottom: 15px;
+}
+
+.accepted-appointments-container .card-body .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff6600;
+}
+
+.accepted-appointments-container .card-body .card-text {
+    font-size: 16px;
+    color: #333;
+}
+
+.pet-care-tips-container {
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.pet-care-tips-container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.tips-card-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.tips-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.tips-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.tips-icon {
+    font-size: 40px;
+    color: #ff6600;
+    margin-bottom: 15px;
+}
+
+.tips-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.tips-description {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.tips-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.tips-link:hover {
+    background-color: #cc5200;
+}
+
+.community-events-container {
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.community-events-container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.event-card-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.event-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.event-icon {
+    font-size: 40px;
+    color: #ff6600;
+    margin-bottom: 15px;
+}
+
+.event-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.event-description {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.event-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.event-link:hover {
+    background-color: #cc5200;
+}
+
+.profile {
+    text-decoration: none;
+}
+
+.button-add-pet {
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .content {
+        margin-left: 0;
+        margin-top: 60px;
+    }
+
+    .header {
+        margin-top: 10px; /* Adjusted margin for smaller screens */
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: center;
+    }
+}
