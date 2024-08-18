@@ -1,0 +1,182 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ff6600, #ff9933);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    color: #333;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+.main-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+    padding-bottom: 60px; /* Ensure content is not hidden under the fixed bottom navbar */
+}
+
+.content {
+    width: calc(100% - 250px); /* Adjusted to accommodate sidebar */
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    margin-left: 270px; /* Ensure the content starts after the sidebar */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 2px solid #ff6600;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card div {
+    margin: 10px;
+    text-align: left;
+    flex: 1 1 45%; /* Adjusted for horizontal layout */
+    display: flex;
+    justify-content: space-between;
+}
+
+.card div .heading {
+    font-weight: bold;
+    color: #333;
+    flex: 0 0 150px; /* Fixed width for labels */
+}
+
+.counter {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background-color: #ff6600;
+    color: white;
+    font-size: 24px;
+    padding: 10px 15px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status {
+    font-weight: bold;
+}
+
+.status.completed {
+    color: green;
+}
+
+.status.cancelled {
+    color: red;
+}
+
+.icon {
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #ff6600;
+}
+
+.no-bookings {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+}
+
+@media (max-width: 1200px) {
+    .content {
+        width: calc(100% - 200px);
+        margin-left: 200px;
+    }
+}
+
+@media (max-width: 992px) {
+    .content {
+        width: calc(100% - 150px);
+        margin-left: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        width: 100%;
+        margin-left: 0;
+        padding: 10px;
+        margin-top: 60px;
+    }
+
+    .card {
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .card div {
+        margin: 10px 0;
+        text-align: left;
+        flex: 1 1 100%;
+        display: block; /* Block display for small screens */
+    }
+
+    .counter {
+        position: static;
+        margin-bottom: 15px;
+        font-size: 20px;
+        padding: 5px 10px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        padding: 10px;
+        margin-top: 80px; /* Space for fixed top navbar */
+        width: 100%;
+    }
+
+    .card {
+        padding: 6px;
+    }
+
+    .card div {
+        margin: 5px 0;
+    }
+
+    .icon {
+        font-size: 18px;
+    }
+
+    .content {
+        width: 100%;
+    }
+
+    .counter {
+        font-size: 18px;
+        padding: 5px 10px;
+    }
+}

@@ -1,0 +1,142 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ff6600, #ff9933);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    color: #333;
+    overflow: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin-top: 70px;
+    margin-left: 250px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.content {
+    flex: 1;
+    margin-left: 10px;
+    padding: 10px;
+    width: 98%;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    border: 1px solid #ff6600;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 5px;
+    background-color: #fff;
+    margin-left: 1px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card > div {
+    flex: 1 1 auto;
+    margin: 10px;
+    text-align: center;
+}
+
+.service-type {
+    background-color: #ff9933;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    min-width: 100px;
+}
+
+.heading {
+    font-weight: bold;
+    color: #333;
+}
+
+.countdown {
+    color: green;
+    min-width: 100px;
+    text-align: center;
+}
+
+.no-appointments {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+}
+
+.upcoming-heading {
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 992px) {
+    .container {
+        flex-direction: column;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        margin-top: 5px;
+        padding: 20px 10px;
+    }
+    .container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .card.p {
+        font-weight: bold;
+    }
+
+    .card {
+        flex-direction: column;
+        text-align: left;
+        margin-left: 0;
+        width: 90%;
+    }
+
+    .card .service-type {
+        width: 80%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .heading {
+        text-align: left;
+    }
+
+    .card .countdown {
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    .card > div {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+/*works but only not responsive to ipad air container blocked by nav*/
