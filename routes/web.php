@@ -93,17 +93,18 @@ Route::middleware(['auth:petowner'])->group(function () {
     //petowner dashboard
     Route::get('petowner/dashboard', [PetOwnerController::class, 'index'])->name('pet-owner.dashboard');
 
-    //*petowner pet profile
-    Route::get('mypets', [PetController::class, 'addpetform'])->name('mypets'); // section which says add a pet and the pets you currently have
-    Route::get('pet-type', [PetController::class, 'pettype'])->name('pettype'); // section which asks the user to select a pet type
-    Route::get('/pets/create', [PetController::class, 'create'])->name('pet.create'); //section which asks the user to input the pet details
-    Route::post('/pets', [PetController::class, 'store'])->name('pet.store'); //section that store the pet details
+   //*petowner pet profile 
+   Route::get('mypets', [PetController::class, 'addpetform'])->name('mypets'); // section which says add a pet and the pets you currently have
+   Route::get('pet-type', [PetController::class, 'pettype'])->name('pettype'); // section which asks the user to select a pet type
+   Route::get('/pets/create', [PetController::class, 'create'])->name('pet.create'); //section which asks the user to input the pet details
+   Route::post('/pets', [PetController::class, 'store'])->name('pet.store'); //section that store the pet details
 
 
-    //*edit pet profile
-    Route::get('/pets/{id}', [PetController::class, 'show']); // Fetch pet details
-    Route::get('/pets/{id}/edit', [PetController::class, 'edit'])->name('pets.edit'); // Show edit form
-    Route::put('/pets/{id}', [PetController::class, 'update'])->name('pets.update'); // Update pet information
+   //*edit pet profile
+   Route::get('/pets/{id}', [PetController::class, 'show']); // Fetch pet details
+   Route::get('/pets/{p}/edit', [PetController::class, 'edit'])->name('pets.edit'); // Show edit form
+   Route::put('/pets/{pet}', [PetController::class, 'update'])->name('pets.update');
+   Route::delete('/pets/{id}/delete', [PetController::class, 'destroy'])->name('pets.delete'); // Update pet information
 
 
     //*pet owner appointment routes
