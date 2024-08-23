@@ -70,4 +70,7 @@ class MissingPetController extends Controller
         $sightings = FoundReport::all(); // Fetch sightings as well
         return view('missing_pets.map', compact('missingPets', 'sightings'));
     }
+
+   
+    
 }

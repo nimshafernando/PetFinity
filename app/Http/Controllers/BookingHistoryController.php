@@ -14,12 +14,13 @@ class BookingHistoryController extends Controller
         // Get the logged-in user
         $user_id = Auth::user()->id;
 
-        // Fetch completed appointments for the logged-in pet owner with related information using joins
+        // Fetch past appointments for the logged-in pet owner with related information using joins
+        // We are not relying on 'status' being 'completed' since it's not fully implemented
         $appointments = DB::table('appointments')
             ->join('pet_boarding_centers', 'appointments.boardingcenter_id', '=', 'pet_boarding_centers.id')
             ->join('pets', 'appointments.pet_id', '=', 'pets.id')
             ->where('appointments.petowner_id', '=', $user_id)
-            ->where('appointments.status', '=', 'completed') // Show only completed appointments
+            ->where('appointments.end_date', '<', Carbon::now()) // Show only past appointments based on the end date
             ->orderBy('appointments.start_date', 'asc')
             ->select(
                 'appointments.*',
@@ -37,6 +38,7 @@ class BookingHistoryController extends Controller
         $user_id = Auth::user()->id;
 
         // Fetch appointments for the logged-in pet boarding center with related information using joins
+        // We are fetching all relevant appointments regardless of status or payment method
         $appointments = DB::table('appointments')
             ->join('pet_boarding_centers', 'appointments.boardingcenter_id', '=', 'pet_boarding_centers.id')
             ->join('pets', 'appointments.pet_id', '=', 'pets.id')

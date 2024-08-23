@@ -11,7 +11,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
         body {
-            background-color: white;
+            background-image: url('https://your-image-url.com/pet-background.jpg'); /* Add a subtle pet-related background */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             font-family: 'Nunito', sans-serif;
             margin: 0;
             padding: 0;
@@ -25,13 +28,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 10px 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 10;
+            backdrop-filter: blur(10px);
         }
 
         .top-navbar .logo {
@@ -57,7 +61,7 @@
         }
 
         .sidebar {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.95);
             width: 250px;
             height: calc(100vh - 60px);
             position: fixed;
@@ -70,6 +74,7 @@
             border-radius: 10px;
             font-family: 'Nunito', sans-serif;
             overflow-y: auto;
+            backdrop-filter: blur(10px);
         }
 
         .sidebar ul {
@@ -111,15 +116,17 @@
             flex-grow: 1;
             overflow-y: auto;
             width: calc(100% - 250px);
+            backdrop-filter: blur(10px);
         }
 
         .navbar {
-            background-color: #2196F3;
+            background-color: rgba(33, 150, 243, 0.9);
             color: white;
             padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-radius: 10px;
         }
 
         .welcome-message {
@@ -129,6 +136,64 @@
             border-radius: 8px;
             margin-top: 20px;
             font-size: 24px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            margin-top: 20px;
+            background-color: rgba(247, 242, 224, 0.9);
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            padding: 20px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            font-size: 1.7rem;
+            color: #035a2e;
+            font-family: 'Fredoka One', cursive;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #035a2e;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #02874a;
+            transform: scale(1.05);
         }
 
         .bottom-navbar {
@@ -163,7 +228,7 @@
         }
 
         .bottom-navbar ul li a:hover {
-            color: #ff6600;
+            color: #035a2e;
         }
 
         .bottom-navbar ul li a i {
@@ -212,6 +277,7 @@
                 font-size: 18px;
             }
         }
+
         .profile {
             text-decoration: none;
         }
@@ -234,31 +300,40 @@
             <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> My Schedule</a></li>
             <li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
             <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> Appointment History</a></li>
-            
         </ul>
     </div>
 
     <div class="main-content">
         <div class="navbar">
             <div>For all your infinite needs!</div>
-            {{-- <div>Hello </div> --}}
             <div>Available For Bookings</div>
         </div>
+
         <div class="welcome-message">
             Welcome to PetFinity
         </div>
 
-        <!-- Updated Manage Tasks Section -->
-<div class="card">
-    <div class="card-header">
-        Manage Tasks
-    </div>
-    <div class="card-body">
-        <a href="{{ route('pet.boardingcenter.managetasks.list') }}" class="btn btn-primary">Manage Tasks</a>
-    </div>
-</div>
-<!-- End of Manage Tasks Section -->
+        <!-- Manage Tasks Section -->
+        <div class="card">
+            <div class="card-header">
+                Manage Tasks
+            </div>
+            <div class="card-body">
+                <a href="{{ route('pet.boardingcenter.managetasks.list') }}" class="btn btn-primary">Manage Tasks</a>
+            </div>
+        </div>
 
+        <!-- Check Reviews Section -->
+        <div class="card">
+            <div class="card-header">
+                Check Reviews
+            </div>
+            <div class="card-body">
+                <a href="{{ route('boarding-center.reviews') }}" class="btn btn-primary">View Reviews</a>
+            </div>
+        </div>
+
+    </div>
 
     <div class="bottom-navbar">
         <ul>
@@ -267,7 +342,6 @@
             <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> My Schedule</a></li>
             <li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
             <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> Appointment History</a></li>
-            
         </ul>
     </div>
 </body>

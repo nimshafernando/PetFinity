@@ -96,24 +96,54 @@
             background-color: #ffcc00; /* Active button color */
             color: #333;
         }
+/* Beaming Effect for Marker Image (Missing Pets) */
+.beaming-marker-missing {
+    position: relative;
+}
 
-        /* Beaming Effect for Marker Image */
-        .beaming-marker {
-            position: relative;
-        }
+.beaming-marker-missing::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 0, 0, 0.3); /* Red beaming effect for missing pets */
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    animation: beaming 1.5s infinite ease-in-out;
+}
 
-        .beaming-marker::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100px;
-            height: 100px;
-            background-color: rgba(255, 0, 0, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(1);
-            animation: beaming 1.5s infinite ease-in-out;
-        }
+/* Beaming Effect for Marker Image (Sighted Pets) */
+.beaming-marker-sighted {
+    position: relative;
+}
+
+.beaming-marker-sighted::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(0, 0, 255, 0.3); /* Blue beaming effect for sighted pets */
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    animation: beaming 1.5s infinite ease-in-out;
+}
+
+@keyframes beaming {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+    }
+}
+
+        
 
         @keyframes beaming {
             0% {
@@ -300,18 +330,20 @@
                 }
             });
 
+            var infowindowContent = `<div class="popup-content">
+                                       <div class="beaming-marker-missing">
+                                            <img src="{{ Storage::url('${pet.photo}') }}" alt="Pet Photo" class="marker-image">
+                                        </div>
+                                        <strong>${pet.pet.pet_name}</strong>
+                                        <span><strong>Last Seen:</strong> ${pet.last_seen_location}</span>
+                                        <span><strong>Date:</strong> ${pet.last_seen_date}</span>
+                                        <span><strong>Time:</strong> ${pet.last_seen_time}</span>
+                                        <span><strong>Features:</strong> ${pet.distinguishing_features}</span>
+                                        ${pet.additional_info ? '<span><strong>Additional Info:</strong> ' + pet.additional_info + '</span>' : ''}
+                                     </div>`;
+
             var infowindow = new google.maps.InfoWindow({
-                content: `<div class="popup-content">
-                            <div class="beaming-marker">
-                                <img src="{{ Storage::url('${pet.photo}') }}" alt="Pet Photo" class="marker-image">
-                            </div>
-                            <strong>${pet.pet.pet_name}</strong> <!-- Displaying the pet's name here -->
-                            <span><strong>Last Seen:</strong> ${pet.last_seen_location}</span>
-                            <span><strong>Date:</strong> ${pet.last_seen_date}</span>
-                            <span><strong>Time:</strong> ${pet.last_seen_time}</span>
-                            <span><strong>Features:</strong> ${pet.distinguishing_features}</span>
-                            ${pet.additional_info ? '<span><strong>Additional Info:</strong> ' + pet.additional_info + '</span>' : ''}
-                          </div>`
+                content: infowindowContent
             });
 
             marker.addListener('click', function() {
@@ -338,15 +370,23 @@
                 }
             });
 
+            // Access the pet's name safely
+            var petName = "Unknown Pet";
+            if (sighting.missing_pet && sighting.missing_pet.pet && sighting.missing_pet.pet.pet_name) {
+                petName = sighting.missing_pet.pet.pet_name;
+            }
+
+            var infowindowContent = `<div class="popup-content">
+                                      <div class="beaming-marker-sighted">
+                                            <img src="{{ Storage::url('${sighting.photo}') }}" alt="Sighting Photo" class="marker-image">
+                                        </div>
+                                        <strong>Sighting of ${petName}</strong>
+                                        <span><strong>Location:</strong> ${sighting.location}</span>
+                                        <span><strong>Description:</strong> ${sighting.description}</span>
+                                     </div>`;
+
             var infowindow = new google.maps.InfoWindow({
-                content: `<div class="popup-content">
-                            <div class="beaming-marker">
-                                <img src="{{ Storage::url('${sighting.photo}') }}" alt="Sighting Photo" class="marker-image">
-                            </div>
-                            <strong>Sighting of ${sighting.missing_pet.pet.pet_name}</strong> <!-- Displaying the pet's name here -->
-                            <span><strong>Location:</strong> ${sighting.location}</span>
-                            <span><strong>Description:</strong> ${sighting.description}</span>
-                          </div>`
+                content: infowindowContent
             });
 
             marker.addListener('click', function() {

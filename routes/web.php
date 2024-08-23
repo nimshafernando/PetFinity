@@ -114,7 +114,7 @@ Route::middleware(['auth:petowner'])->group(function () {
     Route::post('/booking', [AppointmentController::class, 'store'])->name('booking.store'); // Store booking information
     Route::get('/upcoming', [UpcomingController::class, 'index'])->name('appointments.upcoming'); // Show upcoming appointments
     Route::get('/history', [BookingHistoryController::class, 'index'])->name('appointments.history'); // Show appointment history
-
+    
 
     //*pet owner profile 
     Route::get('/pet-owner/profile', [PetOwnerProfileController::class, 'edit'])->name('pet-owner.profile.edit'); // Show profile edit form
@@ -147,6 +147,8 @@ Route::middleware(['auth:petowner'])->group(function () {
     
  
     
+    
+
 
 
 
@@ -217,6 +219,10 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
    // Store task completion
    Route::post('/task-completions/store/{appointment}', [TaskCompletionController::class, 'store'])->name('task-completions.store');
    
+
+   // Route for viewing reviews in the pet boarding center dashboard
+    Route::get('/boarding-center/reviews', [ReviewController::class, 'index'])->name('boarding-center.reviews');
+
 
 });
 

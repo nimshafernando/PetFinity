@@ -31,4 +31,9 @@ class MissingPet extends Model
     {
         return $this->belongsTo(User::class, 'petowner_id');
     }
+
+    public function sightings()
+    {
+        return $this->hasMany(FoundReport::class);
+    }
 }

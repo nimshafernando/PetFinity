@@ -6,8 +6,8 @@ describe('Petfinity Application Test Suite', () => {
   it('should log in successfully, navigate to the Report Missing Pet page, and submit the form', () => {
     // Log in
     cy.visit('/login');
-    cy.get('input[name="email"]').type('owner@gmail.com');
-    cy.get('input[name="password"]').type('hotwheels5');
+    cy.get('input[name="email"]').type('emily@gmail.com');
+    cy.get('input[name="password"]').type('aaqilah123');
     cy.get('button[type="submit"]').click();
     cy.url().should('include', '/dashboard');
 

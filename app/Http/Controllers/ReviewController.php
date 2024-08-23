@@ -1,14 +1,24 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Appointment;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Appointment;
 
 class ReviewController extends Controller
 {
+    public function index()
+    {
+        // Get the logged-in boarding center user
+        $user_id = Auth::id();
+
+        // Fetch reviews for the logged-in boarding center
+        $reviews = Review::where('boardingcenter_id', $user_id)->paginate(10);
+
+        return view('pet-boardingcenter.reviews', compact('reviews'));
+    }
+
     public function create($appointment_id)
     {
         $appointment = Appointment::with('boardingcenter')->findOrFail($appointment_id);
@@ -45,6 +55,6 @@ class ReviewController extends Controller
             'review' => $request->review,
         ]);
 
-        return redirect()->route('booking.history')->with('success', 'Review submitted successfully.');
+        return redirect()->route('appointments.history')->with('success', 'Review submitted successfully.');
     }
 }

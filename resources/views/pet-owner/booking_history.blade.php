@@ -63,7 +63,7 @@
 
         .status {
             font-weight: bold;
-            color: #fff;
+            color: #434343;
             padding: 5px 10px;
             border-radius: 10px;
             display: inline-block;
@@ -111,7 +111,7 @@
         <div class="content">
             <h1>Booking History</h1>
             @if ($appointments->isEmpty())
-            <p class="no-bookings">No completed bookings.</p>
+            <p class="no-bookings">No past bookings.</p> <!-- Updated to reflect any past bookings -->
             @else
             <div class="list-group">
                 @foreach ($appointments as $index => $appointment)
@@ -135,14 +135,14 @@
                         <span class="heading">Check-out Time:</span> <span>{{ Carbon\Carbon::parse($appointment->check_out_time)->format('H:i') }}</span>
                     </div>
                     <div>
-                        <span class="heading">Payment Method:</span> <span>{{ $appointment->payment_method }}</span>
+                        <span class="heading">Payment Method:</span> <span>{{ $appointment->payment_method ?? 'N/A' }}</span> <!-- Default to N/A if payment method isn't implemented -->
                     </div>
                     <div class="status {{ $appointment->status }}">
                         <span class="heading">Status:</span> <span>{{ ucfirst($appointment->status) }}</span>
                     </div>
                     
                     <!-- Leave a Review Button -->
-                    @if($appointment->status == 'completed')
+                    @if(Carbon\Carbon::parse($appointment->end_date)->isPast())
                     <div class="review-button">
                         <a href="{{ route('reviews.create', $appointment->id) }}" class="btn btn-primary">Leave a Review</a>
                     </div>
