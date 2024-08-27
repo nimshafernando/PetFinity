@@ -436,6 +436,13 @@
                         </select>
                         <div class="error" id="end_operating_hour_error"></div>
                     </div>
+                    <!--newly added-->
+                    <div class="form-group">
+                        <label for="price_per_night">Price Per Night</label>
+                        <input id="price_per_night" class="form-input" type="number" name="price_per_night" step="0.01" min="0" required />
+                        <div class="error" id="price_per_night_error"></div>
+                    </div>
+                    <!--newly added-->
                     <div class="form-group">
                         <label for="services_provided">Services Provided</label>
                         <div class="flex flex-wrap">
@@ -634,6 +641,16 @@
                 } else {
                     document.getElementById('end_operating_hour_error').textContent = '';
                 }
+
+                 // start of Validation for Price Per Night
+                if (!pricePerNight || isNaN(pricePerNight) || pricePerNight < 0) {
+                    isValid = false;
+                    document.getElementById('price_per_night_error').textContent = 'Valid price per night is required.';
+                } else {
+                    document.getElementById('price_per_night_error').textContent = '';
+                }
+
+                // end Validation for Price Per Night
 
                 const servicesProvided = document.querySelectorAll('input[name="services_provided[]"]:checked');
                 if (servicesProvided.length === 0) {

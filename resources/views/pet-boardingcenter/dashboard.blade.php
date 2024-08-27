@@ -313,6 +313,33 @@
             Welcome to PetFinity
         </div>
 
+        <div class="card">
+            <div class="card-header">
+                Set or Update Price Per Night
+            </div>
+            <div class="card-body">
+                <form action="{{ route('boarding-center.update-price') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="price_per_night">Price Per Night ($)</label>
+                        <input type="number" step="0.01" name="price_per_night" id="price_per_night" class="form-control" value="{{ Auth::user()->price_per_night }}" required>
+                    </div>
+                    <button type="submit" class="mt-3 btn btn-primary">Update Price</button>
+                </form>
+            </div>
+        </div>
+        
+
+        <div class="card">
+            <div class="card-header">
+                Total Revenue
+            </div>
+            <div class="card-body">
+                <h3>${{ number_format($totalRevenue, 2) }}</h3>
+            </div>
+        </div>
+        
+
         <!-- Manage Tasks Section -->
         <div class="card">
             <div class="card-header">

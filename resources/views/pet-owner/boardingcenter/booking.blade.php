@@ -173,6 +173,61 @@
                 </div>
             </div>
 
+            <!--price per night cal-->
+
+            <input type="hidden" id="price_per_night" value="{{ $boardingCenter->price_per_night }}">
+            <input type="hidden" name="total_price" id="total_price_hidden">
+            
+            <div class="mb-3">
+                <label for="total_price" class="form-label">Total Price</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                    <input type="text" id="total_price" class="form-control" readonly>
+                </div>
+            </div>
+            
+            <script>
+                const startDateInput = document.getElementById('start_date');
+                const endDateInput = document.getElementById('end_date');
+                const checkInTimeInput = document.getElementById('check_in_time');
+                const checkOutTimeInput = document.getElementById('check_out_time');
+                const pricePerNight = parseFloat(document.getElementById('price_per_night').value);
+                const totalPriceInput = document.getElementById('total_price');
+                const totalPriceHiddenInput = document.getElementById('total_price_hidden');
+            
+                function calculateTotalPrice() {
+                    const startDate = new Date(startDateInput.value + ' ' + checkInTimeInput.value);
+                    const endDate = new Date(endDateInput.value + ' ' + checkOutTimeInput.value);
+            
+                    if (startDate && endDate && endDate >= startDate) {
+                        const timeDiff = endDate - startDate;
+                        const days = timeDiff / (1000 * 3600 * 24);
+                        let totalNights = Math.ceil(days);
+            
+                        if (checkOutTimeInput.value < checkInTimeInput.value) {
+                            totalNights -= 1;
+                        }
+            
+                        const totalPrice = (totalNights * pricePerNight).toFixed(2);
+                        totalPriceInput.value = `$${totalPrice}`;
+                        totalPriceHiddenInput.value = totalPrice;
+                    } else {
+                        totalPriceInput.value = '';
+                        totalPriceHiddenInput.value = '';
+                    }
+                }
+            
+                startDateInput.addEventListener('change', calculateTotalPrice);
+                endDateInput.addEventListener('change', calculateTotalPrice);
+                checkInTimeInput.addEventListener('change', calculateTotalPrice);
+                checkOutTimeInput.addEventListener('change', calculateTotalPrice);
+            </script>
+            
+            
+
+
+            <!--price per night cal-->
+
             <button type="submit" class="btn btn-primary">Book Appointment</button>
             <a href="{{ route('boarding-centers.show', $boardingCenter->id) }}" class="btn btn-secondary">Cancel</a>
         </form>

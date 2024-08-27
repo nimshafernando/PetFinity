@@ -165,6 +165,10 @@
     }
 </style>
 
+<a href="{{ route('petowner.analytics.lostandfound') }}" class="btn btn-primary">
+    View Lost and Found Analytics
+</a>
+
 <div class="lost-found-container">
     <h2 class="lost-found-title">Lost and Found</h2>
     <div class="lost-found-cards">

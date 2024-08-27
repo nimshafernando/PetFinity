@@ -29,6 +29,7 @@ class PetBoardingCenter extends Authenticatable implements AuthenticatableContra
         'photos',
         'joining_goals',
         'registered_date',
+        'price_per_night' // Added this line
     ];
 
     protected $hidden = [

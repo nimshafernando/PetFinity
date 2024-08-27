@@ -23,7 +23,8 @@ class Appointment extends Model
         'status', 
         'payment_status', 
         'payment_method',
-        'declined_reason'
+        'declined_reason',
+        'total_price' // Add this
     ];
 
     public function boardingCenter()

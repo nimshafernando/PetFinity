@@ -22,32 +22,34 @@ class AppointmentController extends Controller
 
     //* Store the appointment details
     public function store(Request $request)
-    {
-        $request->validate([
-            'boardingcenter_id' => 'required|exists:pet_boarding_centers,id',
-            'pet_id' => 'required|exists:pets,id',
-            'start_date' => 'required|date|after_or_equal:today',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'check_in_time' => 'required|date_format:H:i',
-            'check_out_time' => 'required|date_format:H:i',
-            'special_notes' => 'nullable|string',
-        ]);
+{
+    $request->validate([
+        'boardingcenter_id' => 'required|exists:pet_boarding_centers,id',
+        'pet_id' => 'required|exists:pets,id',
+        'start_date' => 'required|date|after_or_equal:today',
+        'end_date' => 'required|date|after_or_equal:start_date',
+        'check_in_time' => 'required|date_format:H:i',
+        'check_out_time' => 'required|date_format:H:i',
+        'total_price' => 'required|numeric|min:0', // Validate total_price
+        'special_notes' => 'nullable|string',
+    ]);
 
-        Appointment::create([
-            'boardingcenter_id' => $request->boardingcenter_id,
-            'petowner_id' => Auth::id(),
-            'pet_id' => $request->pet_id,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'check_in_time' => $request->check_in_time,
-            'check_out_time' => $request->check_out_time,
-            'special_notes' => $request->special_notes,
-            'status' => 'pending',
-            'payment_status' => 'pending',
-        ]);
+    Appointment::create([
+        'boardingcenter_id' => $request->boardingcenter_id,
+        'petowner_id' => Auth::id(),
+        'pet_id' => $request->pet_id,
+        'start_date' => $request->start_date,
+        'end_date' => $request->end_date,
+        'check_in_time' => $request->check_in_time,
+        'check_out_time' => $request->check_out_time,
+        'special_notes' => $request->special_notes,
+        'status' => 'pending',
+        'payment_status' => 'pending',
+        'total_price' => $request->total_price, // Use the price from the form 
+    ]);
 
-        return redirect()->route('pet-owner.dashboard')->with('success', 'Appointment created successfully!');
-    }
+    return redirect()->route('pet-owner.dashboard')->with('success', 'Appointment created successfully!');
+}
 
     // * Show accepted appointments from pet boarding center and ask for payment method 
     public function appointmentTypes()
@@ -116,36 +118,6 @@ class AppointmentController extends Controller
 
         return view('pet-owner.activity-log', compact('appointment'));
     }
-
-    // Pet status in the dashboard view (for pet owners)
-    // public function showOngoingAndPastAppointments()
-    // {
-    //     $ongoingAppointments = Appointment::where('petowner_id', Auth::id())
-    //     ->where('status', 'accepted')
-    //     ->where(function ($query) {
-    //         $query->where('end_date', '>', now()->format('Y-m-d'))
-    //               ->orWhere(function ($query) {
-    //                   $query->where('end_date', '=', now()->format('Y-m-d'))
-    //                         ->where('check_out_time', '>=', now()->format('H:i:s'));
-    //               });
-    //     })
-    //     ->with(['boardingcenter', 'pet'])
-    //     ->get();
-
-    //     // $pastAppointments = Appointment::where('petowner_id', Auth::id())
-    //     //     ->where('status', 'accepted')
-    //     //     ->whereDate('end_date', '<', now())
-    //     //     ->with(['boardingcenter', 'pet'])
-    //     //     ->get();
-
-    //     // $acceptedAppointments = Appointment::where('petowner_id', Auth::id())
-    //     //     ->where('status', 'accepted')
-    //     //     ->with(['boardingcenter', 'pet'])
-    //     //     ->get();
-
-    //     return view('pet-owner.dashboard', compact('ongoingAppointments'));
-    // }
-
 
     public function showManageTasksList()
 {

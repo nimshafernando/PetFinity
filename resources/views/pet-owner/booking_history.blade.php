@@ -137,6 +137,11 @@
                     <div>
                         <span class="heading">Payment Method:</span> <span>{{ $appointment->payment_method ?? 'N/A' }}</span> <!-- Default to N/A if payment method isn't implemented -->
                     </div>
+                    
+                    <div>
+                        <span class="heading">Total Price:</span> <span>${{ number_format($appointment->total_price, 2) }}</span>
+                    </div>
+                    
                     <div class="status {{ $appointment->status }}">
                         <span class="heading">Status:</span> <span>{{ ucfirst($appointment->status) }}</span>
                     </div>

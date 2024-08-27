@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PetBoardingCenter;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Models\PetBoardingCenter;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Controller;
 
 //Registering a Pet Boarding Center
 class PetBoardingCenterController extends Controller
@@ -18,11 +19,24 @@ class PetBoardingCenterController extends Controller
         return view('auth.register-boardingcenter');
     }
 
-    //* Show the dashboard
     public function index()
-    {
-        return view('pet-boardingcenter.dashboard');
-    }
+{
+    $boardingCenterId = Auth::id();
+
+    // Calculate the total revenue
+    $totalRevenue = Appointment::where('boardingcenter_id', $boardingCenterId)
+        ->where('status', 'accepted')
+        ->sum('total_price');
+
+    return view('pet-boardingcenter.dashboard', compact('totalRevenue'));
+}
+
+
+    //* Show the dashboard
+    //public function index()
+    //{
+       // return view('pet-boardingcenter.dashboard');
+    //}
 
     //* Register the pet boarding center
     public function register(Request $request)
@@ -90,4 +104,24 @@ class PetBoardingCenterController extends Controller
             'registered_date' => now(), // Sets the registered date to the current date
         ]);
     }
+    public function updatePricePerNight(Request $request)
+    {
+        $request->validate([
+            'price_per_night' => 'required|numeric|min:0',
+        ]);
+    
+        // Use the specific guard for the pet boarding center
+        $boardingCenter = PetBoardingCenter::find(Auth::guard('boardingcenter')->id());
+    
+        // Update the price per night for the boarding center
+        $boardingCenter->update([
+            'price_per_night' => $request->price_per_night,
+        ]);
+    
+        return redirect()->route('pet-boardingcenter.dashboard')->with('success', 'Price per night updated successfully!');
+    }
+    
+    
+    
+
 }
