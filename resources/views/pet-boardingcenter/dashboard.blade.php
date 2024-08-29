@@ -313,6 +313,8 @@
             Welcome to PetFinity
         </div>
 
+        <a href="{{ route('petboarder.analytics') }}" class="mt-3 btn btn-primary">Views Analytics</a>
+
         <div class="card">
             <div class="card-header">
                 Set or Update Price Per Night

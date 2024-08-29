@@ -24,7 +24,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
-        /* Your existing CSS styles */
         .lost-and-found-section {
             display: flex;
             justify-content: space-around;
@@ -55,6 +54,92 @@
         .btn:hover {
             background-color: #0056b3;
         }
+
+        .lost-found-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .lost-found-title {
+            text-align: center;
+            font-size: 1rem;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .lost-found-cards {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .lost-found-card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: calc(25% - 20px);
+            margin-bottom: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .lost-found-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .lost-found-card h2 {
+            font-size: 1.5rem;
+            color: #ff6600;
+            margin-bottom: 10px;
+        }
+
+        .lost-found-card p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .lost-found-card .btn {
+            background-color: #ff6600;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            margin-top: auto;
+        }
+
+        .lost-found-card .btn:hover {
+            background-color: #D25F51;
+        }
+
+        .lost-found-card i {
+            font-size: 2rem;
+            color: #EA785B;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 992px) {
+            .lost-found-card {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lost-found-card {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -79,120 +164,37 @@
                 </a>
             </div>
 
-<!-- Lost and Found Section -->
-<style>
-    .lost-found-container {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 20px;
-    }
-
-    .lost-found-title {
-        text-align: center;
-        font-size: 1rem;
-        color: #000000;
-        margin-bottom: 20px;
-        
-    }
-
-    .lost-found-cards {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .lost-found-card {
-        background-color: #ffffff;
-        border: 1px solid #ddd;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        width: calc(33% - 20px);
-        margin-bottom: 20px;
-        text-align: center;
-        transition: transform 0.3s ease;
-    }
-
-    .lost-found-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .lost-found-card h2 {
-        font-size: 1.5rem;
-        color: #ff6600;
-        margin-bottom: 10px;
-    }
-
-    .lost-found-card p {
-        font-size: 1rem;
-        color: #333;
-        margin-bottom: 15px;
-    }
-
-    .lost-found-card .btn {
-        background-color: #ff6600;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        transition: background-color 0.3s ease;
-    }
-
-    .lost-found-card .btn:hover {
-        background-color: #D25F51;
-    }
-
-    .lost-found-card i {
-        font-size: 2rem;
-        color: #EA785B;
-        margin-bottom: 10px;
-    }
-
-    @media (max-width: 992px) {
-        .lost-found-card {
-            width: calc(50% - 20px);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .lost-found-card {
-            width: 100%;
-        }
-    }
-</style>
-
-<a href="{{ route('petowner.analytics.lostandfound') }}" class="btn btn-primary">
-    View Lost and Found Analytics
-</a>
-
-<div class="lost-found-container">
-    <h2 class="lost-found-title">Lost and Found</h2>
-    <div class="lost-found-cards">
-        <div class="lost-found-card">
-            <i class="fas fa-map-marker-alt"></i>
-            <h2>View Map</h2>
-            <p>See last seen locations of missing pets.</p>
-            <a href="{{ route('missing_pets.map') }}" class="btn">View Map</a>
-        </div>
-        <div class="lost-found-card">
-            <i class="fas fa-exclamation-circle"></i>
-            <h2>Report Missing Pet</h2>
-            <p>Report your pet as missing.</p>
-            <a href="{{ route('missing_pets.create') }}" class="btn">Report Missing Pet</a>
-        </div>
-        <div class="lost-found-card">
-            <i class="fas fa-eye"></i>
-            <h2>View Missing Pets</h2>
-            <p>View all missing pets and report sightings.</p>
-            <a href="{{ route('missing_pets.index') }}" class="btn">View Missing Pets</a>
-        </div>
-    </div>
-</div>
-<!-- End Lost and Found Section -->
+            <!-- Lost and Found Section -->
+            <div class="lost-found-container">
+                <h2 class="lost-found-title">Lost and Found</h2>
+                <div class="lost-found-cards">
+                    <div class="lost-found-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h2>View Map</h2>
+                        <p>See last seen locations of missing pets.</p>
+                        <a href="{{ route('missing_pets.map') }}" class="btn">View Map</a>
+                    </div>
+                    <div class="lost-found-card">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h2>Report Missing Pet</h2>
+                        <p>Report your pet as missing.</p>
+                        <a href="{{ route('missing_pets.create') }}" class="btn">Report Missing Pet</a>
+                    </div>
+                    <div class="lost-found-card">
+                        <i class="fas fa-eye"></i>
+                        <h2>View Missing Pets</h2>
+                        <p>View all missing pets and report sightings.</p>
+                        <a href="{{ route('missing_pets.index') }}" class="btn">View Missing Pets</a>
+                    </div>
+                    <div class="lost-found-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h2>View Lost and Found Analytics</h2>
+                        <p>Analyze the data related to lost and found pets.</p>
+                        <a href="{{ route('petowner.analytics.lostandfound') }}" class="btn">View Analytics</a>
+                    </div>
+                </div>
+            </div>
+            <!-- End Lost and Found Section -->
 
 
 

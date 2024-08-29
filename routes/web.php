@@ -25,8 +25,9 @@ use App\Http\Controllers\PetOwnerAnalyticsController;
 use App\Http\Controllers\PetTrainingCenterController;
 use App\Http\Controllers\PetBoardingProfileController;
 use App\Http\Controllers\PetTrainingProfileController;
-use App\Providers\Filament\BoardingCenterPanelProvider;
+use App\Http\Controllers\PetBoarderAnalyticsController;
 
+use App\Providers\Filament\BoardingCenterPanelProvider;
 use App\Http\Controllers\BoardingCenterDisplayController;
 use App\Http\Controllers\BoardingCenterDashboardController;
 
@@ -235,5 +236,6 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
     Route::post('/boarding-center/update-price', [PetBoardingCenterController::class, 'updatePricePerNight'])->name('boarding-center.update-price');
 
 
+    Route::get('/petboarder/analytics', [PetBoarderAnalyticsController::class, 'index'])->name('petboarder.analytics');
 });
 

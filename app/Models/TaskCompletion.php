@@ -12,4 +12,9 @@ class TaskCompletion extends Model
     {
         return $this->belongsTo(Task::class);
     }
+
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class, 'appointment_id');
+    }
 }
