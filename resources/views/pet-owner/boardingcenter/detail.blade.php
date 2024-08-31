@@ -44,6 +44,9 @@
             z-index: 1;
             margin-left: 270px;
             margin-top: 60px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
         }
 
         .top-navbar {
@@ -178,41 +181,61 @@
 
         .title {
             text-align: center;
-            color: #fff;
+            color: #ff6600;
             margin-bottom: 30px;
             font-weight: bold;
             font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ff6600, #cc5200);
+            border-radius: 50px;
+            color: white;
+            display: inline-block;
         }
 
-        .info-card {
+        .info-card, .review-section {
             background-color: white;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-bottom: 20px;
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #ff6600;
         }
 
-        .info-card p {
+        .info-card p, .review-card p {
             margin: 10px 0;
+            font-size: 1.1rem;
         }
 
         .info-card p strong {
             font-weight: bold;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card p i {
+            font-size: 1.2rem;
+            color: #ff6600;
         }
 
         .photo-gallery {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%;
             margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .photo-gallery img {
-            max-width: 80%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
         }
 
         .carousel-control-prev,
@@ -226,6 +249,122 @@
             border-radius: 50%;
         }
 
+        .review-section {
+            margin-top: 20px;
+            width: 48%;
+        }
+
+        .review-section h2 {
+            color: #ff6600;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .review-card {
+            background-color: #f8f9fa;
+            border: 1px solid #ff6600;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-rating {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            color: #ffbf00;
+            margin-bottom: 10px;
+        }
+
+        .review-rating i {
+            margin-right: 8px;
+        }
+
+        .review-text {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .review-meta {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .no-reviews {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            color: #ff6600;
+            margin: 0 5px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: 1px solid #ff6600;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: #ff6600;
+            color: #fff;
+        }
+
+        .book-now-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            background-color: #ff6600;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .btn-secondary {
+            background-color: #ccc;
+            color: black;
+            margin-right: 20px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #999;
+        }
+
+        .btn-primary:hover {
+            background-color: #cc5200;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 display: none;
@@ -235,6 +374,15 @@
                 margin-left: 0;
                 margin-top: 60px;
                 padding-bottom: 60px;
+                flex-direction: column;
+            }
+
+            .info-card, .review-section {
+                width: 100%;
+            }
+
+            .book-now-container {
+                margin-top: 20px;
             }
 
             .navbar {
@@ -244,6 +392,16 @@
                 bottom: 0;
                 width: 100%;
                 z-index: 10;
+            }
+
+            .title {
+                font-size: 24px;
+                padding: 5px 10px;
+                border-radius: 30px;
+            }
+
+            .photo-gallery img {
+                height: 200px;
             }
         }
 
@@ -274,6 +432,27 @@
                 bottom: 0;
                 width: 100%;
                 z-index: 10;
+            }
+
+            .info-card, .review-section {
+                width: 100%;
+            }
+
+            .book-now-container {
+                margin-top: 20px;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+
+            .title {
+                font-size: 22px;
+                padding: 5px 10px;
+            }
+
+            .photo-gallery img {
+                height: 150px;
             }
         }
     </style>
@@ -346,16 +525,48 @@
             </div>
 
             <div class="info-card">
-                <p><strong>Email:</strong> {{ $boardingCenter->email }}</p>
-                <p><strong>Location:</strong> {{ $boardingCenter->city }} , {{ $boardingCenter->city }}</p>
-                <p><strong>Operating Hours:</strong> {{ $boardingCenter->operating_hours }}</p>
-                <p><strong>Social Media Links:</strong> {{ $boardingCenter->socialmedia_links }}</p>
-                <p><strong>Special Amenities:</strong> {{ $boardingCenter->special_amenities }}</p>
-                <p><strong>Phone Number:</strong> {{ $boardingCenter->phone_number }}</p>
-                <p><strong>Types of Pets Boarded:</strong> {{ $boardingCenter->animal_types }}</p>
+                <p><strong><i class="fas fa-envelope"></i> Email:</strong> {{ $boardingCenter->email }}</p>
+                <p><strong><i class="fas fa-map-marker-alt"></i> Location:</strong> {{ $boardingCenter->city }}</p>
+                <p><strong><i class="fas fa-clock"></i> Operating Hours:</strong> {{ $boardingCenter->operating_hours }}</p>
+                <p><strong><i class="fas fa-dollar-sign"></i> Price Per Night:</strong> ${{ number_format($boardingCenter->price_per_night, 2) }}</p>
+                <p><strong><i class="fas fa-link"></i> Social Media Links:</strong> {{ $boardingCenter->socialmedia_links }}</p>
+                <p><strong><i class="fas fa-couch"></i> Special Amenities:</strong> {{ $boardingCenter->special_amenities }}</p>
+                <p><strong><i class="fas fa-phone"></i> Phone Number:</strong> {{ $boardingCenter->phone_number }}</p>
+                <p><strong><i class="fas fa-paw"></i> Types of Pets Boarded:</strong> {{ $boardingCenter->animal_types }}</p>
             </div>
 
-            <div class="d-flex justify-content-between">
+            <!-- Reviews and Ratings Section -->
+            <div class="review-section">
+                <h2>Reviews & Ratings</h2>
+                @if(count($reviews) > 0)
+                    @foreach($reviews as $review)
+                        <div class="review-card">
+                            <div class="review-rating">
+                                <i class="fas fa-star"></i> {{ $review->rating }} Stars
+                            </div>
+                            <div class="review-text">
+                                {{ $review->review }}
+                            </div>
+                            <div class="review-meta">
+                                Reviewed by: {{ $review->petowner->first_name }}
+                                @if($review->created_at)
+                                    on {{ $review->created_at->format('d M Y') }}
+                                @else
+                                    on an unknown date
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="pagination">
+                        {{ $reviews->links() }}
+                    </div>
+                @else
+                    <p class="no-reviews">No reviews have been left yet.</p>
+                @endif
+            </div>
+
+            <!-- Book Now Button -->
+            <div class="book-now-container">
                 <a href="{{ route('boarding-centers.index') }}" class="btn btn-secondary">Back to List</a>
                 <a href="{{ route('booking.create', $boardingCenter->id) }}" class="btn btn-primary">Book Now</a>
             </div>

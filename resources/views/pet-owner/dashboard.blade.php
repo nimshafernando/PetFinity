@@ -146,6 +146,9 @@
 <body class="bg-gray-50">
     <x-sidebar-nav />
 
+    
+
+
     <div class="container min-h-screen">
         <!-- Main Content -->
         <div class="content">
@@ -199,7 +202,10 @@
 
 
 
-<!-- Pet Activity Log Section -->
+
+
+
+            <!-- Pet Activity Log Section -->
 <div style="padding: 20px; border-radius: 10px; background-color: #fff; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); max-width: 100%; margin: 20px auto;">
     <h2 style="text-align: center; font-weight: bold; font-family: 'Nunito', sans-serif; margin-bottom: 20px;">Appointment Management</h2>
 
@@ -247,6 +253,8 @@
     @endif --}}
 </div>
 
+@livewire('usernotification')
+
 <!-- Additional Styles for Mobile Responsiveness -->
 <style>
     @media (max-width: 768px) {
@@ -255,7 +263,6 @@
         }
     }
 </style>
-
 
 
             <!-- Pet Activity Log Section -->   
@@ -360,34 +367,12 @@
             </div>
             <!-- End Community Events Section -->
 
+          
+
         </div>
     </div>
-    
-    <!-- Include Pusher and Laravel Echo -->
-   <!-- Include Pusher and Laravel Echo -->
-<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.1/dist/echo.iife.js"></script>
 
-<script>
-    window.Pusher = Pusher;
-
-    window.Echo = new Echo({
-        broadcaster: 'pusher',
-        key: '{{ env("PUSHER_APP_KEY") }}',
-        cluster: '{{ env("PUSHER_APP_CLUSTER") }}',
-        forceTLS: true,
-        encrypted: true,
-    });
-
-    const userId = document.head.querySelector('meta[name="user-id"]').content;
-
-    window.Echo.private(`pet-status.${userId}`)
-        .listen('PetStatusUpdated', (e) => {
-            console.log('Pet Status Updated:', e.task_name);
-            alert('Your pet\'s status has been updated: ' + e.task_name);
-        });
-</script>
-
+    @livewireScripts
     
 
 </body>

@@ -199,16 +199,17 @@
                     const startDate = new Date(startDateInput.value + ' ' + checkInTimeInput.value);
                     const endDate = new Date(endDateInput.value + ' ' + checkOutTimeInput.value);
             
-                    if (startDate && endDate && endDate >= startDate) {
-                        const timeDiff = endDate - startDate;
-                        const days = timeDiff / (1000 * 3600 * 24);
-                        let totalNights = Math.ceil(days);
+                    if (startDate && endDate && endDate > startDate) {
+                        // Calculate the difference in days
+                        let timeDiff = endDate.getTime() - startDate.getTime();
+                        let nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
             
-                        if (checkOutTimeInput.value < checkInTimeInput.value) {
-                            totalNights -= 1;
+                        // Adjust nights if the check-in time is later than the check-out time
+                        if (checkOutTimeInput.value <= checkInTimeInput.value) {
+                            nights += 1;
                         }
             
-                        const totalPrice = (totalNights * pricePerNight).toFixed(2);
+                        const totalPrice = (nights * pricePerNight).toFixed(2);
                         totalPriceInput.value = `$${totalPrice}`;
                         totalPriceHiddenInput.value = totalPrice;
                     } else {
@@ -222,6 +223,8 @@
                 checkInTimeInput.addEventListener('change', calculateTotalPrice);
                 checkOutTimeInput.addEventListener('change', calculateTotalPrice);
             </script>
+            
+            
             
             
 

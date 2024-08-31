@@ -39,7 +39,7 @@
             margin: 20px auto;
             padding: 20px;
             background-color: white;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             z-index: 1;
             margin-left: 270px;
@@ -55,65 +55,58 @@
         }
 
         .card {
-            background: linear-gradient(135deg, #ffcc80, #ffb74d);
+            background: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             overflow: hidden;
             position: relative;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-            z-index: 1;
-        }
-
-        .card:hover::before {
-            left: 100%;
-            top: 100%;
+            border-left: 5px solid #ff6600;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         .card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            z-index: 2;
         }
 
         .card-body {
             padding: 20px;
             text-align: center;
-            z-index: 3;
-            position: relative;
         }
 
         .card-title {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Fredoka One', cursive;
             font-size: 24px;
-            color: #ff4000;
+            color: #ff6600;
+            margin-bottom: 15px;
+            transition: color 0.3s;
+        }
+
+        .card:hover .card-title {
+            color: #cc5200;
         }
 
         .card-text {
             font-size: 16px;
-            color: #333;
+            color: #666;
+            margin-bottom: 15px;
         }
 
         .card-text span {
             font-weight: bold;
+        }
+
+        .rating {
+            font-size: 18px;
+            color: #ffbf00;
+            margin-bottom: 15px;
         }
 
         .btn-primary {
@@ -121,14 +114,24 @@
             border: none;
             color: white;
             padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s, transform 0.3s;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
 
         .btn-primary:hover {
             background-color: #cc5200;
-            transform: translateY(-2px);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
+
+        .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(255, 102, 0, 0.2);
+        }
+
         .top-navbar {
             display: flex;
             justify-content: space-between;
@@ -220,13 +223,13 @@
         }
 
         .navbar {
-            display: none;
-            background-color: #fff;
+            background-color: #ffffff;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             bottom: 0;
             width: 100%;
             z-index: 10;
+            display: none;
         }
 
         .navbar ul {
@@ -243,7 +246,7 @@
 
         .navbar ul li a {
             text-decoration: none;
-            color: #333;
+            color: #000000;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -309,6 +312,16 @@
                 z-index: 10;
             }
         }
+
+                .nav-link.active {
+            background-color: #ff6600;
+            color: #fff;
+        }
+
+        .nav-link.active .nav-icon {
+            color: #fff;
+        }
+
     </style>
 </head>
 
@@ -324,54 +337,63 @@
         <aside class="sidebar">
             <div class="p-4">
                 <nav class="space-y-4">
-                    <a href="{{ route('pet-owner.dashboard') }}" class="nav-link">
+                    <a href="{{ route('pet-owner.dashboard') }}" class="nav-link {{ request()->routeIs('pet-owner.dashboard') ? 'active' : '' }}">
                         <div class="nav-icon"><i class="fas fa-home"></i></div>
                         Home
                     </a>
-
-                    <a href="{{ route('mypets') }}" class="nav-link">
+        
+                    <a href="{{ route('mypets') }}" class="nav-link {{ request()->routeIs('mypets') ? 'active' : '' }}">
                         <div class="nav-icon"><i class="fas fa-paw"></i></div>
                         Pets
                     </a>
-
-                    <a href="{{ route('boarding-centers.index') }}" class="nav-link">
+        
+                    <a href="{{ route('boarding-centers.index') }}" class="nav-link {{ request()->routeIs('boarding-centers.index') ? 'active' : '' }}">
                         <div class="nav-icon"><i class="fas fa-bed"></i></div>
                         Pet Boarding Centers
                     </a>
-
-                    <a href="{{ route('appointments.upcoming') }}" class="nav-link">
+        
+                    <a href="{{ route('appointments.upcoming') }}" class="nav-link {{ request()->routeIs('appointments.upcoming') ? 'active' : '' }}">
                         <div class="nav-icon"><i class="fas fa-calendar-alt"></i></div>
                         Upcoming
                     </a>
-
-                    <a href="{{ route('appointments.history') }}" class="nav-link">
+        
+                    <a href="{{ route('appointments.history') }}" class="nav-link {{ request()->routeIs('appointments.history') ? 'active' : '' }}">
                         <div class="nav-icon"><i class="fas fa-history"></i></div>
                         Past Bookings
                     </a>
                 </nav>
             </div>
         </aside>
+        
 
         <!-- Pet Boarding Centers Content -->
         <div class="content">
-         
-            <div class="row g-4"> <!-- Added g-4 for spacing between cards -->
+            <h1>Explore Pet Boarding Centers</h1>
+            <div class="row g-4">
                 @foreach ($boardingCenters as $center)
-                    <div class="mb-4 col-md-4">
-                        <div class="card">
-                            @if(isset($center->photos[0]))
-                                <img src="{{ Storage::url($center->photos[0]) }}" alt="Facility Photo">
-                            @else
-                                <img src="placeholder-image.jpg" alt="No Image Available">
-                            @endif
-                            <div class="card-body">
-                                <h5 class="card-title">{{ strtoupper($center->business_name) }}</h5>
-                                <p class="card-text"><span>Operating Hours:</span> {{ $center->operating_hours }}</p>
-                                <p class="card-text"><span>City:</span> {{ $center->city }}</p>
-                                <a href="{{ route('boarding-centers.show', $center->id) }}" class="btn btn-primary">View More Details</a>
+                <div class="col-md-4">
+                    <div class="card">
+                        @if(isset($center->photos[0]))
+                        <img src="{{ Storage::url($center->photos[0]) }}" alt="Facility Photo">
+                        @else
+                        <img src="placeholder-image.jpg" alt="No Image Available">
+                        @endif
+                        <div class="card-body">
+                            <h5 class="card-title">{{ strtoupper($center->business_name) }}</h5>
+                            <div class="rating">
+                                @if($center->average_rating)
+                                <i class="fas fa-star"></i> {{ number_format($center->average_rating, 1) }} / 5
+                                @else
+                                <i class="fas fa-star"></i> No Ratings Yet
+                                @endif
                             </div>
+                            <p class="card-text"><span>Operating Hours:</span> {{ $center->operating_hours }}</p>
+                            <p class="card-text"><span>City:</span> {{ $center->city }}</p>
+                            <p class="card-text"><span>Price Per Night:</span> ${{ number_format($center->price_per_night, 2) }}</p>
+                            <a href="{{ route('boarding-centers.show', $center->id) }}" class="btn btn-primary">View More Details</a>
                         </div>
                     </div>
+                </div>
                 @endforeach
             </div>
         </div>

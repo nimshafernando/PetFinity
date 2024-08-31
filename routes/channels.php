@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Auth;
 
-Broadcast::channel('pet-status.{id}', function ($user, $id) {
+Broadcast::channel('pet-status', function ($user, $id) {
+
+    return true;
+
     // Check if the user is authenticated as a pet owner
     if (Auth::guard('petowner')->check()) {
         return (int) Auth::guard('petowner')->id() === (int) $id;

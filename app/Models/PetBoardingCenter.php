@@ -49,4 +49,9 @@ class PetBoardingCenter extends Authenticatable implements AuthenticatableContra
         'photos' => 'array', // Cast the photos attribute to an array
 
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'boardingcenter_id');
+    }
 }

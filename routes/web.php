@@ -239,3 +239,14 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
     Route::get('/petboarder/analytics', [PetBoarderAnalyticsController::class, 'index'])->name('petboarder.analytics');
 });
 
+
+
+Route::get('/test-notification', function(){
+
+    $taskCompletion = \App\Models\TaskCompletion::find(12);
+
+    // Trigger the PetStatusUpdated event
+    event(new \App\Events\PetStatus());
+
+});
+

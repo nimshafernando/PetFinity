@@ -620,6 +620,7 @@
                 const animalTypes = document.querySelectorAll('input[name="animal_types[]"]:checked');
                 const startOperatingHour = document.getElementById('start_operating_hour').value;
                 const endOperatingHour = document.getElementById('end_operating_hour').value;
+                const pricePerNight = document.getElementById('price_per_night').value.trim();
 
                 if (animalTypes.length === 0) {
                     isValid = false;
@@ -642,15 +643,12 @@
                     document.getElementById('end_operating_hour_error').textContent = '';
                 }
 
-                 // start of Validation for Price Per Night
                 if (!pricePerNight || isNaN(pricePerNight) || pricePerNight < 0) {
                     isValid = false;
                     document.getElementById('price_per_night_error').textContent = 'Valid price per night is required.';
                 } else {
                     document.getElementById('price_per_night_error').textContent = '';
                 }
-
-                // end Validation for Price Per Night
 
                 const servicesProvided = document.querySelectorAll('input[name="services_provided[]"]:checked');
                 if (servicesProvided.length === 0) {

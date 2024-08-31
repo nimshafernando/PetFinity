@@ -20,17 +20,17 @@ class PetBoardingCenterController extends Controller
     }
 
     public function index()
-{
-    $boardingCenterId = Auth::id();
-
-    // Calculate the total revenue
-    $totalRevenue = Appointment::where('boardingcenter_id', $boardingCenterId)
-        ->where('status', 'accepted')
-        ->sum('total_price');
-
-    return view('pet-boardingcenter.dashboard', compact('totalRevenue'));
-}
-
+    {
+        $boardingCenterId = Auth::id();
+    
+        // Calculate the total revenue correctly
+        $totalRevenue = Appointment::where('boardingcenter_id', $boardingCenterId)
+            ->where('status', 'accepted')
+            ->sum('total_price');
+    
+        return view('pet-boardingcenter.dashboard', compact('totalRevenue'));
+    }
+    
 
     //* Show the dashboard
     //public function index()
@@ -81,6 +81,7 @@ class PetBoardingCenterController extends Controller
             'special_amenities' => ['required', 'string', 'max:255'],
             'socialmedia_links' => ['nullable', 'string', 'max:255'],
             'joining_goals' => ['required', 'string', 'max:255'],
+            'price_per_night' => ['required', 'numeric', 'min:0'],  // Add this line
         ]);
     }
 
@@ -101,25 +102,27 @@ class PetBoardingCenterController extends Controller
             'socialmedia_links' => $data['socialmedia_links'],
             'photos' => $data['photos'], // Store the JSON encoded photo paths
             'joining_goals' => $data['joining_goals'],
+            'price_per_night' => $data['price_per_night'],  // Add this line
             'registered_date' => now(), // Sets the registered date to the current date
         ]);
     }
     public function updatePricePerNight(Request $request)
-    {
-        $request->validate([
-            'price_per_night' => 'required|numeric|min:0',
-        ]);
-    
-        // Use the specific guard for the pet boarding center
-        $boardingCenter = PetBoardingCenter::find(Auth::guard('boardingcenter')->id());
-    
-        // Update the price per night for the boarding center
-        $boardingCenter->update([
-            'price_per_night' => $request->price_per_night,
-        ]);
-    
-        return redirect()->route('pet-boardingcenter.dashboard')->with('success', 'Price per night updated successfully!');
-    }
+{
+    $request->validate([
+        'price_per_night' => 'required|numeric|min:0',
+    ]);
+
+    // Find the boarding center by ID using the current authenticated user
+    $boardingCenter = PetBoardingCenter::find(Auth::guard('boardingcenter')->id());
+
+    // Update the price per night for the boarding center
+    $boardingCenter->update([
+        'price_per_night' => $request->price_per_night,
+    ]);
+
+    return redirect()->route('pet-boardingcenter.dashboard')->with('success', 'Price per night updated successfully!');
+}
+
     
     
     
