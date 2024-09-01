@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(to right, #ff6a00, #ffb900);
+            background-color: #ff6600; /* Set background color */
             margin: 0;
             padding: 0;
             display: flex;
@@ -16,27 +16,8 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            position: relative;
         }
-        .animation-bg::before, .animation-bg::after {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -100%;
-            left: -100%;
-            background: rgba(255, 255, 255, 0.1);
-            animation: rotate 30s infinite linear;
-            z-index: 0;
-        }
-        .animation-bg::after {
-            background: rgba(255, 255, 255, 0.2);
-            animation-duration: 60s;
-        }
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+
         .authentication-card {
             max-width: 700px;
             width: 100%;
@@ -51,6 +32,7 @@
             position: relative;
             z-index: 1;
         }
+
         .authentication-card:hover { transform: translateY(-5px); }
         .authentication-card-logo { display: flex; justify-content: center; margin-bottom: 1.5rem; }
         .avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; }

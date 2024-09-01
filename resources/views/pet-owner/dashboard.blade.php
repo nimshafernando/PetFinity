@@ -164,6 +164,9 @@
                 </a>
             </div>
 
+
+            <a href="{{ route('test.show') }}" class="btn btn-primary">Go to Test Page</a>
+
             <!-- Lost and Found Section -->
             <div class="lost-found-container">
                 <h2 class="lost-found-title">Lost and Found</h2>
@@ -196,6 +199,9 @@
             </div>
             <!-- End Lost and Found Section -->
 
+            <a href="{{ route('checkout') }}" class="btn btn-primary">Go to Checkout</a>
+
+            
 
 
 
@@ -227,6 +233,7 @@
             @endforeach
         </div>
     @endif
+
 
     <!-- Appointment History Section -->
     <div style="text-align: center; margin-top: 30px;">
