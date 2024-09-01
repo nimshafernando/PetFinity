@@ -259,17 +259,36 @@
             </button>
         </a>
     </div>
-    {{-- @if(!$pastAppointments->isEmpty())
-        <div style="text-align: center; margin-top: 30px;">
-            <h5 style="font-weight: bold; color: #333;">Activity Log History</h5>
-            <a href="{{ route('petowner.appointment-history') }}" style="display: block;">
-                <button style="width: 100%; padding: 12px; font-size: 16px; background-color: #ff6600; color: #fff; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">View Activity Log History</button>
-            </a>
-        </div>
-    @endif --}}
 </div>
 
 @livewire('usernotification')
+
+<style>
+    .fab {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background-color: #ff006a;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        color: white;
+        font-size: 24px;
+    }
+    </style>
+    
+    <div class="fab" id="notificationFab">
+        <i class="fas fa-bell"></i>
+    </div>
+
+  
+  
+    
 
 <!-- Additional Styles for Mobile Responsiveness -->
 <style>
@@ -279,11 +298,7 @@
         }
     }
 </style>
-
-
             <!-- Pet Activity Log Section -->   
-
-            
 
             <!-- Services Section -->
             <div class="services-box">
