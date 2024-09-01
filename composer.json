@@ -19,7 +19,8 @@
         "laravel/reverb": "^1.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.0",
+        "livewire/livewire": "*",
+        "livewire/volt": "^1.6",
         "pusher/pusher-php-server": "^7.2",
         "stripe/stripe-php": "^15.8"
     },

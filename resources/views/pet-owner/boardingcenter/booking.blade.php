@@ -129,6 +129,7 @@
                     </select>
                 </div>
             </div>
+    
 
             <div class="mb-3">
                 <label for="start_date" class="form-label">Start Date</label>
@@ -146,17 +147,13 @@
                 </div>
             </div>
 
+           
+
             <div class="mb-3">
                 <label for="check_in_time" class="form-label">Check-In Time</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                    <select name="check_in_time" id="check_in_time" class="form-select" required>
-                        @foreach (range(0, 23) as $hour)
-                            @foreach (['00', '15', '30', '45'] as $minute)
-                                <option value="{{ sprintf('%02d:%s', $hour, $minute) }}">{{ date('h:i A', strtotime(sprintf('%02d:%s', $hour, $minute))) }}</option>
-                            @endforeach
-                        @endforeach
-                    </select>
+                    <input type="time" name="check_in_time" id="check_in_time" class="form-control" required>
                 </div>
             </div>
 
@@ -164,13 +161,7 @@
                 <label for="check_out_time" class="form-label">Check-Out Time</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                    <select name="check_out_time" id="check_out_time" class="form-select" required>
-                        @foreach (range(0, 23) as $hour)
-                            @foreach (['00', '15', '30', '45'] as $minute)
-                                <option value="{{ sprintf('%02d:%s', $hour, $minute) }}">{{ date('h:i A', strtotime(sprintf('%02d:%s', $hour, $minute))) }}</option>
-                            @endforeach
-                        @endforeach
-                    </select>
+                    <input type="time" name="check_out_time" id="check_out_time" class="form-control" required>
                 </div>
             </div>
 
@@ -182,7 +173,8 @@
                 </div>
             </div>
 
-            <!-- Price Per Night Calculation -->
+            <!--price per night cal-->
+
             <input type="hidden" id="price_per_night" value="{{ $boardingCenter->price_per_night }}">
             <input type="hidden" name="total_price" id="total_price_hidden">
             
@@ -196,58 +188,67 @@
             
             
             <script>
+                const startDateInput = document.getElementById('start_date');
+                const endDateInput = document.getElementById('end_date');
                 const checkInTimeInput = document.getElementById('check_in_time');
                 const checkOutTimeInput = document.getElementById('check_out_time');
-                const operatingHours = @json($boardingCenter->operating_hours);
-                
-                function isTimeWithinOperatingHours(time) {
-                    const [openingTime, closingTime] = operatingHours.split('-').map(t => t.trim());
-                    const [openingHour, openingMinute] = openingTime.split(':');
-                    const [closingHour, closingMinute] = closingTime.split(':');
-            
-                    const openingDate = new Date();
-                    openingDate.setHours(parseInt(openingHour), parseInt(openingMinute));
-            
-                    const closingDate = new Date();
-                    closingDate.setHours(parseInt(closingHour), parseInt(closingMinute));
-            
-                    const [checkHour, checkMinute] = time.split(':');
-                    const checkDate = new Date();
-                    checkDate.setHours(parseInt(checkHour), parseInt(checkMinute));
-            
-                    if (closingDate < openingDate) {
-                        // Adjust for overnight operating hours (e.g., 8 AM - 2 AM)
-                        closingDate.setDate(closingDate.getDate() + 1);
-                        if (checkDate < openingDate) {
-                            checkDate.setDate(checkDate.getDate() + 1);
-                        }
+                const pricePerNight = parseFloat(document.getElementById('price_per_night').value);
+                const totalPriceInput = document.getElementById('total_price');
+                const totalPriceHiddenInput = document.getElementById('total_price_hidden');
+
+                function validateDates() {
+                    const startDate = new Date(startDateInput.value);
+                    const endDate = new Date(endDateInput.value);
+
+                    if (endDate < startDate) {
+                        // Automatically adjust the end date to be the same as the start date
+                        endDateInput.value = startDateInput.value;
                     }
-            
-                    return checkDate >= openingDate && checkDate <= closingDate;
+                    calculateTotalPrice();
                 }
-            
-                checkInTimeInput.addEventListener('change', function() {
-                    if (!isTimeWithinOperatingHours(checkInTimeInput.value)) {
-                        alert('Check-in time is outside of operating hours');
-                        checkInTimeInput.value = ''; // Clear the invalid input
+
+                function calculateTotalPrice() {
+                    const startDate = new Date(startDateInput.value + 'T' + checkInTimeInput.value);
+                    const endDate = new Date(endDateInput.value + 'T' + checkOutTimeInput.value);
+
+                    if (startDate && endDate && endDate > startDate) {
+                        // Calculate the difference in days
+                        let timeDiff = endDate.getTime() - startDate.getTime();
+                        let nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                        // Adjust nights if the check-out time is earlier than the check-in time on the last day
+                        if (checkOutTimeInput.value <= checkInTimeInput.value) {
+                            nights += 1;
+                        }
+
+                        const totalPrice = (nights * pricePerNight).toFixed(2);
+                        totalPriceInput.value = totalPrice;
+                        totalPriceHiddenInput.value = totalPrice;
+                    } else {
+                        totalPriceInput.value = '';
+                        totalPriceHiddenInput.value = '';
                     }
-                });
-            
-                checkOutTimeInput.addEventListener('change', function() {
-                    if (!isTimeWithinOperatingHours(checkOutTimeInput.value)) {
-                        alert('Check-out time is outside of operating hours');
-                        checkOutTimeInput.value = ''; // Clear the invalid input
-                    }
-                });
+                }
+
+                startDateInput.addEventListener('change', validateDates);
+                endDateInput.addEventListener('change', validateDates);
+                checkInTimeInput.addEventListener('change', calculateTotalPrice);
+                checkOutTimeInput.addEventListener('change', calculateTotalPrice);
+
             </script>
             
+            
+            
+            
 
-            <!-- Submit Buttons -->
+
+            <!--price per night cal-->
+
             <button type="submit" class="btn btn-primary">Book Appointment</button>
             <a href="{{ route('boarding-centers.show', $boardingCenter->id) }}" class="btn btn-secondary">Cancel</a>
-            <a href="{{ route('pet-owner.dashboard') }}" class="btn btn-secondary">Return to Dashboard</a>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
