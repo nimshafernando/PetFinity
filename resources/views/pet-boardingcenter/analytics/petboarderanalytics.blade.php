@@ -174,6 +174,113 @@
             color: white;
         }
 
+        .breed-card {
+        background-color: #035a2e;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease-in-out;
+        height: 150px; /* Ensures equal height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .breed-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .breed-name {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .breed-count {
+        font-size: 1rem;
+    }
+
+    .card-body .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .col-md-2 {
+        flex: 0 0 16.6667%;
+        max-width: 16.6667%;
+    }
+    .status-card {
+        background-color: #035a2e;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease-in-out;
+        height: 150px; /* Ensures equal height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .status-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .status-name {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .status-count {
+        font-size: 1rem;
+    }
+
+    .card-body .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .col-md-3 {
+        flex: 0 0 23%;
+        max-width: 23%;
+    }
+
+    @media (max-width: 768px) {
+        .col-md-3 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .col-md-3 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .col-md-2 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .col-md-2 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -225,7 +332,8 @@
         <a href="#bookings">Monthly Bookings</a>
         <a href="#stay-length">Average Length of Stay</a>
         <a href="#occupancy">Occupancy Rate</a>
-        <a href="#new-vs-returning">New vs. Returning Customers</a>
+        <a href="#booking-status">Booking Status</a>
+        <a href="#top-breeds">Top Breeds or Pet Types</a>
         <a href="#pets">Pets Handled</a>
         <a href="#" id="downloadPdf" class="btn-custom">Download Report</a>
     </div>
@@ -256,17 +364,19 @@
             </div>
         </div>
 
-        <!-- Total Revenue Section -->
         <div id="revenue" class="card">
             <div class="card-header">Total Revenue</div>
             <div class="card-body">
                 <div class="stat">LKR {{ number_format($totalRevenue, 2) }}</div>
                 <div class="stat-label">Total Revenue Earned</div>
                 <div class="chart-container">
+                    <!-- Optionally, you could include a different visualization or remove this canvas if you no longer need a chart -->
                     <canvas id="monthlyRevenueChart"></canvas>
                 </div>
             </div>
         </div>
+        
+        
 
         <!-- Monthly Booking Trends -->
         <div id="bookings" class="card">
@@ -278,15 +388,24 @@
             </div>
         </div>
 
-        <!-- New vs. Returning Customers -->
-        <div id="new-vs-returning" class="card">
-            <div class="card-header">New vs. Returning Customers</div>
-            <div class="card-body">
-                <div class="chart-container">
-                    <canvas id="customersChart"></canvas>
+  <!-- Booking Status Distribution Section -->
+<div id="booking-status" class="card">
+    <div class="card-header">Booking Status Distribution</div>
+    <div class="card-body">
+        <div class="row">
+            @foreach($bookingStatusDistribution as $status)
+                <div class="col-md-3">
+                    <div class="status-card">
+                        <div class="status-name">{{ ucfirst($status->status) }}</div>
+                        <div class="status-count">Appointment Count :  {{ $status->count }}</div>
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
+    </div>
+</div>
+
+
 
         <!-- Average Length of Stay -->
         <div id="stay-length" class="card">
@@ -297,6 +416,23 @@
             </div>
         </div>
 
+    <!-- top breeds -->
+        <div id="top-breeds" class="card">
+            <div class="card-header">Top Breeds or Pet Types</div>
+            <div class="card-body">
+                <div class="row">
+                    @foreach($topBreeds as $breed)
+                        <div class="col-md-2">
+                            <div class="breed-card">
+                                <div class="breed-name">{{ $breed->breed }}</div>
+                                
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        
         <!-- Occupancy Rate -->
         <div id="occupancy" class="card">
             <div class="card-header">Occupancy Rate</div>
@@ -378,22 +514,7 @@
             }
         });
 
-        // Customers Chart
-        const customersCtx = document.getElementById('customersChart').getContext('2d');
-        const customersChart = new Chart(customersCtx, {
-            type: 'pie',
-            data: {
-                labels: ['New Customers', 'Returning Customers'],
-                datasets: [{
-                    label: 'Customers',
-                    data: [{{ $newCustomers }}, {{ $returningCustomers }}],
-                    backgroundColor: ['#035a2e', '#28a745'],
-                }]
-            },
-            options: {
-                responsive: true
-            }
-        });
+    
 
         // Sidebar toggle for mobile
         const sidebar = document.getElementById('sidebar');
@@ -481,11 +602,11 @@ document.getElementById('downloadPdf').addEventListener('click', function () {
     yPosition += 15;
     doc.setFontSize(10);
     doc.setTextColor(0, 0, 0); // Black color
-    doc.text(Total Bookings: {{ $totalBookings }}, margin, yPosition);
+    doc.text(`Total Bookings: {{ $totalBookings }}`, margin, yPosition);
     yPosition += 10;
-    doc.text(Total Revenue: LKR {{ number_format($totalRevenue, 2) }}, margin, yPosition);
+    doc.text(`Total Revenue: LKR {{ number_format($totalRevenue, 2) }}`, margin, yPosition);
     yPosition += 10;
-    doc.text(Average Rating: {{ number_format($averageRating, 2) }}, margin, yPosition);
+    doc.text(`Average Rating: {{ number_format($averageRating, 2) }}`, margin, yPosition);
 
     yPosition += 20;
 
@@ -520,12 +641,7 @@ document.getElementById('downloadPdf').addEventListener('click', function () {
     doc.text("Occupancy Rate: {{ number_format($occupancyRate, 2) }}%", margin, yPosition);
     yPosition += 10;
 
-    // New vs. Returning Customers Details
-    doc.text("New Customers: {{ $newCustomers }}", margin, yPosition);
-    yPosition += 10;
-    doc.text("Returning Customers: {{ $returningCustomers }}", margin, yPosition);
-
-    yPosition += 20;
+    
 
     // Pets Handled Section
     doc.setFillColor(3, 90, 46); // Green color

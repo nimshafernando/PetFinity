@@ -238,18 +238,7 @@
                     </button>
                 </form>        
             </div>
-            <div class="petTrainingCentreContainer" data-type="Training-Center">
-                <form action="{{ route('user-type.store') }}" method="POST" class="roleForm">
-                    @csrf
-                    <input type="hidden" name="user_type" value="Training-Center">
-                    <button type="submit">
-                        <img src="images/trainer.png" alt="Pet Training Center">
-                        <h2>Pet Training Center</h2>
-                        <p>Offer and track pet training services seamlessly.</p>
-                        <div class="tick-icon">✓</div>
-                    </button>
-                </form>        
-            </div>
+          
             <div class="petBoardingCentreContainer" data-type="Boarding-Center">
                 <form action="{{ route('user-type.store') }}" method="POST" class="roleForm">
                     @csrf

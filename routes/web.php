@@ -21,15 +21,18 @@ use App\Http\Controllers\PendingBookingsController;
 use App\Http\Controllers\PetOwnerProfileController;
 use App\Http\Controllers\PetBoardingCenterController;
 use App\Http\Controllers\PetOwnerAnalyticsController;
-
+//use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PetOwnerDashboardController;
 use App\Http\Controllers\PetTrainingCenterController;
 use App\Http\Controllers\PetBoardingProfileController;
 use App\Http\Controllers\PetTrainingProfileController;
 use App\Http\Controllers\PetBoarderAnalyticsController;
-
 use App\Providers\Filament\BoardingCenterPanelProvider;
 use App\Http\Controllers\BoardingCenterDisplayController;
 use App\Http\Controllers\BoardingCenterDashboardController;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\testcontroller; // Make sure the class name is correct and matches the filename and class definition
 
 //broadcasting route
 Broadcast::routes(['middleware' => ['auth:petowner,boardingcenter,trainingcenter']]);
@@ -56,7 +59,6 @@ Route::get('lostandfound', function () {
 Route::get('/features', function () {
     return view('landing-page.features');
 }); //features page
-
 
 Route::middleware([
     'auth:sanctum',
@@ -89,9 +91,24 @@ Route::get('pet-trainingcenter/register', [PetTrainingCenterController::class, '
 Route::post('pet-trainingcenter/register', [PetTrainingCenterController::class, 'register']);
 
 
+
+Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel');
+Route::get('petowner/dashboard', [PetOwnerController::class, 'index'])->name('pet-owner.dashboard');
+
+//checkout button route 
+Route::get('/checkout', function () {
+    return view('checkout');
+})->name('checkout');
+
+Route::get('/checkout/{appointmentId}', [CheckoutController::class, 'show'])->name('checkout.show');
+
+//stripe routes
+Route::post('stripe', [StripeController::class, 'stripe'])->name('stripe'); 
+Route::get('success', [StripeController::class, 'success'])->name('success');
+Route::get('cancel', [StripeController::class, 'cancel'])->name('cancel');
+
 //!MIDDLEWARE FOR PET OWNER
 Route::middleware(['auth:petowner'])->group(function () {
-
     //petowner dashboard
     Route::get('petowner/dashboard', [PetOwnerController::class, 'index'])->name('pet-owner.dashboard');
 
@@ -101,13 +118,11 @@ Route::middleware(['auth:petowner'])->group(function () {
    Route::get('/pets/create', [PetController::class, 'create'])->name('pet.create'); //section which asks the user to input the pet details
    Route::post('/pets', [PetController::class, 'store'])->name('pet.store'); //section that store the pet details
 
-
    //*edit pet profile
    Route::get('/pets/{id}', [PetController::class, 'show']); // Fetch pet details
    Route::get('/pets/{p}/edit', [PetController::class, 'edit'])->name('pets.edit'); // Show edit form
    Route::put('/pets/{pet}', [PetController::class, 'update'])->name('pets.update');
    Route::delete('/pets/{id}/delete', [PetController::class, 'destroy'])->name('pets.delete'); // Update pet information
-
 
     //*pet owner appointment routes
     Route::get('/boarding-centers', [BoardingCenterDisplayController::class, 'index'])->name('boarding-centers.index'); // Show all boarding centers
@@ -116,20 +131,18 @@ Route::middleware(['auth:petowner'])->group(function () {
     Route::post('/booking', [AppointmentController::class, 'store'])->name('booking.store'); // Store booking information
     Route::get('/upcoming', [UpcomingController::class, 'index'])->name('appointments.upcoming'); // Show upcoming appointments
     Route::get('/history', [BookingHistoryController::class, 'index'])->name('appointments.history'); // Show appointment history
-    
 
     //*pet owner profile 
     Route::get('/pet-owner/profile', [PetOwnerProfileController::class, 'edit'])->name('pet-owner.profile.edit'); // Show profile edit form
     Route::put('/pet-owner/profile', [PetOwnerProfileController::class, 'update'])->name('pet-owner.profile.update'); // Update profile information
 
-
-    //* Route to get accepted appointments for pet owners
+    // Route to get accepted appointments for pet owners
     // Route::get('/pet-owner/accepted-appointments', [AppointmentController::class, 'showAcceptedAppointments'])->name('pet-owner.accepted-appointments');
 
-    //* Route to show the accepted appointments for pet owners
+    // Route to show the accepted appointments for pet owners
     Route::get('/petowner/dashboard', [AppointmentController::class, 'appointmentTypes'])->name('pet-owner.dashboard');
 
-    //* Route to handle payment selection
+    // Route to handle payment selection
     Route::post('/appointment/{id}/select-payment-method', [AppointmentController::class, 'selectPaymentMethod'])->name('appointment.select-payment-method');
 
     //lost and found related controllers
@@ -141,41 +154,29 @@ Route::middleware(['auth:petowner'])->group(function () {
     // Routes for Found Reports (sighted pets)
     Route::get('/found-reports', [FoundReportController::class, 'index'])->name('found_reports.index');
     Route::get('/found-reports/create/{missing_pet_id}', [FoundReportController::class, 'create'])->name('found_reports.create');
-   Route::post('/found_reports/store/{id}', [FoundReportController::class, 'store'])->name('found_reports.store');
+    Route::post('/found_reports/store/{id}', [FoundReportController::class, 'store'])->name('found_reports.store');
 
     //route for reviews and ratings
     Route::get('/reviews/create/{appointment}', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
     
- 
+    // Make sure that the parameter name in the route matches the variable in the controller method
     
-    
-
-
-
+    // Route to show the test page for the current pet owner
+    Route::get('/test', [testcontroller::class, 'showTest'])->name('test.show');
 
     //pet status 
-    Route::get('petowner/activity-log/{id}', [AppointmentController::class, 'showActivityLog'])->name('pet.owner.activity-log'); //id refers to appoitment id
+    Route::get('petowner/activity-log/{id}', [AppointmentController::class, 'showActivityLog'])->name('pet.owner.activity-log'); //id refers to appointment id
     Route::get('petowner/appointment-history', [PetOwnerController::class, 'showAppointmentHistory'])->name('petowner.appointment-history');
 
     // Route to show ongoing and past appointments for the pet owner
     // Route::get('/petowner/appointments', [AppointmentController::class, 'showOngoingAndPastAppointments'])->name('pet-owner.appointments');
     // Route::get('/petowner/dashboard', [AppointmentController::class, 'showOngoingAndPastAppointments'])->name('pet-owner.dashboard');
 
-
     //nimsha test analytics code
-     Route::get('/petowner/lost-and-found-analytics', [PetOwnerAnalyticsController::class, 'showLostAndFoundAnalytics'])->name('petowner.analytics.lostandfound');
-
-
+    Route::get('/petowner/lost-and-found-analytics', [PetOwnerAnalyticsController::class, 'showLostAndFoundAnalytics'])->name('petowner.analytics.lostandfound');
 
 });
-
-
-
-
-
-
-
 
 //!MIDDLEWARE FOR PET TRAINING CENTER
 Route::middleware(['auth:trainingcenter'])->group(function () {
@@ -185,12 +186,8 @@ Route::middleware(['auth:trainingcenter'])->group(function () {
     Route::put('/training-center/profile/update', [PetTrainingProfileController::class, 'update'])->name('training-center-profile.update');
 });
 
-
 //!MIDDLEWARE FOR PET BOARDING CENTER
 Route::middleware(['auth:boardingcenter'])->group(function () {
-
-  //pet boarding center dashboard (with Total Revenue) this i added rn-aaqs
- // Route::get('petboardingcenter/dashboard', [BoardingCenterDashboardController::class, 'dashboard'])->name('pet-boardingcenter.dashboard');
 
     //pet boarding center dashboard
     Route::get('petboardingcenter/dashboard', [PetBoardingCenterController::class, 'index'])->name('pet-boardingcenter.dashboard');
@@ -222,19 +219,14 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
     // Route to display the tasks for a specific appointment
     Route::get('/boarding-center/managetasks/{id}', [AppointmentController::class, 'showTasks'])->name('pet.boardingcenter.managetasks');
 
-
-
    // Store task completion
    Route::post('/task-completions/store/{appointment}', [TaskCompletionController::class, 'store'])->name('task-completions.store');
    
-
    // Route for viewing reviews in the pet boarding center dashboard
     Route::get('/boarding-center/reviews', [ReviewController::class, 'index'])->name('boarding-center.reviews');
 
-
-    //revenur related routes -aaqs
+    //revenue related routes -aaqs
     Route::post('/boarding-center/update-price', [PetBoardingCenterController::class, 'updatePricePerNight'])->name('boarding-center.update-price');
-
 
     Route::get('/petboarder/analytics', [PetBoarderAnalyticsController::class, 'index'])->name('petboarder.analytics');
 });

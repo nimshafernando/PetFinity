@@ -41,27 +41,24 @@ class PetBoarderAnalyticsController extends Controller
             ->orderBy('month')
             ->get();
 
-        // Total Revenue (using price_per_night from PetBoardingCenter)
-        $pricePerNight = Auth::user()->price_per_night;
-        $totalRevenue = Appointment::where('boardingcenter_id', $boardingCenterId)
-            ->selectRaw('SUM(DATEDIFF(end_date, start_date) * ?) as total', [$pricePerNight])
-            ->value('total');
+        // Total Revenue (sum of total_price where payment_status is 'paid')
+    $totalRevenue = Appointment::where('boardingcenter_id', $boardingCenterId)
+    ->where('payment_status', 'paid')
+    ->sum('total_price');
 
-        // Monthly Revenue (using price_per_night from PetBoardingCenter)
+        // Monthly Revenue (using total_price from Appointment)
         $monthlyRevenue = Appointment::where('boardingcenter_id', $boardingCenterId)
-            ->selectRaw('MONTH(start_date) as month, SUM(DATEDIFF(end_date, start_date) * ?) as total', [$pricePerNight])
+            ->selectRaw('MONTH(start_date) as month, SUM(total_price) as total')
             ->groupBy('month')
             ->orderBy('month')
             ->get();
 
-        // New vs. Returning Customers
-        $newCustomers = PetOwner::whereHas('bookings', function ($query) use ($boardingCenterId) {
-            $query->where('boardingcenter_id', $boardingCenterId);
-        })->distinct()->count();
+        // Booking Status Distribution
+$bookingStatusDistribution = Appointment::where('boardingcenter_id', $boardingCenterId)
+->selectRaw('status, COUNT(*) as count')
+->groupBy('status')
+->get();
 
-        $returningCustomers = Appointment::where('boardingcenter_id', $boardingCenterId)
-            ->distinct('petowner_id')
-            ->count('petowner_id') - $newCustomers;
 
         // Average Length of Stay
         $averageLengthOfStay = Appointment::where('boardingcenter_id', $boardingCenterId)
@@ -87,8 +84,8 @@ class PetBoarderAnalyticsController extends Controller
 
         return view('pet-boardingcenter.analytics.petboarderanalytics', compact(
             'totalBookings', 'completedTasks', 'averageRating', 'reviewsCount',
-            'petsHandled', 'monthlyBookings', 'totalRevenue', 'monthlyRevenue',
-            'newCustomers', 'returningCustomers', 'averageLengthOfStay', 'occupancyRate', 'topBreeds'
+            'petsHandled', 'monthlyBookings', 'totalRevenue', 'monthlyRevenue', 'averageLengthOfStay', 'occupancyRate',
+            'topBreeds', 'bookingStatusDistribution' // Add this line
         ));
     }
 }

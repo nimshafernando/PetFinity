@@ -270,11 +270,7 @@
             <h3>Pet Owner</h3>
             <p>Manage your pets' profiles, book boarding and training appointments, and stay updated on their status.</p>
         </a>
-        <a href="#pet-trainer-features" class="card">
-            <img src="images/cat-training.jpg" alt="Pet Trainer">
-            <h3>Pet Trainer</h3>
-            <p>Offer training services, manage your schedule, and communicate directly with pet owners.</p>
-        </a>
+       
         <a href="#pet-boarder-features" class="card">
             <img src="images/ggg.jpg" alt="Pet Boarder">
             <h3>Pet Boarder</h3>
@@ -369,38 +365,6 @@
             </div>
         </section>
         
-        <!-- Pet Trainers Features -->
-        <section class="features-section" id="pet-trainer-features">
-            <h2 class="section-title">Pet Trainers Features</h2>
-            <p class="section-message">Join Petfinity to offer professional training services and track the progress of pets under your care.</p>
-            <div class="feature-container">
-                <div class="feature-box">
-                    <i class="fas fa-user feature-icon"></i>
-                    <h3 class="feature-title">Profile Management</h3>
-                    <p class="feature-description">Create and manage profile details including specialization, training methods, and availability.</p>
-                </div>
-                <div class="feature-box">
-                    <i class="fas fa-calendar-alt feature-icon"></i>
-                    <h3 class="feature-title">Manage Training Services</h3>
-                    <p class="feature-description">Input available time slots and manage bookings. Accept, decline, or reschedule training sessions. Create and share training plans with pet owners. Update and share the training progress of pets.</p>
-                </div>
-                <div class="feature-box">
-                    <i class="fas fa-bell feature-icon"></i>
-                    <h3 class="feature-title">Real-time Notifications</h3>
-                    <p class="feature-description">Receive booking notifications and updates. Notify pet owners about the progress of their pets' training.</p>
-                </div>
-                <div class="feature-box">
-                    <i class="fas fa-envelope feature-icon"></i>
-                    <h3 class="feature-title">Direct Messaging</h3>
-                    <p class="feature-description">Communicate directly with pet owners.</p>
-                </div>
-                <div class="feature-box">
-                    <i class="fas fa-chart-line feature-icon"></i>
-                    <h3 class="feature-title">Analytics</h3>
-                    <p class="feature-description">View session attendance rates, popular training programs, and client feedback.</p>
-                </div>
-            </div>
-        </section>
         
         
 @endsection

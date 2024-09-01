@@ -484,13 +484,7 @@
             <li>
                 <a href="#"><i class="fas fa-paw icon"></i>Services</a>
                 <div class="dropdown">
-                    <a class="dropdown-item" href="training">
-                        <img src="images/pettrain.png" alt="Training">
-                        <div>
-                            <span>Training</span>
-                            <p>Find and connect with pet trainers.</p>
-                        </div>
-                    </a>
+                    
                     <a class="dropdown-item" href="Boarding">
                         <img src="images/boarding.png" alt="Boarding">
                         <div>
