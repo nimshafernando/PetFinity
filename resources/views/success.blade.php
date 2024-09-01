@@ -16,10 +16,10 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            max-width: 600px;
             margin: auto;
         }
-        img {
+        .profile-pic {
             width: 100px;
             height: 100px;
             border-radius: 50%;
@@ -31,17 +31,25 @@
         p {
             font-size: 18px;
             color: #333;
+            margin: 5px 0;
+        }
+        .price {
+            font-size: 24px;
+            color: #ff6600;
+            margin-top: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Thank you for your payment!</h1>
-        <p>Your appointment has been successfully secured.</p>
+        <p><strong>Pet Boarding Center:</strong> {{ $metadata['boarding_center'] }}</p>
         <p><strong>Pet Name:</strong> {{ $metadata['pet_name'] }}</p>
         <p><strong>Check-in:</strong> {{ $metadata['check_in'] }}</p>
         <p><strong>Check-out:</strong> {{ $metadata['check_out'] }}</p>
-        <p><strong>Boarding Center:</strong> {{ $metadata['boarding_center'] }}</p>
+        <p><strong>Pet Owner:</strong> {{ $metadata['owner_first_name'] }} {{ $metadata['owner_last_name'] }}</p>
+        <p class="price">Total Price: LKR {{ session('price') }}</p>
     </div>
 </body>
 </html>

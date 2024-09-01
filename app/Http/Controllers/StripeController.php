@@ -10,13 +10,17 @@ class StripeController extends Controller
     public function stripe(Request $request)
     {
         $stripe = new StripeClient(config('stripe.stripe_sk'));
+
         $response = $stripe->checkout->sessions->create([
             'line_items' => [
                 [
                     'price_data' => [
                         'currency' => 'lkr', // Set currency to LKR
                         'product_data' => [
-                            'name' => $request->product_name,
+                            'name' => 'Please Pay', // General prompt for payment
+                            'description' => "Pet Boarding Center: {$request->boarding_center}",
+    
+                                             
                         ],
                         'unit_amount' => $request->price * 100, // Convert price to cents (smallest currency unit)
                     ],
@@ -27,13 +31,13 @@ class StripeController extends Controller
             'success_url' => route('success') . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('cancel'), // Redirect to cancel method if payment is cancelled
             'metadata' => [
-                'appointment_details' => json_encode([
-                    'pet_name' => $request->pet_name,
-                    'check_in' => $request->check_in,
-                    'check_out' => $request->check_out,
-                    'boarding_center' => $request->boarding_center,
-                    'profile_pic' => $request->profile_pic_url,
-                ]),
+                'pet_name' => $request->pet_name,
+                'check_in' => $request->check_in,
+                'check_out' => $request->check_out,
+                'boarding_center' => $request->boarding_center,
+                'profile_pic' => $request->profile_pic_url,
+                'owner_first_name' => $request->owner_first_name,
+                'owner_last_name' => $request->owner_last_name,
             ],
         ]);
 
@@ -52,15 +56,14 @@ class StripeController extends Controller
     {
         $stripe = new StripeClient(config('stripe.stripe_sk'));
         $session = $stripe->checkout->sessions->retrieve($request->session_id);
-        $metadata = json_decode($session->metadata->appointment_details, true);
+        $metadata = $session->metadata;
 
-        // Pass the metadata to your view to display the appointment details and profile pic
         return view('success', compact('metadata'));
     }
 
     public function cancel()
-    {
-        // Redirect the user back to the dashboard
-        return redirect()->route('Dashboard')->with('message', 'Payment was cancelled. You have been redirected back to the dashboard.');
-    }
+{
+    return redirect()->route('pet-owner.dashboard')->with('message', 'Payment was cancelled. You have been redirected back to the dashboard.');
+}
+
 }

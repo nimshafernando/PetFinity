@@ -93,7 +93,7 @@ Route::post('pet-trainingcenter/register', [PetTrainingCenterController::class, 
 
 
 Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel');
-Route::get('/dashboard', [PetOwnerDashboardController::class, 'index'])->name('dashboard'); // Assuming the dashboard route
+Route::get('petowner/dashboard', [PetOwnerController::class, 'index'])->name('pet-owner.dashboard');
 
 //checkout button route 
 Route::get('/checkout', function () {

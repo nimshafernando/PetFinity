@@ -195,18 +195,25 @@
         <!-- Submit Button Section -->
         <form action="{{ route('stripe') }}" method="post">
             @csrf
+            <!-- Include product details and user details in hidden fields -->
             <input type="hidden" name="product_name" value="Pet Boarding - {{ $appointment->pet->pet_name }}">
             <input type="hidden" name="quantity" value="1">
             <input type="hidden" name="price" value="{{ $appointment->total_price }}">
+            
+            <!-- Additional details to be sent as metadata -->
             <input type="hidden" name="pet_name" value="{{ $appointment->pet->pet_name }}">
             <input type="hidden" name="check_in" value="{{ $appointment->start_date }}">
             <input type="hidden" name="check_out" value="{{ $appointment->end_date }}">
             <input type="hidden" name="boarding_center" value="{{ $appointment->boardingCenter->business_name }}">
-            <input type="hidden" name="profile_pic_url" value="{{ $appointment->boardingCenter->profile_picture_url }}">
+            <input type="hidden" name="profile_pic_url" value="{{ $appointment->boardingCenter->profile_photo_url }}">
+            <input type="hidden" name="owner_first_name" value="{{ $appointment->petOwner->first_name }}">
+            <input type="hidden" name="owner_last_name" value="{{ $appointment->petOwner->last_name }}">
         
+            <!-- Submit buttons -->
             <button type="submit" class="payment-button" id="stripe-payment-button">Complete Payment</button>
             <button type="button" class="payment-button" id="cash-payment-button">Complete Appointment</button>
         </form>
+        
         
 
     <script>
