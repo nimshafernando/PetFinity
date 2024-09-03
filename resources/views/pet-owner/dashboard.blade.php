@@ -11,17 +11,7 @@
 
     @vite(['resources/css/app.css', 'resources/css/pet_owner_css/nav.css', 'resources/css/pet_owner_css/dashboard.css'])
 
-    <!-- Meta tags for user ID and user type -->
-    @if(auth('petowner')->check())
-        <meta name="user-id" content="{{ auth('petowner')->user()->id }}">
-        <meta name="user-type" content="petowner">
-    @elseif(auth('petboarder')->check())
-        <meta name="user-id" content="{{ auth('petboarder')->user()->id }}">
-        <meta name="user-type" content="petboarder">
-    @elseif(auth('pettrainer')->check())
-        <meta name="user-id" content="{{ auth('pettrainer')->user()->id }}">
-        <meta name="user-type" content="pettrainer">
-    @endif
+  
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');

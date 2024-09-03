@@ -6,9 +6,12 @@ use App\Models\PetTrainingCenter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PetOwnerController;
 use App\Http\Controllers\UpcomingController;
 use App\Http\Controllers\UserTypeController;
@@ -18,11 +21,10 @@ use App\Http\Controllers\BookingHistoryController;
 use App\Http\Controllers\TaskCompletionController;
 use App\Http\Controllers\Api\FoundReportController;
 use App\Http\Controllers\PendingBookingsController;
+//use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PetOwnerProfileController;
 use App\Http\Controllers\PetBoardingCenterController;
 use App\Http\Controllers\PetOwnerAnalyticsController;
-//use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PetOwnerDashboardController;
 use App\Http\Controllers\PetTrainingCenterController;
 use App\Http\Controllers\PetBoardingProfileController;
@@ -31,7 +33,6 @@ use App\Http\Controllers\PetBoarderAnalyticsController;
 use App\Providers\Filament\BoardingCenterPanelProvider;
 use App\Http\Controllers\BoardingCenterDisplayController;
 use App\Http\Controllers\BoardingCenterDashboardController;
-use App\Http\Controllers\StripeController;
 use App\Http\Controllers\testcontroller; // Make sure the class name is correct and matches the filename and class definition
 
 //broadcasting route
@@ -176,6 +177,16 @@ Route::middleware(['auth:petowner'])->group(function () {
     //nimsha test analytics code
     Route::get('/petowner/lost-and-found-analytics', [PetOwnerAnalyticsController::class, 'showLostAndFoundAnalytics'])->name('petowner.analytics.lostandfound');
 
+    //chat routes
+    Route::get('/petowner/chats', [ChatController::class, 'fetchMessages'])->name('pet-owner.chats');
+    //Route::post('/petowner/send-message', [ChatController::class, 'sendMessage'])->name('pet-owner.send-message');
+
+    // Route for sending messages between Pet Owner and Pet Boarder
+    Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send.messageBetweenPetOwnerAndBoarder');
+
+    // Route for fetching messages between Pet Owner and Pet Boarder
+    Route::get('/fetch-messages', [ChatController::class, 'fetchMessages'])->name('fetch.messagesBetweenPetOwnerAndBoarder');
+
 });
 
 //!MIDDLEWARE FOR PET TRAINING CENTER
@@ -229,6 +240,12 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
     Route::post('/boarding-center/update-price', [PetBoardingCenterController::class, 'updatePricePerNight'])->name('boarding-center.update-price');
 
     Route::get('/petboarder/analytics', [PetBoarderAnalyticsController::class, 'index'])->name('petboarder.analytics');
+
+        // Chat routes for Pet Boarders
+    Route::get('/pet-boardingcenter/chats', [ChatController::class, 'fetchMessagesForBoarder'])->name('pet-boardingcenter.chats');
+    Route::post('/pet-boardingcenter/send-message', [ChatController::class, 'sendMessageForBoarder'])->name('pet-boardingcenter.send-message');
+
+
 });
 
 
