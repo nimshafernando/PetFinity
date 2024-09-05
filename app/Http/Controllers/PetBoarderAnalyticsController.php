@@ -41,23 +41,28 @@ class PetBoarderAnalyticsController extends Controller
             ->orderBy('month')
             ->get();
 
-        // Total Revenue (sum of total_price where payment_status is 'paid')
-    $totalRevenue = Appointment::where('boardingcenter_id', $boardingCenterId)
-    ->where('payment_status', 'paid')
-    ->sum('total_price');
+        // Total Revenue (only for paid appointments)
+$totalRevenue = Appointment::where('boardingcenter_id', $boardingCenterId)
+->where('payment_status', 'paid')
+->sum('total_price');
 
-        // Monthly Revenue (using total_price from Appointment)
-        $monthlyRevenue = Appointment::where('boardingcenter_id', $boardingCenterId)
-            ->selectRaw('MONTH(start_date) as month, SUM(total_price) as total')
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
+// Monthly Revenue (only for paid appointments)
+$monthlyRevenue = Appointment::where('boardingcenter_id', $boardingCenterId)
+->where('payment_status', 'paid')
+->selectRaw('MONTH(start_date) as month, SUM(total_price) as total')
+->groupBy('month')
+->orderBy('month')
+->get();
 
         // Booking Status Distribution
+// Booking Status Distribution
 $bookingStatusDistribution = Appointment::where('boardingcenter_id', $boardingCenterId)
-->selectRaw('status, COUNT(*) as count')
-->groupBy('status')
-->get();
+    ->selectRaw('status, COUNT(*) as count')
+    ->groupBy('status')
+    ->get();
+
+
+
 
 
         // Average Length of Stay
@@ -89,3 +94,5 @@ $bookingStatusDistribution = Appointment::where('boardingcenter_id', $boardingCe
         ));
     }
 }
+
+

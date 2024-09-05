@@ -1,4 +1,4 @@
-s<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -20,7 +20,7 @@ s<!DOCTYPE html>
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(270deg, #ff6600, #f27e1f, #aa4603);
+            background: linear-gradient(270deg, #ff6600, #e05500, #ff6600);
             background-size: 600% 600%;
             animation: moveBackground 15s ease infinite;
         }
@@ -188,107 +188,118 @@ s<!DOCTYPE html>
 
     <div class="container">
         <div class="header">
-            <h1>Thank you for booking with PetFinity </h1>
+            <h1>Appointment Details</h1>
             <a href="{{ route('pet-owner.dashboard') }}" class="back-button">Back to Dashboard</a>
         </div>
 
-        <div class="details-section">
-            <h2>Appointment Details</h2>
-            @if(isset($appointment))
-                <div class="details">
-                    <p><strong>Pet Name:</strong> {{ $appointment->pet->pet_name }}</p>
-                    <p><strong>Start Date:</strong> {{ $appointment->start_date }}</p>
-                    <p><strong>Check-in Time:</strong> {{ $appointment->check_in_time }}</p>
-                    <p><strong>End Date:</strong> {{ $appointment->end_date }}</p>
-                    <p><strong>Check-out Time:</strong> {{ $appointment->check_out_time }}</p>
-                    <p><strong>Boarding Center:</strong> {{ $appointment->boardingCenter->business_name }}</p>
-                    <p><strong>Total Price:</strong> LKR {{ $appointment->total_price }}</p>
-                </div>
-            @else
-                <p>Appointment details not available.</p>
-            @endif
-        </div>
+        <div class="content">
+            <div class="details">
+                <p><strong>Pet Boarding Center:</strong> {{ $metadata['boarding_center'] }}</p>
+<p><strong>Pet Name:</strong> {{ $metadata['pet_name'] }}</p>
+<p><strong>Check-in:</strong> {{ $metadata['check_in'] }}</p>
+<p><strong>Check-out:</strong> {{ $metadata['check_out'] }}</p>
+<p><strong>Pet Owner:</strong> {{ $metadata['owner_first_name'] }} {{ $metadata['owner_last_name'] }}</p>
+<p class="price">Total Price: LKR {{ $price }}</p>
 
-        <div class="important-note">
-            <p><strong>Status: On Visit Payment</strong></p>
-            <p>Please pay the amount mentioned above to the cashier when you arrive.</p>
-            <p>Remember to safeguard the receipt as proof of payment.</p>
-            <p>Ensure you bring <strong>{{ $appointment->pet->pet_name }}</strong> to the location at least 10 minutes before the scheduled check-in time.</p>
-        </div>
+            </div>
 
-        <button id="downloadPdf" class="btn-download">Download Receipt</button>
+            <div class="important-note">
+                <p><strong>Status: On Visit Payment</strong></p>
+                <p>Please pay the amount mentioned above to the cashier when you arrive.</p>
+                <p>Remember to safeguard the receipt as proof of payment.</p>
+                <p>Ensure you bring <strong>{{ $metadata['pet_name'] }}</strong> to the location at least 10 minutes before the scheduled check-in time.</p>
+            </div>
+
+            <button id="downloadPdf" class="btn-download">Download Receipt</button>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script>
         document.getElementById('downloadPdf').addEventListener('click', function () {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 15;
-    let yPosition = 20;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const margin = 15;
+            let yPosition = 20;
 
-    // Get current date and time
-    const currentDateTime = new Date().toLocaleString();
+            // Get current date and time
+            const currentDateTime = new Date().toLocaleString();
 
-    // Header Section
-    doc.setFillColor(255, 102, 0); // Orange color
-    doc.rect(0, 0, pageWidth, 30, 'F');
+            // Header Section
+            doc.setFillColor(40, 167, 69); // Green color
+            doc.rect(0, 0, pageWidth, 30, 'F');
 
-    // Title
-    doc.setFontSize(18);
-    doc.setTextColor(255, 255, 255); // White color
-    doc.setFont("helvetica", "bold");
-    doc.text("PETFINITY PAYMENT RECEIPT", pageWidth / 2, 15, null, null, 'center');
+            // Title
+            doc.setFontSize(18);
+            doc.setTextColor(255, 255, 255); // White color
+            doc.setFont("helvetica", "bold");
+            doc.text("PETFINITY PAYMENT RECEIPT", pageWidth / 2, 15, null, null, 'center');
 
-    yPosition += 40;
+            yPosition += 40;
 
-    // Display the current date and time
-    doc.setFontSize(10);
-    doc.setTextColor(0, 0, 0); // Black color
-    doc.text(`Date: ${currentDateTime}`, margin, yPosition);
-    yPosition += 10;
+            // Pet Boarding Center Information
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0); // Black color
+            doc.setFont("helvetica", "bold");
+            doc.text("Pet Boarding Center:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("{{ $metadata['boarding_center'] }}", pageWidth / 2, yPosition);
+            yPosition += 10;
 
-    // Appointment Details
-    doc.setFontSize(12);
-    doc.text("Pet Boarding Center:", margin, yPosition);
-    doc.text("{{ $appointment->boardingCenter->business_name }}", margin + 70, yPosition);
-    yPosition += 10;
+            // Pet Information
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "bold");
+            doc.text("Pet Name:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("{{ $metadata['pet_name'] }}", pageWidth / 2, yPosition);
+            yPosition += 10;
 
-    doc.text("Pet Name:", margin, yPosition);
-    doc.text("{{ $appointment->pet->pet_name }}", margin + 70, yPosition);
-    yPosition += 10;
+            // Check-in Date
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "bold");
+            doc.text("Check-in Date:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("{{ $metadata['check_in'] }}", pageWidth / 2, yPosition);
+            yPosition += 10;
 
-    doc.text("Check-in Date:", margin, yPosition);
-    doc.text("{{ $appointment->start_date }}", margin + 70, yPosition);
-    yPosition += 10;
+            // Check-out Date
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "bold");
+            doc.text("Check-out Date:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("{{ $metadata['check_out'] }}", pageWidth / 2, yPosition);
+            yPosition += 10;
 
-    doc.text("Check-out Date:", margin, yPosition);
-    doc.text("{{ $appointment->end_date }}", margin + 70, yPosition);
-    yPosition += 10;
+            // Pet Owner
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "bold");
+            doc.text("Pet Owner:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("{{ $metadata['owner_first_name'] }} {{ $metadata['owner_last_name'] }}", pageWidth / 2, yPosition);
+            yPosition += 10;
 
-    doc.text("Pet Owner:", margin, yPosition);
-    doc.text("{{ $appointment->petOwner->first_name }} {{ $appointment->petOwner->last_name }}", margin + 70, yPosition);
-    yPosition += 10;
+            // Total Price
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "bold");
+            doc.text("Total Price:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("LKR {{ $price }}", pageWidth / 2, yPosition);
+            yPosition += 20;
 
-    doc.text("Total Price:", margin, yPosition);
-    doc.text("LKR {{ $appointment->total_price }}", margin + 70, yPosition);
-    yPosition += 20;
+            // Footer Message
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "italic");
+            doc.text("Please pay the amount to the cashier on arrival.", margin, yPosition);
+            yPosition += 10;
+            doc.text("Safeguard the receipt as proof of payment.", margin, yPosition);
+            yPosition += 10;
+            doc.text("Bring your pet to the location 10 minutes before the check-in time.", margin, yPosition);
 
-    // Footer Message
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "italic");
-    doc.text("Please pay the amount to the cashier on arrival.", margin, yPosition);
-    yPosition += 10;
-    doc.text("Safeguard the receipt as proof of payment.", margin, yPosition);
-    yPosition += 10;
-    doc.text("Bring your pet to the location 10 minutes before the check-in time.", margin, yPosition);
-
-    // Save PDF
-    doc.save('PetFinity_Reciept.pdf');
-});
-
-</script>
+            // Save PDF
+            doc.save('PetBoarding_Invoice.pdf');
+        });
+    </script>
 </body>
 
 </html>

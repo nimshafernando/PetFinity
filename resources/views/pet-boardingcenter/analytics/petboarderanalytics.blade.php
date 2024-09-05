@@ -12,7 +12,7 @@
     <style>
         body {
             font-family: 'Fredoka', cursive;
-            background-color: #f4f7f6;
+            background-color: #f7f6f4;
             margin: 0;
             padding: 0;
             color: #333;
@@ -370,11 +370,11 @@
                 <div class="stat">LKR {{ number_format($totalRevenue, 2) }}</div>
                 <div class="stat-label">Total Revenue Earned</div>
                 <div class="chart-container">
-                    <!-- Optionally, you could include a different visualization or remove this canvas if you no longer need a chart -->
                     <canvas id="monthlyRevenueChart"></canvas>
                 </div>
             </div>
         </div>
+        
         
         
 
@@ -388,7 +388,7 @@
             </div>
         </div>
 
-  <!-- Booking Status Distribution Section -->
+<!-- Booking Status Distribution Section -->
 <div id="booking-status" class="card">
     <div class="card-header">Booking Status Distribution</div>
     <div class="card-body">
@@ -397,15 +397,11 @@
                 <div class="col-md-3">
                     <div class="status-card">
                         <div class="status-name">{{ ucfirst($status->status) }}</div>
-                        <div class="status-count">Appointment Count :  {{ $status->count }}</div>
+                        <div class="status-count">Appointment Count: {{ $status->count }}</div>
                     </div>
                 </div>
             @endforeach
-        </div>
-    </div>
-</div>
-
-
+           
 
         <!-- Average Length of Stay -->
         <div id="stay-length" class="card">
@@ -473,8 +469,8 @@
                 datasets: [{
                     label: 'Bookings',
                     data: {!! json_encode($monthlyBookings->pluck('total')->toArray()) !!},
-                    backgroundColor: '#035a2e',
-                    borderColor: '#035a2e',
+                    backgroundColor: '#ffae00',
+                    borderColor: '#ffae00',
                     borderWidth: 1
                 }]
             },
@@ -488,31 +484,31 @@
             }
         });
 
-        // Monthly Revenue Chart
         const monthlyRevenueCtx = document.getElementById('monthlyRevenueChart').getContext('2d');
-        const monthlyRevenueChart = new Chart(monthlyRevenueCtx, {
-            type: 'line',
-            data: {
-                labels: {!! json_encode($monthlyRevenue->pluck('month')->map(function($month) {
-                    return date("F", mktime(0, 0, 0, $month, 10));
-                })->toArray()) !!},
-                datasets: [{
-                    label: 'Revenue',
-                    data: {!! json_encode($monthlyRevenue->pluck('total')->toArray()) !!},
-                    backgroundColor: '#035a2e',
-                    borderColor: '#035a2e',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
+const monthlyRevenueChart = new Chart(monthlyRevenueCtx, {
+    type: 'line',
+    data: {
+        labels: {!! json_encode($monthlyRevenue->pluck('month')->map(function($month) {
+            return date("F", mktime(0, 0, 0, $month, 10));
+        })->toArray()) !!},
+        datasets: [{
+            label: 'Paid Revenue',
+            data: {!! json_encode($monthlyRevenue->pluck('total')->toArray()) !!},
+            backgroundColor: '#ffae00',
+                    borderColor: '#ffae00',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
             }
-        });
+        }
+    }
+});
+
 
     
 

@@ -53,33 +53,37 @@ class AppointmentController extends Controller
 
     // * Show accepted appointments from pet boarding center and ask for payment method 
     public function appointmentTypes()
-{
-    $currentDate = Carbon::now()->format('Y-m-d');
-    $currentTime = Carbon::now()->format('H:i:s');
+    {
+        $currentDate = now()->format('Y-m-d');
+        $currentTime = now()->format('H:i:s');
     
-    // Fetch ongoing appointments based only on end_date
-    $ongoingAppointments = Appointment::where('petowner_id', Auth::id())
-        ->where('status', 'accepted')
-        ->where('end_date', '>=', $currentDate)
-        ->with(['boardingcenter', 'pet'])
-        ->get();
-
-    // Fetch past appointments
-    $pastAppointments = Appointment::where('petowner_id', Auth::id())
-        ->where('status', 'accepted')
-        ->where('end_date', '<', $currentDate)
-        ->with(['boardingcenter', 'pet'])
-        ->get();
-
-    // Fetch accepted appointments with pending payment status
-    $acceptedAppointments = Appointment::where('petowner_id', Auth::id())
-        ->where('status', 'accepted')
-        ->where('payment_status', 'pending')
-        ->with(['boardingcenter', 'pet'])
-        ->get();
-
-    return view('pet-owner.dashboard', compact('acceptedAppointments', 'ongoingAppointments', 'pastAppointments'));
-}
+        // Fetch ongoing appointments based on end_date
+        $ongoingAppointments = Appointment::where('petowner_id', Auth::id())
+            ->where('status', 'accepted')
+            ->where('end_date', '>=', $currentDate)
+            ->with(['boardingcenter', 'pet'])
+            ->get();
+    
+        // Fetch past appointments
+        $pastAppointments = Appointment::where('petowner_id', Auth::id())
+            ->where('status', 'accepted')
+            ->where('end_date', '<', $currentDate)
+            ->with(['boardingcenter', 'pet'])
+            ->get();
+    
+        // Fetch accepted appointments with pending payment status
+        $acceptedAppointments = Appointment::where('petowner_id', Auth::id())
+            ->where('status', 'accepted')
+            ->where('payment_status', 'pending')
+            ->with(['boardingcenter', 'pet'])
+            ->get();
+    
+        // Fetch the user's pets
+        $pets = Auth::user()->pets;
+    
+        return view('pet-owner.dashboard', compact('acceptedAppointments', 'ongoingAppointments', 'pastAppointments', 'pets'));
+    }
+    
 
     //* Select payment method
     public function selectPaymentMethod(Request $request, $id)

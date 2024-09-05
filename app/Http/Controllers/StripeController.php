@@ -38,6 +38,7 @@ class StripeController extends Controller
                 'profile_pic' => $request->profile_pic_url,
                 'owner_first_name' => $request->owner_first_name,
                 'owner_last_name' => $request->owner_last_name,
+                
             ],
         ]);
 

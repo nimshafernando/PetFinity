@@ -6,9 +6,13 @@ use App\Models\PetTrainingCenter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\CashController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PetOwnerController;
 use App\Http\Controllers\UpcomingController;
 use App\Http\Controllers\UserTypeController;
@@ -17,12 +21,11 @@ use App\Http\Controllers\Api\MissingPetController;
 use App\Http\Controllers\BookingHistoryController;
 use App\Http\Controllers\TaskCompletionController;
 use App\Http\Controllers\Api\FoundReportController;
+//use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PendingBookingsController;
 use App\Http\Controllers\PetOwnerProfileController;
 use App\Http\Controllers\PetBoardingCenterController;
 use App\Http\Controllers\PetOwnerAnalyticsController;
-//use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PetOwnerDashboardController;
 use App\Http\Controllers\PetTrainingCenterController;
 use App\Http\Controllers\PetBoardingProfileController;
@@ -31,7 +34,6 @@ use App\Http\Controllers\PetBoarderAnalyticsController;
 use App\Providers\Filament\BoardingCenterPanelProvider;
 use App\Http\Controllers\BoardingCenterDisplayController;
 use App\Http\Controllers\BoardingCenterDashboardController;
-use App\Http\Controllers\StripeController;
 use App\Http\Controllers\testcontroller; // Make sure the class name is correct and matches the filename and class definition
 
 //broadcasting route
@@ -151,6 +153,21 @@ Route::middleware(['auth:petowner'])->group(function () {
     Route::post('/missing-pets', [MissingPetController::class, 'store'])->name('missing_pets.store');
     Route::get('/missing-pets/map', [MissingPetController::class, 'map'])->name('missing_pets.map');
 
+
+    //test-cash route
+    Route::get('/cash', function () {
+        return view('cash');
+    })->name('cash.payment');
+
+    //cash-route
+    Route::get('/cash-payment', [PaymentController::class, 'showCashPayment'])->name('cash.payment');
+
+
+
+
+
+    
+    
     // Routes for Found Reports (sighted pets)
     Route::get('/found-reports', [FoundReportController::class, 'index'])->name('found_reports.index');
     Route::get('/found-reports/create/{missing_pet_id}', [FoundReportController::class, 'create'])->name('found_reports.create');
@@ -164,6 +181,9 @@ Route::middleware(['auth:petowner'])->group(function () {
     
     // Route to show the test page for the current pet owner
     Route::get('/test', [testcontroller::class, 'showTest'])->name('test.show');
+
+    Route::get('/pay', 'PaymentController@processCashPayment')->name('cash');
+
 
     //pet status 
     Route::get('petowner/activity-log/{id}', [AppointmentController::class, 'showActivityLog'])->name('pet.owner.activity-log'); //id refers to appointment id
@@ -216,12 +236,22 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
     // Route to display the ongoing appointments list
     Route::get('/boarding-center/managetasks', [AppointmentController::class, 'showManageTasksList'])->name('pet.boardingcenter.managetasks.list');
 
+
+    Route::post('/complete-appointment', [AppointmentController::class, 'completeAppointment'])->name('complete-appointment');
+
     // Route to display the tasks for a specific appointment
     Route::get('/boarding-center/managetasks/{id}', [AppointmentController::class, 'showTasks'])->name('pet.boardingcenter.managetasks');
 
    // Store task completion
    Route::post('/task-completions/store/{appointment}', [TaskCompletionController::class, 'store'])->name('task-completions.store');
    
+
+   Route::group(['middleware' => ['auth:petOwner,petBoarder']], function () {
+    Route::get('/chatify', function () {
+        return view('chatify');
+    });
+});
+
    // Route for viewing reviews in the pet boarding center dashboard
     Route::get('/boarding-center/reviews', [ReviewController::class, 'index'])->name('boarding-center.reviews');
 
