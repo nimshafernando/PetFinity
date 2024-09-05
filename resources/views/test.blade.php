@@ -28,6 +28,28 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ff6600;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover {
+            background-color: #e55b00;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
         .payment-button {
@@ -149,14 +171,19 @@
             <p>You're one step away from securing your pet's appointment!</p>
         </div>
 
+        <!-- Back to Dashboard Button -->
+        <a href="{{ route('pet-owner.dashboard') }}" class="back-button">Back to Dashboard</a>
+
         <!-- Appointment Details Section -->
         <div class="details-section">
             <h2>Appointment Details</h2>
             @if(isset($appointment))
                 <div class="details">
                     <p><strong>Pet Name:</strong> {{ $appointment->pet->pet_name }}</p>
-                    <p><strong>Check-in:</strong> {{ $appointment->start_date }}</p>
-                    <p><strong>Check-out:</strong> {{ $appointment->end_date }}</p>
+                    <p><strong>Start Date:</strong> {{ $appointment->start_date }}</p>
+                    <p><strong>Check-in Time:</strong> {{ $appointment->check_in_time}}</p>
+                    <p><strong>End Date:</strong> {{ $appointment->end_date }}</p>
+                    <p><strong>Check-out Time:</strong> {{ $appointment->check_out_time }}</p>
                     <p><strong>Boarding Center:</strong> {{ $appointment->boardingCenter->business_name }}</p>
                     <p><strong>Total Price:</strong> LKR {{ $appointment->total_price }}</p>
                 </div>
@@ -176,7 +203,7 @@
                 <div id="card-option" class="payment-option" onclick="selectPayment('card')">
                     <div class="card-label">Credit/Debit</div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M3 10.5h18M3 14.25h18M4.5 6h15A2.25 2.25 0 0121.75 8.25v7.5A2.25 2.25 0 0119.5 18h-15A2.25 2.25 0 012.25 15.75v-7.5A2.25 2.25 0 014.5 6z" />
+                        <path d="M3 10.5h18M3 14.25h18M4.5 6h15A2.25 2.25 0 0121.75 8.25v7.5A2.25 2.25 0 0119.5 18h-15A2.25 2.25 0 014.5 15.75v-7.5A2.25 2.25 0 014.5 6z" />
                     </svg>
                     <span>Pay with Card</span>
                 </div>
@@ -214,7 +241,7 @@
             <button type="button" class="payment-button" id="cash-payment-button">Complete Appointment</button>
         </form>
         
-        
+    </div>
 
     <script>
         function selectPayment(method) {
@@ -237,7 +264,7 @@
                 document.getElementById('cash-option').classList.add('active');
                 cashButton.style.display = 'block';
                 cashButton.onclick = function () {
-                    window.location.href = '/cash';
+                    window.location.href = '{{ route("cash.payment") }}';
                 };
             }
         }
