@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with Pet Boarders</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
@@ -54,7 +55,7 @@
         }
 
         .message.sent {
-            background-color: #0b276e;
+            background-color: #e5752a;
             text-align: right;
             margin-left: auto;
         }
@@ -66,6 +67,22 @@
         }
 
     </style>
+    @vite('resources/js/echo-setup.js')
+
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', function () {
+            const receiverId = {{ $selectedBoarder->id ?? $selectedOwner->id ?? 'null' }}; 
+            if (receiverId) {
+                @if(Auth::guard('petowner')->check())
+                    setupPetOwnerChatListener(receiverId);
+                @elseif(Auth::guard('boardingcenter')->check())
+                    setupPetBoarderChatListener(receiverId);
+                @endif
+            }
+        });
+    </script>
+    
+    
 </head>
 <body>
 <div class="container mt-5">
@@ -85,7 +102,7 @@
                     @if(isset($selectedBoarder))
                         <div id="chatBox">
                             @foreach($messages as $message)
-                                <div class="message {{ $message->sender_id == (Auth::guard('petowner')->check() ? Auth::guard('petowner')->id() : Auth::guard('boardingcenter')->id()) ? 'sent' : 'received' }}">
+                                <div class="message {{ ($message->sender_user_type == 'boardingcenter' ? 'sent' : 'received') }}">
                                     {{ $message->message }}
                                 </div>
                     @endforeach

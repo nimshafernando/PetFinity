@@ -22,7 +22,7 @@ class SendPetOwnerMessage implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new PrivateChannel('chat.' . $this->message->receiver_id);
+        return new Channel('pet-owner-messages.' . $this->message->receiver_id);
     }
 
     public function broadcastWith()

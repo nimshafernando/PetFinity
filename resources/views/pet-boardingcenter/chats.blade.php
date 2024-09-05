@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with Pet Owners</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
@@ -60,12 +61,29 @@
         }
 
         .message.received {
-            background-color: #be59f5;
+            background-color: #00c251;
             text-align: left;
             margin-right: auto;
         }
 
     </style>
+
+@vite('resources/js/echo-setup.js')
+
+<script type="module">
+    document.addEventListener('DOMContentLoaded', function () {
+        const receiverId = {{ $selectedBoarder->id ?? $selectedOwner->id ?? 'null' }}; 
+        if (receiverId) {
+            @if(Auth::guard('petowner')->check())
+                setupPetOwnerChatListener(receiverId);
+            @elseif(Auth::guard('boardingcenter')->check())
+                setupPetBoarderChatListener(receiverId);
+            @endif
+        }
+    });
+</script>
+
+
 </head>
 <body>
 <div class="container mt-5">
