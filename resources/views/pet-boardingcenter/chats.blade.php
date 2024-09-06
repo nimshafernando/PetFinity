@@ -28,6 +28,15 @@
             width: 300px;
             overflow-y: auto;
             padding: 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .chat-sidebar h4 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00c251;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .chat-sidebar a {
@@ -38,6 +47,7 @@
             background-color: #f8f9fa;
             color: #333;
             text-decoration: none;
+            font-weight: bold;
         }
 
         .chat-sidebar a:hover {
@@ -49,9 +59,6 @@
             background-color: #00c251;
             color: white;
         }
-
-
-        
 
         .chat-main {
             flex: 1;
@@ -67,13 +74,14 @@
             text-align: center;
             font-family: 'Fredoka One', cursive;
             font-size: 1.5rem;
+            position: relative;
         }
 
         #chatBox {
             background-color: white;
             padding: 20px;
             flex: 1;
-            overflow-y: scroll;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
         }
@@ -129,13 +137,61 @@
             }
 
             .chat-sidebar {
-                width: 100%;
-                height: auto;
-                padding: 10px;
+                position: absolute;
+                top: 0;
+                left: -300px;
+                width: 300px;
+                height: 100%;
+                z-index: 1000;
+                background-color: #fff;
+                transition: left 0.3s ease-in-out;
+            }
+
+            .chat-sidebar.show {
+                left: 0;
             }
 
             .chat-main {
                 width: 100%;
+            }
+
+            .chat-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .toggle-sidebar {
+                display: block;
+                font-size: 1rem;
+                background-color: #fff;
+                border: none;
+                color: #00c251;
+                margin-right: 10px;
+                padding: 5px 10px;
+                border-radius: 5px;
+            }
+
+        }
+
+        @media (max-width: 576px) {
+            .chat-sidebar a {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .message {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+
+            .chat-input input {
+                font-size: 0.9rem;
+            }
+
+            .chat-input button {
+                font-size: 0.9rem;
+                padding: 8px 15px;
             }
         }
     </style>
@@ -159,17 +215,8 @@
 <body>
 
 <div class="chat-container">
-    {{-- <div class="chat-sidebar">
-        <h4>Contacts</h4>
-        @foreach($owners as $owner)
-            <a href="{{ route('pet-boardingcenter.chats', ['owner_id' => $owner->id]) }}">
-                {{ $owner->first_name }}
-            </a>
-        @endforeach
-    </div> --}}
-
     <div class="chat-sidebar">
-        <h4>Contacts</h4>
+        <h4>Pet Owners</h4>
         @if($owners->isEmpty())
             <p>No pet owners have contacted you yet.</p>
         @else
@@ -181,8 +228,6 @@
             @endforeach
         @endif
     </div>
-    
-    
 
     <div class="chat-main">
         <div class="chat-header">
@@ -191,6 +236,7 @@
             @else
                 Select a pet owner to chat
             @endif
+            <button class="toggle-sidebar d-md-none">Pet Owners</button>
         </div>
 
         <div id="chatBox">
@@ -253,6 +299,14 @@
 
     setInterval(fetchMessages, 2000); // Fetch messages every 2 seconds
     @endif
+
+    // Toggle chat sidebar on mobile
+    const toggleSidebar = document.querySelector('.toggle-sidebar');
+    const chatSidebar = document.querySelector('.chat-sidebar');
+
+    toggleSidebar.addEventListener('click', function () {
+        chatSidebar.classList.toggle('show');
+    });
 </script>
 
 </body>
