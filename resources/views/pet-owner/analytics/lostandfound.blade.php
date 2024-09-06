@@ -1,4 +1,3 @@
-<!-- resources/views/petowner/analytics/lostandfound.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +11,7 @@
     <style>
         body {
             font-family: 'Fredoka', sans-serif;
-            background-color: #f4f7f6;
+            background-color: #ff6600;
             margin: 0;
             padding: 0;
             color: #333;
@@ -27,6 +26,22 @@
             border-radius: 12px;
             overflow: hidden;
             animation: fadeIn 1s ease-in-out;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #ff6600;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #e65c00;
         }
 
         @keyframes fadeIn {
@@ -121,12 +136,14 @@
         .card-body {
             padding: 20px;
             background-color: #fff;
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
+            table-layout: fixed;
         }
 
         table th,
@@ -135,6 +152,7 @@
             border-bottom: 1px solid #dee2e6;
             text-align: left;
             font-size: 1rem;
+            word-wrap: break-word;
         }
 
         table th {
@@ -163,12 +181,34 @@
                 padding: 10px;
                 font-size: 0.9rem;
             }
+
+            .summary-cards {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .summary-cards {
+                flex-direction: column;
+            }
+
+            table th,
+            table td {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+
+            table th {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="container">
+        <a href="{{ route('pet-owner.dashboard') }}" class="back-button">Back to Dashboard</a>
+
         <h1>Lost and Found Analytics Dashboard</h1>
 
         <!-- Summary Cards Section -->
@@ -203,7 +243,7 @@
                     <tbody>
                         @foreach($missingPets as $pet)
                         <tr>
-                            <td>{{ $pet->pet->name ?? 'N/A' }}</td>
+                            <td>{{ $pet->pet->pet_name ?? 'N/A' }}</td>
                             <td>{{ $pet->last_seen_location }}</td>
                             <td>{{ \Carbon\Carbon::parse($pet->last_seen_date)->format('d/m/Y') }}</td>
                             <td>{{ $pet->sightings->count() }}</td>
@@ -225,7 +265,7 @@
                         <tr>
                             <th>Location</th>
                             <th>Description</th>
-                            <th>Reported For Pet ID</th>
+                            <th>Pet Name</th>
                             <th>Date Reported</th>
                         </tr>
                     </thead>
@@ -234,7 +274,7 @@
                         <tr>
                             <td>{{ $report->location }}</td>
                             <td>{{ $report->description }}</td>
-                            <td>{{ $report->missing_pet_id }}</td>
+                            <td>{{ $report->missingPet->pet->pet_name ?? 'N/A' }}</td>
                             <td>{{ \Carbon\Carbon::parse($report->created_at)->format('d/m/Y') }}</td>
                         </tr>
                         @endforeach
@@ -249,20 +289,24 @@
     <script>
         // Animated counter for summary cards
         function animateCounter(id, target) {
-            $({ counter: 0 }).animate({ counter: target }, {
+            $({
+                counter: 0
+            }).animate({
+                counter: target
+            }, {
                 duration: 2000,
                 easing: 'swing',
-                step: function () {
+                step: function() {
                     $(id).text(Math.ceil(this.counter));
                 }
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             animateCounter('#missingPetsCount', {{ $missingPets->count() }});
             animateCounter('#foundReportsCount', {{ $foundReports->count() }});
         });
     </script>
 </body>
 
-</html>
+</html

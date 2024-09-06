@@ -55,13 +55,13 @@
         }
 
         .message.sent {
-            background-color: #ffccb3;
+            background-color: #d9edf7;
             text-align: right;
             margin-left: auto;
         }
 
         .message.received {
-            background-color: #00c251;
+            background-color: #ffccb3;
             text-align: left;
             margin-right: auto;
         }
@@ -107,7 +107,7 @@
                     @if(isset($selectedOwner))
                         <div id="chatBox">
                             @foreach($messages as $message)
-                                    <div class="message {{ $message->sender_id == (Auth::guard('boardingcenter')->check() ? Auth::guard('boardingcenter')->id() : Auth::guard('petowner')->id()) ? 'sent' : 'received' }}">
+                                    <div class="message {{ ( $message->sender_user_type == 'boardingcenter' ? 'sent' : 'received') }}">
                                         {{ $message->message }}
                                     </div>
                             @endforeach
@@ -134,7 +134,10 @@
 <script>
     @if(isset($selectedOwner))
     const fetchMessages = () => {
-        fetch("{{ route('fetch.messagesBetweenPetOwnerAndBoarder', ['receiver_id' => $selectedOwner->id]) }}")
+       // fetch("{{ route('fetch.messagesBetweenPetOwnerAndBoarder', ['receiver_id' => $selectedOwner->id]) }}")
+
+        fetch("{{ route('fetch.messagesForBoarder', ['receiver_id' => $selectedOwner->id]) }}")
+
         .then(response => response.json())
         .then(data => {
             const chatBox = document.getElementById('chatBox');
@@ -158,10 +161,15 @@
             e.preventDefault();
             const formData = new FormData(this);
 
-            fetch("{{ route('send.messageBetweenPetOwnerAndBoarder') }}", {
-                method: 'POST',
-                body: formData
-            })
+            // fetch("{{ route('send.messageBetweenPetOwnerAndBoarder') }}", {
+            //     method: 'POST',
+            //     body: formData
+            // })
+            fetch("{{ route('pet-boardingcenter.send-message') }}", {
+                    method: 'POST',
+                    body: formData
+                })
+
             .then(response => response.json())
             .then(data => {
                 if (data.success) {

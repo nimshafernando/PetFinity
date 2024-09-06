@@ -179,7 +179,7 @@ Route::middleware(['auth:petowner'])->group(function () {
 
     //chat routes
     Route::get('/petowner/chats', [ChatController::class, 'fetchMessages'])->name('pet-owner.chats');
-    //Route::post('/petowner/send-message', [ChatController::class, 'sendMessage'])->name('pet-owner.send-message');
+  
 
     // Route for sending messages between Pet Owner and Pet Boarder
     Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send.messageBetweenPetOwnerAndBoarder');
@@ -244,6 +244,9 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
         // Chat routes for Pet Boarders
     Route::get('/pet-boardingcenter/chats', [ChatController::class, 'fetchMessagesForBoarder'])->name('pet-boardingcenter.chats');
     Route::post('/pet-boardingcenter/send-message', [ChatController::class, 'sendMessageForBoarder'])->name('pet-boardingcenter.send-message');
+
+    Route::get('/pet-boardingcenter/fetch-messages', [ChatController::class, 'fetchMessagesForBoarder'])->name('fetch.messagesForBoarder');
+
 
 
 });

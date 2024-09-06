@@ -9,20 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::table('chats', function (Blueprint $table) {
-            $table->string('user_type')->after('id');
+            $table->string('sender_user_type')->after('receiver_id'); // Add this column after receiver_id
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    
+    public function down()
     {
         Schema::table('chats', function (Blueprint $table) {
-            //
+            $table->dropColumn('sender_user_type');
         });
     }
+    
 };

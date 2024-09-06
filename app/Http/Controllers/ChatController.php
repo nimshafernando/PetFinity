@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
@@ -121,12 +122,13 @@ class ChatController extends Controller
         ]);
     
         // Get the authenticated PetBoardingCenter's ID
-        $senderId = Auth::guard('boardingcenter')->id();
+     //   $senderId = Auth::guard('boardingcenter')->check() ? Auth::guard('boardingcenter')->id() : null;
+        $senderId = Auth::guard('boardingcenter')->id() ? Auth::guard('boardingcenter')->id() : null;
     
         $chat = new Chat();
-        $chat->sender_id = $senderId;
         $chat->receiver_user_type = 'petowner';
         $chat->sender_user_type = 'boardingcenter';
+        $chat->sender_id = $senderId;
         $chat->receiver_id = $request->input('receiver_id'); // Set the receiver ID explicitly
         $chat->message = $request->input('message');
         $chat->seen = false;

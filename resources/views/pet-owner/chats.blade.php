@@ -55,7 +55,7 @@
         }
 
         .message.sent {
-            background-color: #e5752a;
+            background-color: #ffccb3;
             text-align: right;
             margin-left: auto;
         }
@@ -102,7 +102,7 @@
                     @if(isset($selectedBoarder))
                         <div id="chatBox">
                             @foreach($messages as $message)
-                                <div class="message {{ ($message->sender_user_type == 'boardingcenter' ? 'sent' : 'received') }}">
+                                <div class="message {{ ($message->sender_user_type == 'petowner' ? 'sent' : 'received' )}}">
                                     {{ $message->message }}
                                 </div>
                     @endforeach
