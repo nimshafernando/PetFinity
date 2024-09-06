@@ -113,6 +113,8 @@ Route::get('cancel', [StripeController::class, 'cancel'])->name('cancel');
 Route::middleware(['auth:petowner'])->group(function () {
     //petowner dashboard
     Route::get('petowner/dashboard', [PetOwnerController::class, 'index'])->name('pet-owner.dashboard');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
    //*petowner pet profile 
    Route::get('mypets', [PetController::class, 'addpetform'])->name('mypets'); // section which says add a pet and the pets you currently have
@@ -153,16 +155,19 @@ Route::middleware(['auth:petowner'])->group(function () {
     Route::post('/missing-pets', [MissingPetController::class, 'store'])->name('missing_pets.store');
     Route::get('/missing-pets/map', [MissingPetController::class, 'map'])->name('missing_pets.map');
 
+    Route::get('/payment-gateway', [testcontroller::class, 'index'])->name('payment.gateway');
+    Route::get('/test', [testcontroller::class, 'showTest'])->name('test.show');
+
 
     //test-cash route
-    Route::get('/cash', function () {
-        return view('cash');
-    })->name('cash.payment');
+    // Route::get('/cash', function () {
+    //     return view('cash');
+    // })->name('cash.payment');
 
-    //cash-route
-    Route::get('/cash-payment', [PaymentController::class, 'showCashPayment'])->name('cash.payment');
+    // //cash-route
+    // Route::get('/cash-payment', [PaymentController::class, 'showCashPayment'])->name('cash.payment');
 
-
+    Route::get('/cash/payment/{id}', [AppointmentController::class, 'cashPayment'])->name('cash.payment');
 
 
 
@@ -179,8 +184,9 @@ Route::middleware(['auth:petowner'])->group(function () {
     
     // Make sure that the parameter name in the route matches the variable in the controller method
     
-    // Route to show the test page for the current pet owner
-    Route::get('/test', [testcontroller::class, 'showTest'])->name('test.show');
+    
+    // // Route to show the test page for the current pet owner
+    // Route::get('/test', [testcontroller::class, 'showTest'])->name('test.show');
 
     Route::get('/pay', 'PaymentController@processCashPayment')->name('cash');
 
@@ -208,6 +214,8 @@ Route::middleware(['auth:trainingcenter'])->group(function () {
 
 //!MIDDLEWARE FOR PET BOARDING CENTER
 Route::middleware(['auth:boardingcenter'])->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
     //pet boarding center dashboard
     Route::get('petboardingcenter/dashboard', [PetBoardingCenterController::class, 'index'])->name('pet-boardingcenter.dashboard');

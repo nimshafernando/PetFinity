@@ -209,7 +209,7 @@
                         }
             
                         const totalPrice = (totalNights * pricePerNight).toFixed(2);
-                        totalPriceInput.value = `$${totalPrice}`;
+                        totalPriceInput.value = `LKR ${totalPrice}`;
                         totalPriceHiddenInput.value = totalPrice;
                     } else {
                         totalPriceInput.value = '';

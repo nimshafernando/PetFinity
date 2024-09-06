@@ -448,7 +448,7 @@
                             <form action="{{ route('boarding-center.update-price') }}" method="POST" class="mt-auto text-center">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="price_per_night">Price Per Night ($)</label>
+                                    <label for="price_per_night">Price Per Night (LKR)</label>
                                     <input type="number" step="0.01" name="price_per_night" id="price_per_night" class="form-control" value="{{ Auth::user()->price_per_night }}" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary align-button">
