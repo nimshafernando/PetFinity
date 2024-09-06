@@ -13,66 +13,138 @@
         body {
             font-family: 'Nunito', sans-serif;
             background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
         }
 
-        .card-header {
-            background-color: #ff6600;
+        .chat-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .chat-sidebar {
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            width: 300px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .chat-sidebar a {
+            padding: 15px;
+            display: block;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .chat-sidebar a:hover {
+            background-color: #00c251;
             color: white;
+        }
+
+        .chat-sidebar a.active {
+            background-color: #00c251;
+            color: white;
+        }
+
+
+        
+
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+        }
+
+        .chat-header {
+            background-color: #00c251;
+            color: white;
+            padding: 15px;
+            text-align: center;
             font-family: 'Fredoka One', cursive;
             font-size: 1.5rem;
-            text-align: center;
         }
 
         #chatBox {
             background-color: white;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-            height: 400px;
+            padding: 20px;
+            flex: 1;
             overflow-y: scroll;
-        }
-
-        .input-group .form-control {
-            border-radius: 5px;
-        }
-
-        .btn-primary {
-            background-color: #ff6600;
-            border-color: #ff6600;
-        }
-
-        .btn-primary:hover {
-            background-color: #e65c00;
-            border-color: #e65c00;
+            display: flex;
+            flex-direction: column;
         }
 
         .message {
             margin-bottom: 15px;
             padding: 10px;
-            border-radius: 5px;
-            background-color: #f1f1f1;
+            border-radius: 20px;
             max-width: 70%;
+            font-size: 1rem;
         }
 
         .message.sent {
-            background-color: #d9edf7;
+            background-color: #00c251;
+            color: black;
             text-align: right;
-            margin-left: auto;
+            align-self: flex-end;
         }
 
         .message.received {
-            background-color: #ffccb3;
+            background-color: #f1f1f1;
+            color: black;
             text-align: left;
-            margin-right: auto;
+            align-self: flex-start;
         }
 
+        .chat-input {
+            background-color: #fff;
+            padding: 15px;
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        .chat-input button {
+            background-color: #00c251;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                flex-direction: column;
+            }
+
+            .chat-sidebar {
+                width: 100%;
+                height: auto;
+                padding: 10px;
+            }
+
+            .chat-main {
+                width: 100%;
+            }
+        }
     </style>
 
 @vite('resources/js/echo-setup.js')
 
 <script type="module">
     document.addEventListener('DOMContentLoaded', function () {
-        const receiverId = {{ $selectedBoarder->id ?? $selectedOwner->id ?? 'null' }}; 
+        const receiverId = {{ $selectedBoarder->id ?? $selectedOwner->id ?? 'null' }};
         if (receiverId) {
             @if(Auth::guard('petowner')->check())
                 setupPetOwnerChatListener(receiverId);
@@ -83,73 +155,78 @@
     });
 </script>
 
-
 </head>
 <body>
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Chat with Pet Owners</div>
-                <div class="card-body">
-                    @if($owners->isEmpty())
-                        <p>No pet owners have contacted you yet.</p>
-                    @else
-                        <div class="mb-4 list-group">
-                            @foreach($owners as $owner)
-                                <a href="{{ route('pet-boardingcenter.chats', ['owner_id' => $owner->id]) }}" class="list-group-item list-group-item-action">
-                                    {{ $owner->first_name }}
-                                </a>
-                            @endforeach
-                        </div>
-                    @endif
 
-                    @if(isset($selectedOwner))
-                        <div id="chatBox">
-                            @foreach($messages as $message)
-                                    <div class="message {{ ( $message->sender_user_type == 'boardingcenter' ? 'sent' : 'received') }}">
-                                        {{ $message->message }}
-                                    </div>
-                            @endforeach
+<div class="chat-container">
+    {{-- <div class="chat-sidebar">
+        <h4>Contacts</h4>
+        @foreach($owners as $owner)
+            <a href="{{ route('pet-boardingcenter.chats', ['owner_id' => $owner->id]) }}">
+                {{ $owner->first_name }}
+            </a>
+        @endforeach
+    </div> --}}
 
-                        </div>
+    <div class="chat-sidebar">
+        <h4>Contacts</h4>
+        @if($owners->isEmpty())
+            <p>No pet owners have contacted you yet.</p>
+        @else
+            @foreach($owners as $owner)
+                <a href="{{ route('pet-boardingcenter.chats', ['owner_id' => $owner->id]) }}" 
+                   class="{{ isset($selectedOwner) && $selectedOwner->id == $owner->id ? 'active' : '' }}">
+                    {{ $owner->first_name }}
+                </a>
+            @endforeach
+        @endif
+    </div>
+    
+    
 
-                        <form id="sendMessageForm">
-                            @csrf
-                            <div class="input-group">
-                                <input type="hidden" name="receiver_id" value="{{ $selectedOwner->id }}" />
-                                <input type="text" name="message" class="form-control" placeholder="Type your message here..." required />
-                                <button type="submit" class="btn btn-primary">Send</button>
-                            </div>
-                        </form>
-                    @else
-                        <p>Select a pet owner to start chatting.</p>
-                    @endif
-                </div>
-            </div>
+    <div class="chat-main">
+        <div class="chat-header">
+            @if(isset($selectedOwner))
+                Chat with {{ $selectedOwner->first_name }}
+            @else
+                Select a pet owner to chat
+            @endif
         </div>
+
+        <div id="chatBox">
+            @if(isset($selectedOwner))
+                @foreach($messages as $message)
+                    <div class="message {{ ($message->sender_user_type == 'boardingcenter' ? 'sent' : 'received') }}">
+                        {{ $message->message }}
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
+        @if(isset($selectedOwner))
+            <div class="chat-input">
+                <form id="sendMessageForm">
+                    @csrf
+                    <input type="hidden" name="receiver_id" value="{{ $selectedOwner->id }}" />
+                    <input type="text" name="message" class="form-control" placeholder="Type your message here..." required />
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        @endif
     </div>
 </div>
 
 <script>
     @if(isset($selectedOwner))
     const fetchMessages = () => {
-       // fetch("{{ route('fetch.messagesBetweenPetOwnerAndBoarder', ['receiver_id' => $selectedOwner->id]) }}")
-
         fetch("{{ route('fetch.messagesForBoarder', ['receiver_id' => $selectedOwner->id]) }}")
-
         .then(response => response.json())
         .then(data => {
             const chatBox = document.getElementById('chatBox');
             chatBox.innerHTML = '';
             data.messages.forEach(message => {
                 const messageElement = document.createElement('div');
-                messageElement.classList.add('message');
-                if (message.sender_id === {{ $authUserId }}) {
-                    messageElement.classList.add('sent');
-                } else {
-                    messageElement.classList.add('received');
-                }
+                messageElement.classList.add('message', message.sender_id === {{ $authUserId }} ? 'sent' : 'received');
                 messageElement.innerText = message.message;
                 chatBox.appendChild(messageElement);
             });
@@ -157,30 +234,26 @@
         });
     }
 
-        document.getElementById('sendMessageForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
+    document.getElementById('sendMessageForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
 
-            // fetch("{{ route('send.messageBetweenPetOwnerAndBoarder') }}", {
-            //     method: 'POST',
-            //     body: formData
-            // })
-            fetch("{{ route('pet-boardingcenter.send-message') }}", {
-                    method: 'POST',
-                    body: formData
-                })
-
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    this.reset();
-                    fetchMessages();
-                }
-            });
+        fetch("{{ route('pet-boardingcenter.send-message') }}", {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                this.reset();
+                fetchMessages();
+            }
         });
+    });
 
-        setInterval(fetchMessages, 2000); // Fetch messages every 2 seconds
+    setInterval(fetchMessages, 2000); // Fetch messages every 2 seconds
     @endif
 </script>
+
 </body>
 </html>
