@@ -42,7 +42,7 @@
         }
 
         .icon {
-            font-size: 40px;
+            font-size: 80px;
             color: #28a745;
             margin-bottom: 20px;
             animation: pulse 2s infinite;
@@ -65,7 +65,7 @@
 
         h1 {
             color: #ff6600;
-            font-size: 28px;
+            font-size: 32px;
             margin-bottom: 20px;
         }
 
@@ -92,8 +92,8 @@
             color: white;
             border: none;
             border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 15px 30px;
+            font-size: 18px;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
             margin-top: 20px;
@@ -118,29 +118,36 @@
         .message strong {
             color: #ff6600;
         }
-    
-
-.back-button {
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    text-decoration: none;
-}
-
-.back-button:hover {
-    background-color: #e05500;
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(255, 102, 0, 0.3);
-}
 
         .message:hover {
             color: #555;
         }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ffffff;
+            color: #ff6600;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .back-button:hover {
+            background-color: #451c00;
+            color: #ffffff;
+
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+
 
         @media (max-width: 768px) {
             .container {
@@ -156,12 +163,16 @@
             }
 
             .btn-download {
-                font-size: 14px;
-                padding: 8px 16px;
+                font-size: 16px;
+                padding: 12px 24px;
             }
 
             p {
                 font-size: 16px;
+            }
+
+            .back-button {
+                font-size: 14px;
             }
         }
 
@@ -179,12 +190,16 @@
             }
 
             .btn-download {
-                font-size: 12px;
-                padding: 6px 12px;
+                font-size: 14px;
+                padding: 10px 20px;
             }
 
             p {
                 font-size: 14px;
+            }
+
+            .back-button {
+                font-size: 12px;
             }
         }
     </style>
@@ -192,9 +207,11 @@
 <body>
 
     <a href="{{ route('pet-owner.dashboard') }}" class="back-button">Back to Dashboard</a>
+
     
+
     <div class="container">
-        <div class="icon">✔️</div> <!-- Green Tick Icon -->
+        <div class="icon">✅</div> <!-- New Tick Icon -->
         <h1>Thank you for your payment!</h1>
         <p><strong>Pet Boarding Center:</strong> {{ $metadata['boarding_center'] }}</p>
         <p><strong>Pet Name:</strong> {{ $metadata['pet_name'] }}</p>
@@ -202,7 +219,6 @@
         <p><strong>Check-out:</strong> {{ $metadata['check_out'] }}</p>
         <p><strong>Pet Owner:</strong> {{ $metadata['owner_first_name'] }} {{ $metadata['owner_last_name'] }}</p>
         <p class="price">Total Price: LKR {{ session('price') }}</p>
-
 
         <button id="downloadPdf" class="btn-download">Download Invoice</button>
 
@@ -212,90 +228,90 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-<script>
-    document.getElementById('downloadPdf').addEventListener('click', function () {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const margin = 15;
-        let yPosition = 20;
+    <script>
+        document.getElementById('downloadPdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const margin = 15;
+            let yPosition = 20;
 
-        // Get current date and time
-        const currentDateTime = new Date().toLocaleString();
+            // Get current date and time
+            const currentDateTime = new Date().toLocaleString();
 
-        // Header Section
-        doc.setFillColor(40, 167, 69); // Green color
-        doc.rect(0, 0, pageWidth, 30, 'F');
+            // Header Section
+            doc.setFillColor(40, 167, 69); // Green color
+            doc.rect(0, 0, pageWidth, 30, 'F');
 
-        // Title
-        doc.setFontSize(18);
-        doc.setTextColor(255, 255, 255); // White color
-        doc.setFont("helvetica", "bold");
-        doc.text("PETFINITY PAYMENT RECEIPT", pageWidth / 2, 15, null, null, 'center');
+            // Title
+            doc.setFontSize(18);
+            doc.setTextColor(255, 255, 255); // White color
+            doc.setFont("helvetica", "bold");
+            doc.text("PETFINITY PAYMENT RECEIPT", pageWidth / 2, 15, null, null, 'center');
 
-        yPosition += 40;
+            yPosition += 40;
 
-        // Pet Boarding Center Information
-        doc.setFontSize(11);
-        doc.setTextColor(0, 0, 0); // Black color
-        doc.setFont("helvetica", "bold");
-        doc.text("Pet Boarding Center:", margin, yPosition);
-        doc.setFont("helvetica", "normal");
-        doc.text("{{ $metadata['boarding_center'] }}", pageWidth / 2, yPosition);
-        yPosition += 10;
+            // Pet Boarding Center Information
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0); // Black color
+            doc.setFont("helvetica", "bold");
+            doc.text("Pet Boarding Center:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("{{ $metadata['boarding_center'] }}", pageWidth / 2, yPosition);
+            yPosition += 10;
 
-        // Pet Information
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "bold");
-        doc.text("Pet Name:", margin, yPosition);
-        doc.setFont("helvetica", "normal");
-        doc.text("{{ $metadata['pet_name'] }}", pageWidth / 2, yPosition);
-        yPosition += 10;
+            // Pet Information
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "bold");
+            doc.text("Pet Name:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("{{ $metadata['pet_name'] }}", pageWidth / 2, yPosition);
+            yPosition += 10;
 
-        // Check-in Date
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "bold");
-        doc.text("Check-in Date:", margin, yPosition);
-        doc.setFont("helvetica", "normal");
-        doc.text("{{ $metadata['check_in'] }}", pageWidth / 2, yPosition);
-        yPosition += 10;
+            // Check-in Date
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "bold");
+            doc.text("Check-in Date:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("{{ $metadata['check_in'] }}", pageWidth / 2, yPosition);
+            yPosition += 10;
 
-        // Check-out Date
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "bold");
-        doc.text("Check-out Date:", margin, yPosition);
-        doc.setFont("helvetica", "normal");
-        doc.text("{{ $metadata['check_out'] }}", pageWidth / 2, yPosition);
-        yPosition += 10;
+            // Check-out Date
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "bold");
+            doc.text("Check-out Date:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("{{ $metadata['check_out'] }}", pageWidth / 2, yPosition);
+            yPosition += 10;
 
-        // Pet Owner
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "bold");
-        doc.text("Pet Owner:", margin, yPosition);
-        doc.setFont("helvetica", "normal");
-        doc.text("{{ $metadata['owner_first_name'] }} {{ $metadata['owner_last_name'] }}", pageWidth / 2, yPosition);
-        yPosition += 10;
+            // Pet Owner
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "bold");
+            doc.text("Pet Owner:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("{{ $metadata['owner_first_name'] }} {{ $metadata['owner_last_name'] }}", pageWidth / 2, yPosition);
+            yPosition += 10;
 
-        // Total Price
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "bold");
-        doc.text("Total Price:", margin, yPosition);
-        doc.setFont("helvetica", "normal");
-        doc.text("LKR {{ session('price') }}", pageWidth / 2, yPosition);
-        yPosition += 20;
+            // Total Price
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "bold");
+            doc.text("Total Price:", margin, yPosition);
+            doc.setFont("helvetica", "normal");
+            doc.text("LKR {{ session('price') }}", pageWidth / 2, yPosition);
+            yPosition += 20;
 
-        // Footer Message
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "italic");
-        doc.text("We look forward to welcoming your pet!", margin, yPosition);
-        yPosition += 10;
-        doc.text("Please bring your pet to the boarding center by the check-in time.", margin, yPosition);
-        yPosition += 10;
-        doc.text("We hope you have a great day!", margin, yPosition);
+            // Footer Message
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "italic");
+            doc.text("We look forward to welcoming your pet!", margin, yPosition);
+            yPosition += 10;
+            doc.text("Please bring your pet to the boarding center by the check-in time.", margin, yPosition);
+            yPosition += 10;
+            doc.text("We hope you have a great day!", margin, yPosition);
 
-        // Save PDF
-        doc.save('PetBoarding_Invoice.pdf');
-    });
-</script>
+            // Save PDF
+            doc.save('PetBoarding_Invoice.pdf');
+        });
+    </script>
 </body>
 </html>

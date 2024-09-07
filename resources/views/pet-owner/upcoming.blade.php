@@ -451,7 +451,7 @@
 
     <!-- Countdown Timer Script -->
     <script>
-            document.querySelectorAll('.countdown-timer').forEach(function (countdownElement) {
+        document.querySelectorAll('.countdown-timer').forEach(function (countdownElement) {
             const targetDate = new Date(countdownElement.getAttribute('data-date')).getTime();
 
             function updateCountdown() {
@@ -477,7 +477,6 @@
             // Update every second
             setInterval(updateCountdown, 1000);
         });
-
     </script>
 
 </body>

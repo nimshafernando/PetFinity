@@ -14,7 +14,7 @@
 
         .main-container {
             padding: 20px;
-            background-color: #F7E9DE;
+            background-color: #f0ab77;
             min-height: 100vh;
         }
 
