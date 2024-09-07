@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\CashController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\ReviewController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Api\MissingPetController;
 use App\Http\Controllers\BookingHistoryController;
 use App\Http\Controllers\TaskCompletionController;
+//use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Api\FoundReportController;
 //use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PendingBookingsController;
@@ -196,6 +198,19 @@ Route::middleware(['auth:petowner'])->group(function () {
     //nimsha test analytics code
     Route::get('/petowner/lost-and-found-analytics', [PetOwnerAnalyticsController::class, 'showLostAndFoundAnalytics'])->name('petowner.analytics.lostandfound');
 
+    //chat routes
+    Route::get('/petowner/chats', [ChatController::class, 'fetchMessages'])->name('pet-owner.chats');
+  
+
+    // Route for sending messages between Pet Owner and Pet Boarder
+    Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send.messageBetweenPetOwnerAndBoarder');
+
+    // Route for fetching messages between Pet Owner and Pet Boarder
+    Route::get('/fetch-messages', [ChatController::class, 'fetchMessages'])->name('fetch.messagesBetweenPetOwnerAndBoarder');
+
+  
+
+
 });
 
 //!MIDDLEWARE FOR PET TRAINING CENTER
@@ -259,6 +274,15 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
     Route::post('/boarding-center/update-price', [PetBoardingCenterController::class, 'updatePricePerNight'])->name('boarding-center.update-price');
 
     Route::get('/petboarder/analytics', [PetBoarderAnalyticsController::class, 'index'])->name('petboarder.analytics');
+
+        // Chat routes for Pet Boarders
+    Route::get('/pet-boardingcenter/chats', [ChatController::class, 'fetchMessagesForBoarder'])->name('pet-boardingcenter.chats');
+    Route::post('/pet-boardingcenter/send-message', [ChatController::class, 'sendMessageForBoarder'])->name('pet-boardingcenter.send-message');
+
+    Route::get('/pet-boardingcenter/fetch-messages', [ChatController::class, 'fetchMessagesForBoarder'])->name('fetch.messagesForBoarder');
+
+
+
 });
 
 

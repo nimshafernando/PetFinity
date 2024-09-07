@@ -12,8 +12,8 @@ class PetOwnerAnalyticsController extends Controller
 {
     public function showLostAndFoundAnalytics()
     {
-        $missingPets = MissingPet::with('sightings')->get();
-        $foundReports = FoundReport::with('missingPet')->get();
+        $missingPets = MissingPet::with('pet', 'sightings')->get();
+        $foundReports = FoundReport::with('missingPet.pet')->get();
 
         return view('pet-owner.analytics.lostandfound', compact('missingPets', 'foundReports'));
     }
