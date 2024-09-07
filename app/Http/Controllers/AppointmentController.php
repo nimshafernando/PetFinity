@@ -77,11 +77,14 @@ class AppointmentController extends Controller
             ->where('payment_status', 'pending')
             ->with(['boardingcenter', 'pet'])
             ->get();
+
+        $pendingAppointments = Appointment::where('status', 'pending')->get();
+
     
         // Fetch the user's pets
         $pets = Auth::user()->pets;
     
-        return view('pet-owner.dashboard', compact('acceptedAppointments', 'ongoingAppointments', 'pastAppointments', 'pets'));
+        return view('pet-owner.dashboard', compact('acceptedAppointments', 'ongoingAppointments', 'pastAppointments', 'pets', 'pendingAppointments'));
     }
     
 
