@@ -300,7 +300,6 @@
                                 <strong>Type:</strong> {{ $pet->type }}<br>
                                 <strong>Breed:</strong> {{ $pet->breed }}<br>
                                 <strong>Age:</strong> {{ $pet->age }}<br>
-                                <strong>Special Note:</strong> {{ $pet->special_notes }}<br>
                             </p>
                         </div>
                     </div>

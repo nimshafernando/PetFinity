@@ -38,12 +38,12 @@ class BookingHistoryController extends Controller
         $user_id = Auth::user()->id;
 
         // Fetch appointments for the logged-in pet boarding center with related information using joins
-        // We are fetching all relevant appointments regardless of status or payment method
         $appointments = DB::table('appointments')
             ->join('pet_boarding_centers', 'appointments.boardingcenter_id', '=', 'pet_boarding_centers.id')
             ->join('pets', 'appointments.pet_id', '=', 'pets.id')
             ->join('pet_owners', 'appointments.petowner_id', '=', 'pet_owners.id')
             ->where('appointments.boardingcenter_id', $user_id)
+            ->where('appointments.status', '==' , 'accepted')
             ->orderBy('appointments.start_date', 'asc')
             ->select(
                 'appointments.*',

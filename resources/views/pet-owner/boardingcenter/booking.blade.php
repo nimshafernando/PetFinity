@@ -220,9 +220,9 @@
                         if (checkOutTimeInput.value <= checkInTimeInput.value) {
                             nights += 1;
                         }
-
-                        const totalPrice = (nights * pricePerNight).toFixed(2);
-                        totalPriceInput.value = totalPrice;
+            
+                        const totalPrice = (totalNights * pricePerNight).toFixed(2);
+                        totalPriceInput.value = `LKR ${totalPrice}`;
                         totalPriceHiddenInput.value = totalPrice;
                     } else {
                         totalPriceInput.value = '';

@@ -756,7 +756,7 @@ body {
             </div>
         </div>
 
-        <a href="{{ route('test.show') }}" class="btn btn-primary">Go to Test Page</a>
+            {{-- <a href="{{ route('test.show') }}" class="btn btn-primary">Go to Test Page</a> --}}
 
         <!-- Lost and Found Section -->
         <div class="lost-found-container">
@@ -805,33 +805,14 @@ body {
             @else
                 @foreach($acceptedAppointments as $appointment)
                     <div class="appointment-card">
-                        <h5 class="appointment-title">Booking Accepted for {{ $appointment->pet->name }}</h5>
-                        <div class="appointment-details">
-                            <p><strong>Boarding Center:</strong> {{ $appointment->boardingcenter->name }}</p>
-                            <p><strong>Start Date:</strong> {{ $appointment->start_date }}</p>
-                            <p><strong>End Date:</strong> {{ $appointment->end_date }}</p>
-                            <p><strong>Check-in Time:</strong> {{ $appointment->check_in_time }}</p>
-                            <p><strong>Check-out Time:</strong> {{ $appointment->check_out_time }}</p>
-                            <p><strong>Special Notes:</strong> {{ $appointment->special_notes }}</p>
-                            <p><strong>Status:</strong> {{ $appointment->status }}</p>
-                            <p><strong>Payment Status:</strong> {{ $appointment->payment_status }}</p>
-                        </div>
-                        <form action="{{ route('appointment.select-payment-method', $appointment->id) }}" method="POST">
-                            @csrf
-                            <div class="form-group">
-                                <label for="payment_method">Select Payment Method</label>
-                                <select name="payment_method" id="payment_method" class="form-control">
-                                    <option value="choose">choose</option>
-                                    <option value="cash">Cash</option>
-                                    <option value="card">Card</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn">Confirm Payment Method</button>
-                        </form>
+                        <a href="{{ route('test.show') }}" class="btn btn-primary">
+                            Booking Accepted for {{ $appointment->boardingcenter->business_name }}
+                        </a>
                     </div>
                 @endforeach
             @endif
         </div>
+        
 
         <!-- Services Section -->
         <div class="services-box">

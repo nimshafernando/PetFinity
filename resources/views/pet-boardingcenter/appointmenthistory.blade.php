@@ -335,6 +335,8 @@
 
     <div class="content">
         <div class="container">
+            <h2>Appointment Histoy</h2>
+            <p>All your past appointments with PETFINITY!</p>
             @if($appointments->isEmpty())
             <p class="no-appointments">No upcoming appointments.</p>
             @else

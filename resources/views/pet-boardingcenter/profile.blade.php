@@ -378,7 +378,17 @@
         </ul>
     </div>
 
+    
+
     <div class="content">
+        <div class="d-flex justify-content-end p-3">
+            <form method="POST" action="{{ route('logout') }}" class="d-inline-block">
+                @csrf
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </form>
+        </div>
         <div class="container">
             <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -527,8 +537,18 @@
                     <button type="submit">Update</button>
                     <button type="button" onclick="window.location='{{ route('boarding-center.profile') }}'">Cancel</button>
                 </div>
+                
             </form>
         </div>
+    </div>
+    
+    <div class="d-flex justify-content-end p-3">
+        <form method="POST" action="{{ route('logout') }}" class="d-inline-block">
+            @csrf
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </form>
     </div>
 
     <div class="navbar">
