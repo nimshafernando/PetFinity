@@ -187,6 +187,9 @@ Route::middleware(['auth:petowner'])->group(function () {
     // Route for fetching messages between Pet Owner and Pet Boarder
     Route::get('/fetch-messages', [ChatController::class, 'fetchMessages'])->name('fetch.messagesBetweenPetOwnerAndBoarder');
 
+  
+
+
 });
 
 //!MIDDLEWARE FOR PET TRAINING CENTER

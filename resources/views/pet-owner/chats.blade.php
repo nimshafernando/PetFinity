@@ -286,6 +286,8 @@
     toggleSidebar.addEventListener('click', function () {
         chatSidebar.classList.toggle('show');
     });
+
+
 </script>
 
 </body>

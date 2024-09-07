@@ -96,7 +96,7 @@
 
         .message.sent {
             background-color: #00c251;
-            color: black;
+            color: white;
             text-align: right;
             align-self: flex-end;
         }
