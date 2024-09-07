@@ -240,7 +240,7 @@
             const currentDateTime = new Date().toLocaleString();
 
             // Header Section
-            doc.setFillColor(40, 167, 69); // Green color
+            doc.setFillColor(255, 102, 0); // Orange color
             doc.rect(0, 0, pageWidth, 30, 'F');
 
             // Title

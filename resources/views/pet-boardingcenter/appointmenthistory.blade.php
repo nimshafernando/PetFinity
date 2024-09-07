@@ -362,11 +362,11 @@
 
     <div class="navbar">
         <ul>
-            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="#"><i class="fas fa-paw"></i> Pets</a></li>
-            <li><a href="#"><i class="fas fa-bed"></i> Boarding</a></li>
-            <li><a href="#"><i class="fas fa-calendar-alt"></i> Upcoming</a></li>
-            <li><a href="#"><i class="fas fa-history"></i> History</a></li>
+            <li><a href="{{ route('pet-boardingcenter.dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{{ route('pet-boardingcenter.pendingbookings') }}"><i class="fas fa-clock"></i> Requests</a></li>
+            <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> Schedule</a></li>
+            <li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
+            <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> History</a></li>
         </ul>
     </div>
 </body>

@@ -1225,7 +1225,7 @@
         </div> --}}
 
         <div class="accepted-appointments-container">
-            <h2 class="section-title">Appointments</h2>
+            <h2 class="section-title">Appointment Status</h2>
         
             <!-- Accepted Appointments Section -->
             @if($acceptedAppointments->isEmpty())

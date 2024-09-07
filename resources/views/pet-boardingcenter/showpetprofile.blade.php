@@ -292,7 +292,7 @@
                 <p>No pet profiles found.</p>
             @else
                 @foreach($pets as $pet)
-                    <div class="card mb-3">
+                    <div class="mb-3 card">
                         <img src="{{ Storage::url($pet->profile_picture) }}" alt="{{ $pet->pet_name }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $pet->pet_name }}</h5>
@@ -310,12 +310,11 @@
 
     <div class="bottom-navbar">
         <ul>
-            <li><a href="{{ route('pet-boardingcenter.dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="{{ route('pet-boardingcenter.pendingbookings') }}"><i class="fas fa-clock"></i> Pending Requests</a></li>
-            <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> My Schedule</a></li>
+            <li><a href="{{ route('pet-boardingcenter.dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{{ route('pet-boardingcenter.pendingbookings') }}"><i class="fas fa-clock"></i> Requests</a></li>
+            <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> Schedule</a></li>
             <li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
-            <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> Appointment History</a></li>
-            
+            <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> History</a></li>
         </ul>
     </div>
 </body>
