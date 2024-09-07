@@ -214,6 +214,8 @@ Route::middleware(['auth:petowner'])->group(function () {
     // Route for fetching messages between Pet Owner and Pet Boarder
     Route::get('/fetch-messages', [ChatController::class, 'fetchMessages'])->name('fetch.messagesBetweenPetOwnerAndBoarder');
 
+    Route::post('/appointment/{id}/remove-declined', [AppointmentController::class, 'removeDeclinedAppointment'])->name('appointment.removeDeclined');
+
   
 
 

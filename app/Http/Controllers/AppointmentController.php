@@ -53,39 +53,59 @@ class AppointmentController extends Controller
 
     // * Show accepted appointments from pet boarding center and ask for payment method 
     public function appointmentTypes()
-    {
-        $currentDate = now()->format('Y-m-d');
-        $currentTime = now()->format('H:i:s');
-    
-        // Fetch ongoing appointments based on end_date
-        $ongoingAppointments = Appointment::where('petowner_id', Auth::id())
-            ->where('status', 'accepted')
-            ->where('end_date', '>=', $currentDate)
-            ->with(['boardingcenter', 'pet'])
-            ->get();
-    
-        // Fetch past appointments
-        $pastAppointments = Appointment::where('petowner_id', Auth::id())
-            ->where('status', 'accepted')
-            ->where('end_date', '<', $currentDate)
-            ->with(['boardingcenter', 'pet'])
-            ->get();
-    
-        // Fetch accepted appointments with pending payment status
-        $acceptedAppointments = Appointment::where('petowner_id', Auth::id())
-            ->where('status', 'accepted')
-            ->where('payment_status', 'pending')
-            ->with(['boardingcenter', 'pet'])
-            ->get();
+{
+    $currentDate = now()->format('Y-m-d');
+    $currentTime = now()->format('H:i:s');
 
-        $pendingAppointments = Appointment::where('status', 'pending')->get();
+    // Fetch ongoing appointments
+    $ongoingAppointments = Appointment::where('petowner_id', Auth::id())
+        ->where('status', 'accepted')
+        ->where('end_date', '>=', $currentDate)
+        ->with(['boardingcenter', 'pet'])
+        ->get();
 
-    
+    // Fetch past appointments
+    $pastAppointments = Appointment::where('petowner_id', Auth::id())
+        ->where('status', 'accepted')
+        ->where('end_date', '<', $currentDate)
+        ->with(['boardingcenter', 'pet'])
+        ->get();
+
+    // Fetch accepted appointments with pending payment status
+    $acceptedAppointments = Appointment::where('petowner_id', Auth::id())
+        ->where('status', 'accepted')
+        ->where('payment_status', 'pending')
+        ->with(['boardingcenter', 'pet'])
+        ->get();
+
+    // Fetch pending appointments
+    $pendingAppointments = Appointment::where('status', 'pending')
+        ->where('petowner_id', Auth::id())
+        ->with(['boardingcenter', 'pet'])
+        ->get();
+
+    // Fetch declined appointments
+    $declinedAppointments = Appointment::where('status', 'declined')
+        ->where('petowner_id', Auth::id())
+        ->with(['boardingcenter', 'pet'])
+        ->get();
+
         // Fetch the user's pets
         $pets = Auth::user()->pets;
-    
-        return view('pet-owner.dashboard', compact('acceptedAppointments', 'ongoingAppointments', 'pastAppointments', 'pets', 'pendingAppointments'));
-    }
+
+    return view('pet-owner.dashboard', compact('acceptedAppointments', 'ongoingAppointments', 'pastAppointments', 'pets', 'pendingAppointments', 'declinedAppointments'));
+}
+
+public function removeDeclinedAppointment($id)
+{
+    $appointment = Appointment::findOrFail($id);
+
+    // You can delete the appointment, or simply update its status to 'removed'
+    $appointment->delete();
+
+    return redirect()->route('pet-owner.dashboard')->with('success', 'Declined appointment removed successfully.');
+}
+
     
 
     //* Select payment method

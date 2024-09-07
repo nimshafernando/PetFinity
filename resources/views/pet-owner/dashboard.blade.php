@@ -1197,17 +1197,14 @@
             </div>
         </div>
 
-       <!-- Accepted Appointments Section -->
-<div class="section-container">
-    <div class="accepted-appointments-card">
-        <div class="accepted-appointments-body">
-            <div class="section-title">Accepted Appointments</div>
+      
+        {{-- <!-- Accepted Appointments Section -->
+        <div class="accepted-appointments-container">
+            <h2 class="section-title">Accepted Appointments</h2>
             @if($acceptedAppointments->isEmpty())
-            <p class="no-appointments-text">No accepted bookings.</p>
+                <p>No accepted bookings.</p>
             @else
-            <div class="row card-grid">
                 @foreach($acceptedAppointments as $appointment)
-                <div class="mb-4 col-md-4 d-flex justify-content-center">
                     <div class="appointment-card">
                         <a href="{{ route('test.show') }}" class="btn btn-primary">
                             Booking Accepted for {{ $appointment->boardingcenter->business_name }} for {{ $appointment->pet->pet_name }}
@@ -1217,19 +1214,98 @@
             @endif
         
             @if($pendingAppointments->isEmpty())
-                <p>No pending bookings.</p>
+                <p><br>No pending bookings.</p>
             @else
                 @foreach($pendingAppointments as $appointment)
                     <div class="appointment-card">
-                            Booking Pending for {{ $appointment->boardingcenter->business_name }} for {{$appointment->pet->pet_name }}
+                            Booking Pending for {{ $appointment->boardingcenter->business_name }} for {{$appointment->pet->pet_name}}
                     </div>
                 @endforeach
-            </div>
+            @endif
+        </div> --}}
+
+        <div class="accepted-appointments-container">
+            <h2 class="section-title">Appointments</h2>
+        
+            <!-- Accepted Appointments Section -->
+            @if($acceptedAppointments->isEmpty())
+                <p>No accepted bookings.</p>
+            @else
+                @foreach($acceptedAppointments as $appointment)
+                    <div class="appointment-card">
+                        <a href="{{ route('test.show') }}" class="btn btn-primary">
+                            Booking Accepted for {{ $appointment->boardingcenter->business_name }} for {{ $appointment->pet->pet_name }}
+                        </a>
+                    </div>
+                @endforeach
+            @endif
+        
+            <!-- Pending Appointments Section -->
+            @if($pendingAppointments->isEmpty())
+                <p><br>No pending bookings.</p>
+            @else
+                @foreach($pendingAppointments as $appointment)
+                    <div class="appointment-card">
+                        Booking Pending for {{ $appointment->boardingcenter->business_name }} for {{ $appointment->pet->pet_name }}
+                    </div>
+                @endforeach
+            @endif
+        
+            <!-- Declined Appointments Section -->
+            @if(!$declinedAppointments->isEmpty())
+                <h3>Declined Appointments</h3>
+                @foreach($declinedAppointments as $appointment)
+                    <div class="appointment-card declined">
+                        <p>Unfortunately, your booking for {{ $appointment->boardingcenter->business_name }} for {{ $appointment->pet->pet_name }} has been declined.</p>
+                        
+                        <!-- Button to remove the declined appointment -->
+                        <form action="{{ route('appointment.removeDeclined', $appointment->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </div>
+                @endforeach
             @endif
         </div>
-    </div>
-</div>
 
+        <style>
+  
+
+            .appointment-card.declined {
+                background-color: #ffe6e6;
+                border-left: 5px solid #ff4d4d;
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .appointment-card.declined p {
+                color: #b30000;
+            }
+
+            .btn-danger {
+                background-color: #ff4d4d;
+                border: none;
+                padding: 10px 15px;
+                color: #fff;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .btn-danger:hover {
+                background-color: #ff1a1a;
+            }
+
+        </style>
+        
+
+
+<!-- Services Section -->
+<!-- Chat with Pet Boarders Section -->
+<div class="services-box">
+    <h2 class="services-title">Chat with Pet Boarders</h2>
+    <p>If you need more information or want to ask questions, feel free to reach out to the pet boarders directly.</p>
+    <a href="{{ route('pet-owner.chats') }}" class="btn">Start a Conversation</a>
+</div>
 
         <!-- Pet Activity Log Section -->
         <div class="activity-log-container">

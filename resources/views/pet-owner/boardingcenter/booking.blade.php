@@ -194,28 +194,27 @@
                 const pricePerNight = parseFloat(document.getElementById('price_per_night').value);
                 const totalPriceInput = document.getElementById('total_price');
                 const totalPriceHiddenInput = document.getElementById('total_price_hidden');
-            
                 function calculateTotalPrice() {
-    const startDate = new Date(startDateInput.value + ' ' + checkInTimeInput.value);
-    const endDate = new Date(endDateInput.value + ' ' + checkOutTimeInput.value);
+                const startDate = new Date(startDateInput.value + ' ' + checkInTimeInput.value);
+                const endDate = new Date(endDateInput.value + ' ' + checkOutTimeInput.value);
 
-    if (startDate && endDate && endDate >= startDate) {
-        const timeDiff = endDate - startDate;
-        const days = timeDiff / (1000 * 3600 * 24);
-        let totalNights = Math.ceil(days);
+                if (startDate && endDate && endDate >= startDate) {
+                    const timeDiff = endDate - startDate;
+                    const days = timeDiff / (1000 * 3600 * 24);
+                    let totalNights = Math.ceil(days);
 
-        if (checkOutTimeInput.value < checkInTimeInput.value) {
-            totalNights -= 1;
-        }
+                    if (checkOutTimeInput.value < checkInTimeInput.value) {
+                        totalNights -= 1;
+                    }
 
-        const totalPrice = (totalNights * pricePerNight).toFixed(2);
-        totalPriceInput.value = "LKR " + totalPrice;
-        totalPriceHiddenInput.value = totalPrice;
-    } else {
-        totalPriceInput.value = '';
-        totalPriceHiddenInput.value = '';
-    }
-}
+                    const totalPrice = (totalNights * pricePerNight).toFixed(2);
+                    totalPriceInput.value = "LKR " + totalPrice;
+                    totalPriceHiddenInput.value = totalPrice;
+                } else {
+                    totalPriceInput.value = '';
+                    totalPriceHiddenInput.value = '';
+                }
+            }
 
             
                 startDateInput.addEventListener('change', calculateTotalPrice);

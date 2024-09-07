@@ -31,11 +31,31 @@ class StripeController extends Controller
             'mode' => 'payment',
             'success_url' => route('success') . '?session_id={CHECKOUT_SESSION_ID}&id=' . $request->id,
             'cancel_url' => route('cancel'),
+            'metadata' => [
+                'pet_name' => $request->pet_name,
+                'check_in' => $request->check_in,
+                'check_out' => $request->check_out,
+                'boarding_center' => $request->boarding_center,
+                'profile_pic' => $request->profile_pic_url,
+                'owner_first_name' => $request->owner_first_name,
+                'owner_last_name' => $request->owner_last_name,
+                
+            ],
         ]);
 
-        // Redirect to Stripe checkout page
+    if (isset($response->id) && $response->id != '') {
+        session()->put('product_name', $request->product_name);
+        session()->put('quantity', $request->quantity);
+        session()->put('price', $request->price);
+
         return redirect($response->url);
+    } else {
+        return redirect()->route('cancel');
     }
+}
+
+        // Redirect to Stripe checkout page
+        
 
     // Phase 2: Stripe Payment Success Handling
     public function success(Request $request)
@@ -43,6 +63,8 @@ class StripeController extends Controller
         // Initialize Stripe client
         $stripe = new StripeClient(config('stripe.stripe_sk'));
         $session = $stripe->checkout->sessions->retrieve($request->session_id);
+        $metadata = $session->metadata;
+
 
         // Get the appointment by ID (from the request)
         $appointment = Appointment::findOrFail($request->id);
@@ -53,7 +75,7 @@ class StripeController extends Controller
             'payment_status' => 'paid',
         ]);
 
-        return view('success', ['metadata' => $session->metadata]);
+        return view('success',compact('metadata'));
     }
 
     public function cancel()
