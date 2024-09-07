@@ -806,7 +806,7 @@ body {
                 @foreach($acceptedAppointments as $appointment)
                     <div class="appointment-card">
                         <a href="{{ route('test.show') }}" class="btn btn-primary">
-                            Booking Accepted for {{ $appointment->boardingcenter->business_name }}
+                            Booking Accepted for {{ $appointment->pet->pet_name }} at {{ $appointment->boardingcenter->business_name }}
                         </a>
                     </div>
                 @endforeach
@@ -815,11 +815,13 @@ body {
         
 
         <!-- Services Section -->
+        <!-- Chat with Pet Boarders Section -->
         <div class="services-box">
-            <h2 class="services-title">Explore Our Services</h2>
-            <p>Discover amazing places for your pet. Click below to book appointments at pet boarding centers.</p>
-            <a href="{{ route('boarding-centers.index') }}" class="btn">View All Pet Boarding Places</a>
+            <h2 class="services-title">Chat with Pet Boarders</h2>
+            <p>If you need more information or want to ask questions, feel free to reach out to the pet boarders directly.</p>
+            <a href="{{ route('pet-owner.chats') }}" class="btn">Start a Conversation</a>
         </div>
+
 
         <!-- Pet Care Tips Section -->
         <div class="pet-care-tips-container">

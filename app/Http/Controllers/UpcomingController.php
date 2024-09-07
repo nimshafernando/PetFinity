@@ -59,5 +59,5 @@ class UpcomingController extends Controller
                 ->get();
 
             return view('pet-boardingcenter.upcoming', compact('appointments'));
-        }
+}
 }
