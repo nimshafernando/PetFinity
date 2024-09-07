@@ -18,7 +18,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ff6600, #ff9933);
+            background: linear-gradient(135deg, #FFEBCC, #FFEBCC);
             margin: 0;
             padding: 20px;
             font-family: 'Fredoka', sans-serif;

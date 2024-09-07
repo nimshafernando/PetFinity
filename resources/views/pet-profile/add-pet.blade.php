@@ -22,6 +22,8 @@
             margin: 0;
             padding: 0;
             font-family: 'Nunito', sans-serif;
+
+
         }
 
         body {
@@ -29,14 +31,16 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ff6600, #ff9933);
+            background-color: #ff6600;
             padding: 20px;
+            
+
         }
 
         .container {
             width: 100%;
             max-width: 1000px;
-            background-color: #fff;
+            background-color: #ff6600;
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
             padding: 30px;
