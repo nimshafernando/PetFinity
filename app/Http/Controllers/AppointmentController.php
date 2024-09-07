@@ -77,11 +77,14 @@ class AppointmentController extends Controller
             ->where('payment_status', 'pending')
             ->with(['boardingcenter', 'pet'])
             ->get();
+
+        $pendingAppointments = Appointment::where('status', 'pending')->get();
+
     
         // Fetch the user's pets
         $pets = Auth::user()->pets;
     
-        return view('pet-owner.dashboard', compact('acceptedAppointments', 'ongoingAppointments', 'pastAppointments', 'pets'));
+        return view('pet-owner.dashboard', compact('acceptedAppointments', 'ongoingAppointments', 'pastAppointments', 'pets', 'pendingAppointments'));
     }
     
 
@@ -102,8 +105,20 @@ class AppointmentController extends Controller
         return redirect()->route('pet-owner.dashboard')->with('success', 'Payment method selected successfully.');
     }
 
-
-
+    public function cashPayment(Request $request, $id)
+    {
+        // Find the appointment by ID
+        $appointment = Appointment::findOrFail($id);
+    
+        // Update the payment method and payment status to 'cash' and 'onvisit'
+        $appointment->update([
+            'payment_method' => 'cash',
+            'payment_status' => 'onvisit', // Set status for cash payments (to be paid on visit)
+        ]);
+    
+        // Redirect to cash.blade.php
+        return view('cash', compact('appointment'));
+    }
     
     // Pet status update feature: Show tasks for an appointment
     public function showTasks($id)

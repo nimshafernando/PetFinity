@@ -15,7 +15,7 @@
             font-family: 'Nunito', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #ff6600, #ff9933);
+            background: #FFEBCC;;
             display: flex;
             justify-content: center;
             align-items: flex-start;
