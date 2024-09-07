@@ -444,7 +444,7 @@ body {
 }
 
 .tips-card {
-    background-color: #fff;
+    background-color: #ffe5b4;
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -514,7 +514,7 @@ body {
 }
 
 .event-card {
-    background-color: #fff;
+    background-color: #ffe5b4;
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -806,8 +806,18 @@ body {
                 @foreach($acceptedAppointments as $appointment)
                     <div class="appointment-card">
                         <a href="{{ route('test.show') }}" class="btn btn-primary">
-                            Booking Accepted for {{ $appointment->pet->pet_name }} at {{ $appointment->boardingcenter->business_name }}
+                            Booking Accepted for {{ $appointment->boardingcenter->business_name }} for {{ $appointment->pet->pet_name }}
                         </a>
+                    </div>
+                @endforeach
+            @endif
+        
+            @if($pendingAppointments->isEmpty())
+                <p>No pending bookings.</p>
+            @else
+                @foreach($pendingAppointments as $appointment)
+                    <div class="appointment-card">
+                            Booking Pending for {{ $appointment->boardingcenter->business_name }} for {{$appointment->pet->pet_name }}
                     </div>
                 @endforeach
             @endif
