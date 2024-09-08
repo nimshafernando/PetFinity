@@ -25,20 +25,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 10px 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 10;
+            backdrop-filter: blur(10px);
         }
 
         .top-navbar .logo {
             font-family: 'Fredoka One', cursive;
             font-size: 32px;
             color: #035a2e;
-            margin-left: 20px;
         }
 
         .top-navbar .profile {
@@ -47,7 +47,7 @@
             color: #333;
             cursor: pointer;
             font-size: 18px;
-            margin-right: 50px;
+            margin-left: auto;
             font-weight: bold;
         }
 

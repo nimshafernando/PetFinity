@@ -180,19 +180,22 @@
         }
 
         .title {
-            text-align: center;
-            color: #ff6600;
-            margin-bottom: 30px;
-            font-weight: bold;
-            font-size: 36px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            position: relative;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #ff6600, #cc5200);
-            border-radius: 50px;
-            color: white;
-            display: inline-block;
-        }
+    text-align: center;
+    color: #ff6600;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #ff6600, #cc5200);
+    border-radius: 50px;
+    color: white;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
         .info-card, .review-section {
             background-color: white;
@@ -330,9 +333,10 @@
 
         .book-now-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             margin-top: 40px;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         .btn-primary, .btn-secondary {
@@ -347,14 +351,12 @@
             transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
             display: inline-block;
             margin-bottom: 10px;
-            width: 100%;
-            max-width: 300px;
+            max-width: 200px;
         }
 
         .btn-secondary {
             background-color: #ccc;
             color: black;
-            margin-right: 20px;
         }
 
         .btn-secondary:hover {
@@ -382,7 +384,7 @@
             }
 
             .book-now-container {
-                margin-top: 20px;
+                justify-content: center;
             }
 
             .navbar {
@@ -440,6 +442,7 @@
 
             .book-now-container {
                 margin-top: 20px;
+                justify-content: center;
             }
 
             .btn-primary, .btn-secondary {
@@ -469,7 +472,7 @@
         <aside class="sidebar">
             <div class="p-4">
                 <nav class="space-y-4">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('pet-owner.dashboard') }}" class="nav-link">
                         <div class="nav-icon"><i class="fas fa-home"></i></div>
                         Home
                     </a>
@@ -481,7 +484,7 @@
 
                     <a href="{{ route('boarding-centers.index') }}" class="nav-link">
                         <div class="nav-icon"><i class="fas fa-bed"></i></div>
-                        Pet Boarding Centers
+                        Boarding
                     </a>
 
                     <a href="{{ route('appointments.upcoming') }}" class="nav-link">
@@ -491,7 +494,7 @@
 
                     <a href="{{ route('appointments.history') }}" class="nav-link">
                         <div class="nav-icon"><i class="fas fa-history"></i></div>
-                        Past Bookings
+                        History
                     </a>
                 </nav>
             </div>
@@ -528,7 +531,7 @@
                 <p><strong><i class="fas fa-envelope"></i> Email:</strong> {{ $boardingCenter->email }}</p>
                 <p><strong><i class="fas fa-map-marker-alt"></i> Location:</strong> {{ $boardingCenter->city }}</p>
                 <p><strong><i class="fas fa-clock"></i> Operating Hours:</strong> {{ $boardingCenter->operating_hours }}</p>
-                <p><strong><i class="fas fa-dollar-sign"></i> Price Per Night:</strong> ${{ number_format($boardingCenter->price_per_night, 2) }}</p>
+                <p><strong><i class="fas fa-dollar-sign"></i> Price Per Night:</strong> LKR {{ number_format($boardingCenter->price_per_night, 2) }}</p>
                 <p><strong><i class="fas fa-link"></i> Social Media Links:</strong> {{ $boardingCenter->socialmedia_links }}</p>
                 <p><strong><i class="fas fa-couch"></i> Special Amenities:</strong> {{ $boardingCenter->special_amenities }}</p>
                 <p><strong><i class="fas fa-phone"></i> Phone Number:</strong> {{ $boardingCenter->phone_number }}</p>
@@ -565,7 +568,7 @@
                 @endif
             </div>
 
-            <!-- Book Now Button -->
+            <!-- Book Now and Back to List Buttons -->
             <div class="book-now-container">
                 <a href="{{ route('boarding-centers.index') }}" class="btn btn-secondary">Back to List</a>
                 <a href="{{ route('booking.create', $boardingCenter->id) }}" class="btn btn-primary">Book Now</a>

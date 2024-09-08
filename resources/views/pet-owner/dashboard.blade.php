@@ -750,112 +750,112 @@
             width: 80%;
             margin: 0 auto;
         }
-        /* Accepted Appointments Outer Card */
-.accepted-appointments-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px;
-}
+                /* Accepted Appointments Outer Card */
+        .accepted-appointments-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
 
-.accepted-appointments-body {
-    text-align: center;
-}
+        .accepted-appointments-body {
+            text-align: center;
+        }
 
-.section-title {
-    font-family: 'Fredoka One', cursive;
-    font-size: 2.5rem;
-    color: #ff6600;
-    margin-bottom: 30px;
-}
+        .section-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.5rem;
+            color: #ff6600;
+            margin-bottom: 30px;
+        }
 
-.no-appointments-text {
-    color: #555;
-    font-size: 1.2rem;
-}
+        .no-appointments-text {
+            color: #555;
+            font-size: 1.2rem;
+        }
 
-/* Individual Appointment Cards */
-.appointment-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-    padding: 20px;
-    width: 100%;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    text-align: center;
-}
+        /* Individual Appointment Cards */
+        .appointment-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            text-align: center;
+        }
 
-.appointment-card:hover {
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    transform: translateY(-5px);
-}
+        .appointment-card:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
 
-.appointment-card-title {
-    font-size: 1.2rem;
-    color: #ff6600;
-    margin-bottom: 15px;
-}
+        .appointment-card-title {
+            font-size: 1.2rem;
+            color: #ff6600;
+            margin-bottom: 15px;
+        }
 
-.appointment-card-body p {
-    color: #555;
-    font-size: 1rem;
-    margin-bottom: 10px;
-}
+        .appointment-card-body p {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
 
-/* Form and Button Styling */
-.form-control {
-    margin: 0 auto;
-    width: 80%;
-    padding: 8px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
+        /* Form and Button Styling */
+        .form-control {
+            margin: 0 auto;
+            width: 80%;
+            padding: 8px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
 
-.btn {
-    background-color: #ff6600;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    text-transform: uppercase;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
+        .btn {
+            background-color: #ff6600;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
 
-.btn:hover {
-    background-color: #ff8500;
-    transform: scale(1.05);
-}
+        .btn:hover {
+            background-color: #ff8500;
+            transform: scale(1.05);
+        }
 
-/* Responsive Layout */
-@media (max-width: 1200px) {
-    .card-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
+        /* Responsive Layout */
+        @media (max-width: 1200px) {
+            .card-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
 
-    .appointment-card {
-        flex: 0 0 45%;
-    }
-}
+            .appointment-card {
+                flex: 0 0 45%;
+            }
+        }
 
-@media (max-width: 768px) {
-    .appointment-card {
-        flex: 0 0 100%;
-        margin-bottom: 20px;
-    }
-}
+        @media (max-width: 768px) {
+            .appointment-card {
+                flex: 0 0 100%;
+                margin-bottom: 20px;
+            }
+        }
 
-@media (max-width: 480px) {
-    .appointment-card {
-        flex: 0 0 100%;
-    }
-}
+        @media (max-width: 480px) {
+            .appointment-card {
+                flex: 0 0 100%;
+            }
+        }
 
 
 
@@ -1232,11 +1232,12 @@
                 <p>No accepted bookings.</p>
             @else
                 @foreach($acceptedAppointments as $appointment)
-                    <div class="appointment-card">
-                        <a href="{{ route('test.show') }}" class="btn btn-primary">
-                            Booking Accepted for {{ $appointment->boardingcenter->business_name }} for {{ $appointment->pet->pet_name }}
-                        </a>
-                    </div>
+                <div class="accepted-appointments-container">
+                    <a href="{{ route('test.show') }}" class="btn btn-primary">
+                      Booking Accepted for {{ $appointment->boardingcenter->business_name }} for {{ $appointment->pet->pet_name }}
+                    </a>
+                  </div>
+                  
                 @endforeach
             @endif
         
@@ -1342,25 +1343,25 @@
 
     </div>
 
-<!-- jQuery (required for Bootstrap's JavaScript plugins) -->
+{{-- <!-- jQuery (required for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
 <!-- Popper.js (required for Bootstrap's dropdowns) -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 
 <!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> --}}
 
     
 
 
-        <!-- Services Section -->
+        {{-- <!-- Services Section -->
         <!-- Chat with Pet Boarders Section -->
         <div class="services-box">
             <h2 class="services-title">Chat with Pet Boarders</h2>
             <p>If you need more information or want to ask questions, feel free to reach out to the pet boarders directly.</p>
             <a href="{{ route('pet-owner.chats') }}" class="btn">Start a Conversation</a>
-        </div>
+        </div> --}}
 
 
         <!-- Pet Care Tips Section -->
@@ -1425,7 +1426,7 @@
     </div>
 
     <!-- Include Pusher and Laravel Echo -->
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    {{-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.1/dist/echo.iife.js"></script>
 
     <script>
@@ -1446,7 +1447,7 @@
                 console.log('Pet Status Updated:', e.task_name);
                 alert('Your pet\'s status has been updated: ' + e.task_name);
             });
-    </script>
+    </script> --}}
 @livewireScripts
 </body>
 

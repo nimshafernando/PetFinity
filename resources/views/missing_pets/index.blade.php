@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,18 +19,50 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
         }
+        .back-to-dashboard {
+    background-color: #ff6600;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    position: absolute; /* Changed from fixed to absolute */
+    top: 20px;
+    left: 20px;
+    font-weight: bold;
+    z-index: 100;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.back-to-dashboard:hover {
+    background-color: #e65a00;
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+    .back-to-dashboard {
+        position: absolute; /* Ensures the button stays at the top */
+        top: 10px; /* Adjust for small screens */
+        left: 10px; /* Adjust for small screens */
+    }
+}
+
 
         .main-container {
             max-width: 1200px;
             width: 100%;
-            margin: 0 auto;
+            margin-top: 80px; /* Space for the back-to-dashboard button */
             padding: 20px;
             background-color: #fff; /* White card background */
             border-radius: 20px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
@@ -103,7 +136,6 @@
             align-items: center;
             justify-content: center;
             max-width: 250px;
-            margin: 0 auto;
         }
 
         @media (min-width: 768px) {
@@ -128,32 +160,32 @@
         .row {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            gap: 20px;
+            justify-content: center; /* Center the cards horizontally */
             margin-bottom: 20px;
         }
 
         .col-md-4 {
-            flex: 1 1 calc(100% - 20px);
-            margin: 10px;
+            flex: 1 1 calc(33.333% - 20px);
             background-color: #FFF;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
-            position: relative;
+            max-width: 300px;
         }
 
-        @media (min-width: 768px) {
+        @media (max-width: 768px) {
             .col-md-4 {
                 flex: 1 1 calc(50% - 20px);
             }
         }
 
-        @media (min-width: 1024px) {
+        @media (max-width: 480px) {
             .col-md-4 {
-                flex: 1 1 calc(33.333% - 20px);
+                flex: 1 1 calc(100% - 20px);
             }
         }
 
@@ -211,22 +243,24 @@
         }
 
         .btn-primary {
-            display: block;
-            width: 100%;
-            padding: 12px;
             background-color: #ff6600; /* Carnation */
-            color: #FFF;
+            color: white;
             text-align: center;
-            border-radius: 8px;
-            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 50px;
             font-size: 1.1rem;
             font-weight: bold;
-            transition: background-color 0.3s ease;
             text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: auto;
+            max-width: 250px;
+            margin-left: auto;
+            margin-right: auto; /* Center the button */
         }
 
         @media (min-width: 768px) {
@@ -257,51 +291,54 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="main-container">
-    <h1><i class="fas fa-paw"></i> Missing Pets</h1>
+    <a href="{{ route('pet-owner.dashboard') }}" class="back-to-dashboard">Back to Dashboard</a>
 
-    @if (session('success'))
-        <div class="alert-success">
-            <i class="fas fa-check-circle"></i> {{ session('success') }}
+    <div class="main-container">
+        <h1><i class="fas fa-paw"></i> Missing Pets</h1>
+
+        @if (session('success'))
+            <div class="alert-success">
+                <i class="fas fa-check-circle"></i> {{ session('success') }}
+            </div>
+        @endif
+
+        <div class="btn-container">
+            <a href="{{ route('missing_pets.map') }}" class="btn-view-map"><i class="fas fa-map-marker-alt"></i> View Map</a>
+            <a href="{{ route('found_reports.index') }}" class="btn-view-sightings"><i class="fas fa-binoculars"></i> View Sightings</a>
         </div>
-    @endif
 
-    <div class="btn-container">
-        <a href="{{ route('missing_pets.map') }}" class="btn-view-map"><i class="fas fa-map-marker-alt"></i> View Map</a>
-        <a href="{{ route('found_reports.index') }}" class="btn-view-sightings"><i class="fas fa-binoculars"></i> View Sightings</a>
-    </div>
-
-    @if ($missingPets->isEmpty())
-        <p class="no-pets"><i class="fas fa-sad-tear"></i> No missing pets reported yet.</p>
-    @else
-        <div class="row">
-            @foreach ($missingPets as $missingPet)
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="{{ Storage::url($missingPet->photo) }}" class="card-img-top" alt="Missing Pet Photo">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-dog"></i>{{ $missingPet->pet->pet_name }}</h5>
-                            <p class="card-text">
-                                <i class="fas fa-map-marker-alt"></i><strong>Last Seen:</strong> {{ $missingPet->last_seen_location }}<br>
-                                <i class="fas fa-calendar-day"></i><strong>Date:</strong> {{ $missingPet->last_seen_date }}<br>
-                                <i class="fas fa-clock"></i><strong>Time:</strong> {{ $missingPet->last_seen_time }}<br>
-                                <i class="fas fa-paw"></i><strong>Distinguishing Features:</strong> {{ $missingPet->distinguishing_features }}<br>
-                                @if ($missingPet->additional_info)
-                                    <i class="fas fa-info-circle"></i><strong>Additional Info:</strong> {{ $missingPet->additional_info }}
-                                @endif
-                            </p>
-                            <a href="{{ route('found_reports.create', ['missing_pet_id' => $missingPet->id]) }}" class="btn-primary">
-                                <i class="fas fa-binoculars"></i> Report Sighting
-                            </a>
+        @if ($missingPets->isEmpty())
+            <p class="no-pets"><i class="fas fa-sad-tear"></i> No missing pets reported yet.</p>
+        @else
+            <div class="row">
+                @foreach ($missingPets as $missingPet)
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="{{ Storage::url($missingPet->photo) }}" class="card-img-top" alt="Missing Pet Photo">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-dog"></i> {{ $missingPet->pet->pet_name }}</h5>
+                                <p class="card-text">
+                                    <i class="fas fa-map-marker-alt"></i><strong>Last Seen:</strong> {{ $missingPet->last_seen_location }}<br>
+                                    <i class="fas fa-calendar-day"></i><strong>Date:</strong> {{ $missingPet->last_seen_date }}<br>
+                                    <i class="fas fa-clock"></i><strong>Time:</strong> {{ $missingPet->last_seen_time }}<br>
+                                    <i class="fas fa-paw"></i><strong>Distinguishing Features:</strong> {{ $missingPet->distinguishing_features }}<br>
+                                    @if ($missingPet->additional_info)
+                                        <i class="fas fa-info-circle"></i><strong>Additional Info:</strong> {{ $missingPet->additional_info }}
+                                    @endif
+                                </p>
+                                <a href="{{ route('found_reports.create', ['missing_pet_id' => $missingPet->id]) }}" class="btn-primary">
+                                    <i class="fas fa-binoculars"></i> Report Sighting
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
-    @endif
-</div>
+                @endforeach
+            </div>
+        @endif
+    </div>
 
 </body>
 </html>

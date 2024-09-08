@@ -139,7 +139,7 @@
                     </div>
                     
                     <div>
-                        <span class="heading">Total Price:</span> <span>${{ number_format($appointment->total_price, 2) }}</span>
+                        <span class="heading">Total Price:</span> <span>LKR {{ number_format($appointment->total_price, 2) }}</span>
                     </div>
                     
                     {{-- <div class="status {{ $appointment->status }}">

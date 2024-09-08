@@ -81,32 +81,27 @@
             font-size: 0.9em;
         }
 
-        .back-button {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: #ff6600;
-            font-weight: 600;
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            background-color: #fff;
+        /* Back to Dashboard Button */
+        .back-to-dashboard {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #ff6600;
+            color: white;
             padding: 10px 20px;
             border-radius: 50px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            z-index: 100;
         }
 
-        .back-button:hover {
-            background-color: #ff6600;
-            color: #fff;
+        .back-to-dashboard:hover {
+            background-color: #e65c00;
         }
 
-        .back-button i {
-            margin-right: 8px;
-            font-size: 1.2em;
-        }
-
+        /* Fade in animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -119,7 +114,12 @@
             }
         }
 
+        /* Media Query to hide the Back to Dashboard button on smaller screens */
         @media screen and (max-width: 768px) {
+            .back-to-dashboard {
+                display: none;
+            }
+
             .container {
                 padding: 15px;
             }
@@ -136,12 +136,6 @@
                 font-size: 1em;
             }
 
-            .back-button {
-                top: -5px;
-                left: -5px;
-                padding: 8px 16px;
-            }
-
             .task-icon {
                 font-size: 1.2em;
             }
@@ -150,8 +144,7 @@
 </head>
 
 <body>
-    <a href="{{ route('pet-owner.dashboard') }}" class="back-button" {{ Route::is('pet-owner.dashboard') ? 'active' : '' }}">
-        <div class="nav-icon"><i class="fas fa-home"></i></div>
+    <a href="{{ route('pet-owner.dashboard') }}" class="back-to-dashboard">
         <i class="fas fa-arrow-left"></i> Back to Dashboard
     </a>
 

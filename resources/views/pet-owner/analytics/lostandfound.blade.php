@@ -8,10 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: 'Fredoka', sans-serif;
-            background-color: #ff6600;
+            background-color: #FFEBCC;
             margin: 0;
             padding: 0;
             color: #333;
@@ -29,27 +30,36 @@
         }
 
         .back-button {
-            display: inline-block;
-            margin-bottom: 20px;
-            padding: 10px 20px;
-            background-color: #ff6600;
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    position: relative; /* Needed for centering in small screens */
+}
 
-        .back-button:hover {
-            background-color: #e65c00;
-        }
+.back-button:hover {
+    background-color: #e65c00;
+}
+
+@media (max-width: 768px) {
+    .back-button {
+        display: block;
+        text-align: center;
+        margin: 0 auto 20px auto; /* Centers the button horizontally */
+    }
+}
+
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateY(10px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -62,6 +72,7 @@
             color: #ff6600;
             font-weight: bold;
             font-size: 2.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .summary-cards {
@@ -76,38 +87,47 @@
             flex: 1;
             padding: 20px;
             background-color: #ff6600;
-            color: white;
+            color: #ffffff;
             text-align: center;
             border-radius: 12px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
             min-width: 250px;
             margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
         }
 
         .summary-card:hover {
             transform: translateY(-5px);
-        }
-
-        .summary-card i {
-            font-size: 40px;
-            margin-bottom: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .summary-card h2 {
             margin: 0;
             font-size: 2rem;
             font-weight: bold;
+            color: #ffffff;
         }
 
         .summary-card p {
             margin: 5px 0 0;
-            font-size: 1.2rem;
+            font-size: 35px;
+            font-weight: bold;
+            font-family: 'Fredoka', sans-serif;
+            color: white;
         }
 
         .card {
             margin-bottom: 20px;
             border: none;
+            width: 100%;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
@@ -128,22 +148,15 @@
             align-items: center;
         }
 
-        .card-header i {
-            font-size: 24px;
-            margin-right: 10px;
-        }
-
         .card-body {
             padding: 20px;
-            background-color: #fff;
-            overflow-x: auto;
+            background-color: #ffefef;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
-            table-layout: fixed;
         }
 
         table th,
@@ -152,34 +165,17 @@
             border-bottom: 1px solid #dee2e6;
             text-align: left;
             font-size: 1rem;
-            word-wrap: break-word;
         }
 
         table th {
             background-color: #ff6600;
             color: white;
             font-size: 16px;
-            text-transform: uppercase;
-        }
-
-        table tbody tr:hover {
-            background-color: #f9f9f9;
         }
 
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
-            }
-
-            .card-header,
-            .card-body {
-                padding: 10px;
-            }
-
-            table th,
-            table td {
-                padding: 10px;
-                font-size: 0.9rem;
             }
 
             .summary-cards {
@@ -188,19 +184,34 @@
         }
 
         @media (max-width: 576px) {
-            .summary-cards {
-                flex-direction: column;
-            }
-
             table th,
             table td {
                 padding: 8px;
                 font-size: 0.8rem;
             }
+        }
 
-            table th {
-                font-size: 14px;
-            }
+        /* Custom Graph Styling */
+        .graph-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .graph-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex: 1;
+            max-width: 100%;
+        }
+
+        .graph-card canvas {
+            max-height: 300px;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -214,14 +225,26 @@
         <!-- Summary Cards Section -->
         <div class="summary-cards">
             <div class="summary-card">
-                <i class="fas fa-dog"></i>
+                <img src="{{ asset('images/boarder/missing.png') }}" alt="Total Missing Pets">
                 <h2 id="missingPetsCount">0</h2>
                 <p>Total Missing Pets</p>
             </div>
             <div class="summary-card">
-                <i class="fas fa-map-marker-alt"></i>
+                <img src="{{ asset('images/boarder/pet-shop.png') }}" alt="Total Found Reports">
                 <h2 id="foundReportsCount">0</h2>
                 <p>Total Found Reports</p>
+            </div>
+        </div>
+
+        <!-- Graphs Section -->
+        <div class="graph-container">
+            <div class="graph-card">
+                <h5>Pets Reported Missing Over Time</h5>
+                <canvas id="missingPetsGraph"></canvas>
+            </div>
+            <div class="graph-card">
+                <h5>Sightings Over Time</h5>
+                <canvas id="sightingsGraph"></canvas>
             </div>
         </div>
 
@@ -284,29 +307,79 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Add Bootstrap & Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Animated counter for summary cards
+        // Animate Counter for Cards
         function animateCounter(id, target) {
-            $({
-                counter: 0
-            }).animate({
-                counter: target
-            }, {
+            $({ counter: 0 }).animate({ counter: target }, {
                 duration: 2000,
                 easing: 'swing',
-                step: function() {
+                step: function () {
                     $(id).text(Math.ceil(this.counter));
                 }
             });
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
+            // Animated counters for the summary cards
             animateCounter('#missingPetsCount', {{ $missingPets->count() }});
             animateCounter('#foundReportsCount', {{ $foundReports->count() }});
+
+            // Graph Data - Process and convert dates into months for Missing Pets and Sightings
+            const missingPetsData = @json($missingPets->pluck('last_seen_date')->map(function ($date) {
+                return \Carbon\Carbon::parse($date)->month;
+            }));
+            
+            const sightingsData = @json($foundReports->pluck('created_at')->map(function ($date) {
+                return \Carbon\Carbon::parse($date)->month;
+            }));
+
+            // Prepare month labels for the graphs
+            const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            // Count the occurrences of each month for Missing Pets data
+            const missingPetsCountByMonth = Array(12).fill(0);
+            missingPetsData.forEach(month => missingPetsCountByMonth[month - 1]++);
+
+            // Count the occurrences of each month for Sightings data
+            const sightingsCountByMonth = Array(12).fill(0);
+            sightingsData.forEach(month => sightingsCountByMonth[month - 1]++);
+
+            // Graphs
+
+            // Line graph for Missing Pets
+            const missingPetsGraph = new Chart(document.getElementById('missingPetsGraph'), {
+                type: 'line',
+                data: {
+                    labels: monthLabels,
+                    datasets: [{
+                        label: 'Missing Pets',
+                        data: missingPetsCountByMonth,
+                        borderColor: '#ff6600',
+                        backgroundColor: 'rgba(255, 102, 0, 0.2)',
+                        fill: true,
+                        tension: 0.1
+                    }]
+                }
+            });
+
+            // Bar graph for Sightings
+            const sightingsGraph = new Chart(document.getElementById('sightingsGraph'), {
+                type: 'bar',
+                data: {
+                    labels: monthLabels,
+                    datasets: [{
+                        label: 'Sightings',
+                        data: sightingsCountByMonth,
+                        backgroundColor: '#ff6600',
+                    }]
+                }
+            });
         });
     </script>
 </body>
 
-</html
+</html>

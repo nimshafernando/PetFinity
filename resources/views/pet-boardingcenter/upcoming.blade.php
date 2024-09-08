@@ -21,42 +21,49 @@
         }
 
         .top-navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #fff;
-            padding: 10px 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 10;
-        }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        padding: 10px 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+    }
 
-        .top-navbar .logo {
-            font-family: 'Fredoka One', cursive;
-            font-size: 32px;
-            color: #035a2e;
-            margin-left: 20px;
-        }
+    .top-navbar .logo {
+        font-family: 'Fredoka One', cursive;
+        font-size: 32px;
+        color: #035a2e;
+        margin-left: 20px;
+    }
 
-        .top-navbar .profile {
-            display: flex;
-            align-items: center;
-            color: #333;
-            cursor: pointer;
-            font-size: 18px;
-            margin-right: 50px;
-            font-weight: bold;
-        }
+    .top-navbar .profile {
+        display: flex;
+        align-items: center;
+        color: #333;
+        cursor: pointer;
+        font-size: 18px;
+        margin-right: 20px;
+        font-weight: bold;
+    }
 
-        .top-navbar .profile i {
-            margin-left: 10px;
-            font-size: 24px;
-        }
+    .top-navbar .profile img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .top-navbar .profile i {
+        margin-left: 10px;
+        font-size: 24px;
+    }
 
         .sidebar {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.95);
             width: 250px;
             height: calc(100vh - 60px);
             position: fixed;
@@ -69,6 +76,7 @@
             border-radius: 10px;
             font-family: 'Nunito', sans-serif;
             overflow-y: auto;
+            backdrop-filter: blur(10px);
         }
 
         .sidebar ul {
@@ -270,8 +278,9 @@
                 text-align: left;
             }
 
-            .profile{
-                right: 20px
+            .profile {
+                flex: 0 0 auto;
+                justify-content: flex-end;
             }
         }
 
@@ -298,12 +307,8 @@
                 font-size: 18px;
             }
 
-            .profile{
-                right: 20px
-            }
-
             .profile {
-                text-decoration: none;
+                justify-content: flex-end;
             }
         }
     </style>
@@ -312,19 +317,19 @@
 
 <body>
     <div class="top-navbar">
-        <div class="logo">Petfinity</div>
+        <div class="logo">PetFinity</div>
         <a href="{{ route('boarding-center.profile')}}" class="profile">
-            <div class="profile"><span>Profile</span><i class="fas fa-user"></i></div>
-        </a>    </div>
+            <span>Profile</span><i class="fas fa-user"></i>
+        </a>
+    </div>
 
     <div class="sidebar">
         <ul>
             <li><a href="{{ route('pet-boardingcenter.dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-<li><a href="{{ route('pet-boardingcenter.pendingbookings') }}"><i class="fas fa-clock"></i> Pending Requests</a></li>
-<li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> My Schedule</a></li>
-<li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
-<li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> Appointment History</a></li>
-
+            <li><a href="{{ route('pet-boardingcenter.pendingbookings') }}"><i class="fas fa-clock"></i> Pending Requests</a></li>
+            <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> My Schedule</a></li>
+            <li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
+            <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> Appointment History</a></li>
         </ul>
     </div>
 
@@ -360,10 +365,7 @@
             <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> Schedule</a></li>
             <li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
             <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> History</a></li>
-            
-
         </ul>
-    </div>
     </div>
 </body>
 
