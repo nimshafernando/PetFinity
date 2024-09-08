@@ -26,20 +26,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 10px 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 10;
+            backdrop-filter: blur(10px);
         }
 
         .top-navbar .logo {
             font-family: 'Fredoka One', cursive;
             font-size: 32px;
             color: #035a2e;
-            margin-left: 20px;
         }
 
         .top-navbar .profile {
@@ -48,7 +48,7 @@
             color: #333;
             cursor: pointer;
             font-size: 18px;
-            margin-right: 50px;
+            margin-left: auto;
             font-weight: bold;
         }
 
@@ -58,7 +58,7 @@
         }
 
         .sidebar {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.95);
             width: 250px;
             height: calc(100vh - 60px);
             position: fixed;
@@ -71,6 +71,7 @@
             border-radius: 10px;
             font-family: 'Nunito', sans-serif;
             overflow-y: auto;
+            backdrop-filter: blur(10px);
         }
 
         .sidebar ul {
@@ -325,7 +326,7 @@
             <p>No pending bookings.</p>
             @else
             @foreach($pendingAppointments as $appointment)
-            <div class="card mb-3" id="appointment-{{ $appointment->id }}">
+            <div class="mb-3 card" id="appointment-{{ $appointment->id }}">
                 <div class="card-body">
                     <h5 class="card-title">Booking Request for Pet : {{ $appointment->pet_name }}</h5>
                     <h5 class="card-title">Pet Type : {{ $appointment->pet_type }}</h5>
@@ -350,7 +351,7 @@
                             <button type="submit" class="btn btn-danger">Decline</button>
                         </form>
                     </div>
-                    <div class="form-group mt-2">
+                    <div class="mt-2 form-group">
                         <label for="declined_reason-{{ $appointment->id }}">Reason for Declination</label>
                         <select id="declined_reason-{{ $appointment->id }}" class="form-control" required
                             onchange="toggleOtherReasonField({{ $appointment->id }})">
@@ -362,7 +363,7 @@
                         <div class="error-message" id="error-message-{{ $appointment->id }}">Please select a reason for
                             declining the booking.</div>
                     </div>
-                    <div class="form-group mt-2" id="other-reason-field-{{ $appointment->id }}" style="display: none;">
+                    <div class="mt-2 form-group" id="other-reason-field-{{ $appointment->id }}" style="display: none;">
                         <label for="other_reason-{{ $appointment->id }}">Please specify</label>
                         <input type="text" name="other_reason" id="other_reason-{{ $appointment->id }}"
                             class="form-control" oninput="updateHiddenReason({{ $appointment->id }})">
@@ -379,10 +380,10 @@
     <div class="navbar">
         <ul>
             <li><a href="{{ route('pet-boardingcenter.dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="{{ route('pet-boardingcenter.pendingbookings') }}"><i class="fas fa-clock"></i> Pending Requests</a></li>
-            <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> My Schedule</a></li>
+            <li><a href="{{ route('pet-boardingcenter.pendingbookings') }}"><i class="fas fa-clock"></i> Requests</a></li>
+            <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> Schedule</a></li>
             <li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
-            <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> Appointment History</a></li>
+            <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> History</a></li>
             
 
         </ul>

@@ -22,7 +22,9 @@
 
         h1 {
             text-align: center;
-            color: #EA785B; /* Terra Cotta */
+            color: #ff6600; /* Terra Cotta */
+            font-family: 'Fredoka One', cursive, sans-serif;
+font-weight: bold;
             position: relative;
         }
 
@@ -67,8 +69,8 @@
             display: block;
             width: 100%;
             padding: 12px;
-            background-color: #EA785B;
-            border-color: #EA785B;
+            background-color: #4CAF50; /* Green color for 'Report Missing Pet' */
+            border-color: #4CAF50;
             color: white;
             font-weight: bold;
             text-align: center;
@@ -77,12 +79,34 @@
             font-size: 18px;
             margin-top: 20px;
             transition: background-color 0.3s ease;
+            margin-bottom: 10px; /* Reduce bottom margin */
         }
 
         .btn-primary:hover {
-            background-color: #D25F51; /* Darker Terra Cotta */
-            border-color: #D25F51;
+            background-color: #45A049; /* Darker green */
+            border-color: #45A049;
         }
+
+        .btn-cancel {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #FF0000; /* Red color for 'Cancel' */
+            border-color: #FF0000;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background-color: #CC0000; /* Darker red */
+            border-color: #CC0000;
+        }
+
 
         .paw-print-bottom {
             display: block;
@@ -131,6 +155,8 @@
         </div>
         <button type="submit" class="btn-primary">Report Missing Pet</button>
         <div class="paw-print-bottom"></div>
+        <button type="button" class="btn-cancel" onclick="window.location.href='{{ route('pet-owner.dashboard') }}'">Cancel</button>
+
     </form>
 </div>
 

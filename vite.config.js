@@ -13,7 +13,8 @@ export default defineConfig({
                 'resources/css/pet_owner_css/bookinghistory.css',
                 'resources/js/pet_owner_js/bookinghistory.js',
                 'resources/js/pet_owner_js/upcoming.js',
-                'resources/css/pet_owner_css/upcoming.css'
+                'resources/css/pet_owner_css/upcoming.css',
+                'resources/js/echo-setup.js'
             ],
             refresh: true,
         }),

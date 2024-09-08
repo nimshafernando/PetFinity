@@ -53,36 +53,59 @@ class AppointmentController extends Controller
 
     // * Show accepted appointments from pet boarding center and ask for payment method 
     public function appointmentTypes()
-    {
-        $currentDate = now()->format('Y-m-d');
-        $currentTime = now()->format('H:i:s');
-    
-        // Fetch ongoing appointments based on end_date
-        $ongoingAppointments = Appointment::where('petowner_id', Auth::id())
-            ->where('status', 'accepted')
-            ->where('end_date', '>=', $currentDate)
-            ->with(['boardingcenter', 'pet'])
-            ->get();
-    
-        // Fetch past appointments
-        $pastAppointments = Appointment::where('petowner_id', Auth::id())
-            ->where('status', 'accepted')
-            ->where('end_date', '<', $currentDate)
-            ->with(['boardingcenter', 'pet'])
-            ->get();
-    
-        // Fetch accepted appointments with pending payment status
-        $acceptedAppointments = Appointment::where('petowner_id', Auth::id())
-            ->where('status', 'accepted')
-            ->where('payment_status', 'pending')
-            ->with(['boardingcenter', 'pet'])
-            ->get();
-    
+{
+    $currentDate = now()->format('Y-m-d');
+    $currentTime = now()->format('H:i:s');
+
+    // Fetch ongoing appointments
+    $ongoingAppointments = Appointment::where('petowner_id', Auth::id())
+        ->where('status', 'accepted')
+        ->where('end_date', '>=', $currentDate)
+        ->with(['boardingcenter', 'pet'])
+        ->get();
+
+    // Fetch past appointments
+    $pastAppointments = Appointment::where('petowner_id', Auth::id())
+        ->where('status', 'accepted')
+        ->where('end_date', '<', $currentDate)
+        ->with(['boardingcenter', 'pet'])
+        ->get();
+
+    // Fetch accepted appointments with pending payment status
+    $acceptedAppointments = Appointment::where('petowner_id', Auth::id())
+        ->where('status', 'accepted')
+        ->where('payment_status', 'pending')
+        ->with(['boardingcenter', 'pet'])
+        ->get();
+
+    // Fetch pending appointments
+    $pendingAppointments = Appointment::where('status', 'pending')
+        ->where('petowner_id', Auth::id())
+        ->with(['boardingcenter', 'pet'])
+        ->get();
+
+    // Fetch declined appointments
+    $declinedAppointments = Appointment::where('status', 'declined')
+        ->where('petowner_id', Auth::id())
+        ->with(['boardingcenter', 'pet'])
+        ->get();
+
         // Fetch the user's pets
         $pets = Auth::user()->pets;
-    
-        return view('pet-owner.dashboard', compact('acceptedAppointments', 'ongoingAppointments', 'pastAppointments', 'pets'));
-    }
+
+    return view('pet-owner.dashboard', compact('acceptedAppointments', 'ongoingAppointments', 'pastAppointments', 'pets', 'pendingAppointments', 'declinedAppointments'));
+}
+
+public function removeDeclinedAppointment($id)
+{
+    $appointment = Appointment::findOrFail($id);
+
+    // You can delete the appointment, or simply update its status to 'removed'
+    $appointment->delete();
+
+    return redirect()->route('pet-owner.dashboard')->with('success', 'Declined appointment removed successfully.');
+}
+
     
 
     //* Select payment method
@@ -102,8 +125,20 @@ class AppointmentController extends Controller
         return redirect()->route('pet-owner.dashboard')->with('success', 'Payment method selected successfully.');
     }
 
-
-
+    public function cashPayment(Request $request, $id)
+    {
+        // Find the appointment by ID
+        $appointment = Appointment::findOrFail($id);
+    
+        // Update the payment method and payment status to 'cash' and 'onvisit'
+        $appointment->update([
+            'payment_method' => 'cash',
+            'payment_status' => 'onvisit', // Set status for cash payments (to be paid on visit)
+        ]);
+    
+        // Redirect to cash.blade.php
+        return view('cash', compact('appointment'));
+    }
     
     // Pet status update feature: Show tasks for an appointment
     public function showTasks($id)

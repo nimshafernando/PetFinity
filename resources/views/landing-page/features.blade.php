@@ -259,7 +259,7 @@
     <section class="hero">
         <div class="hero-content">
             <h1>See Our Portfolio of Features in Action</h1>
-            <p>Explore the features that make Petfinity the best choice for pet owners, trainers, and boarders.</p>
+            <p>Explore the features that make Petfinity the best choice for pet owners and pet boarders.</p>
             <a href="{{ route('select-role')}}" class="cta-button">Explore Now</a>
         </div>
     </section>

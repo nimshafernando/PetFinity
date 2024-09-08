@@ -515,7 +515,6 @@
         <a href="/">Home</a>
         <div class="dropdown-btn" onclick="toggleSidebarDropdown('sidebarServicesDropdown')">Services <i class="fa fa-caret-down"></i></div>
         <div class="dropdown" id="sidebarServicesDropdown">
-            <a href="training">Training</a>
             <a href="Boarding">Boarding</a>
             <a href="lostandfound">Report Missing Pets</a>
         </div>
@@ -549,17 +548,17 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="Boarding">Boarding</a></li>
+                        <li><a href="lostandfound">Report lost and found </a></li>
+                        <li><a href="features">Features</a></li>
+                        <li><a href="{{ route('select-role')}}">Register</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Contact Us</h3>
-                    <p>Email: support@petfinity.com</p>
-                    <p>Phone: (123) 456-7890</p>
-                    <p>Address: 123 Pet Street, Pet City, PC 12345</p>
+                    <p>Email: petfinity@gmail.com</p>
+                    <p>Phone: (+94) 768 041 769</p>
                 </div>
             </div>
             <div class="search-bar">

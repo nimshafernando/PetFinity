@@ -21,40 +21,46 @@
         }
 
         .top-navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #fff;
-            padding: 10px 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 10;
-        }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        padding: 10px 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+    }
 
-        .top-navbar .logo {
-            font-family: 'Fredoka One', cursive;
-            font-size: 32px;
-            color: #035a2e;
-            margin-left: 20px;
-        }
+    .top-navbar .logo {
+        font-family: 'Fredoka One', cursive;
+        font-size: 32px;
+        color: #035a2e;
+        margin-left: 20px;
+    }
 
-        .top-navbar .profile {
-            display: flex;
-            align-items: center;
-            color: #333;
-            cursor: pointer;
-            font-size: 18px;
-            margin-right: 50px;
-            font-weight: bold;
-        }
+    .top-navbar .profile {
+        display: flex;
+        align-items: center;
+        color: #333;
+        cursor: pointer;
+        font-size: 18px;
+        margin-right: 20px;
+        font-weight: bold;
+    }
 
-        .top-navbar .profile i {
-            margin-left: 10px;
-            font-size: 24px;
-        }
+    .top-navbar .profile img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
 
+    .top-navbar .profile i {
+        margin-left: 10px;
+        font-size: 24px;
+    }
         .sidebar {
             background-color: #fff;
             width: 250px;
@@ -66,7 +72,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             z-index: 10;
             transition: all 0.3s ease-in-out;
-            border-radius: 10px;
             font-family: 'Nunito', sans-serif;
             overflow-y: auto;
         }
@@ -81,8 +86,6 @@
             padding: 15px 20px;
             cursor: pointer;
             transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-            border-radius: 8px;
-            margin: 0 10px;
             font-weight: bold;
         }
 
@@ -129,14 +132,6 @@
             font-size: 28px;
         }
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-weight: bold;
-            font-size: 28px;
-        }
-
         .card {
             display: flex;
             flex-wrap: wrap;
@@ -144,7 +139,6 @@
             border-bottom: 2px solid #249EA0;
             padding: 20px 0;
             transition: transform 0.3s, box-shadow 0.3s;
-            min-width: 280px;
         }
 
         .card:last-child {
@@ -280,7 +274,7 @@
             }
 
             .profile {
-                right: 20px
+                justify-content: flex-end;
             }
         }
 
@@ -308,7 +302,7 @@
             }
 
             .profile {
-                right: 20px
+                justify-content: flex-end;
             }
         }
     </style>
@@ -319,8 +313,9 @@
     <div class="top-navbar">
         <div class="logo">Petfinity</div>
         <a href="{{ route('boarding-center.profile')}}" class="profile">
-            <div class="profile"><span>Profile</span><i class="fas fa-user"></i></div>
-        </a>    </div>
+            <span>Profile</span><i class="fas fa-user"></i>
+        </a>
+    </div>
 
     <div class="sidebar">
         <ul>
@@ -329,12 +324,13 @@
             <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> My Schedule</a></li>
             <li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
             <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> Appointment History</a></li>
-            
         </ul>
     </div>
 
     <div class="content">
         <div class="container">
+            <h2>Appointment History</h2>
+            <p>All your past appointments with PETFINITY!</p>
             @if($appointments->isEmpty())
             <p class="no-appointments">No upcoming appointments.</p>
             @else
@@ -357,14 +353,13 @@
         </div>
     </div>
 
-
     <div class="navbar">
         <ul>
-            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="#"><i class="fas fa-paw"></i> Pets</a></li>
-            <li><a href="#"><i class="fas fa-bed"></i> Boarding</a></li>
-            <li><a href="#"><i class="fas fa-calendar-alt"></i> Upcoming</a></li>
-            <li><a href="#"><i class="fas fa-history"></i> History</a></li>
+            <li><a href="{{ route('pet-boardingcenter.dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{{ route('pet-boardingcenter.pendingbookings') }}"><i class="fas fa-clock"></i> Requests</a></li>
+            <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> Schedule</a></li>
+            <li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
+            <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> History</a></li>
         </ul>
     </div>
 </body>

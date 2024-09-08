@@ -13,7 +13,7 @@
 
             <a href="{{ route('boarding-centers.index') }}" class="nav-link {{ Route::is('boarding-centers.index') ? 'active' : '' }}">
                 <div class="nav-icon"><i class="fas fa-bed"></i></div>
-                Pet Boarding Centers
+                Boarding
             </a>
 
             <a href="{{ route('appointments.upcoming') }}" class="nav-link {{ Route::is('appointments.upcoming') ? 'active' : '' }}">
@@ -23,7 +23,7 @@
 
             <a href="{{ route('appointments.history') }}" class="nav-link {{ Route::is('appointments.history') ? 'active' : '' }}">
                 <div class="nav-icon"><i class="fas fa-history"></i></div>
-                Past Bookings
+                History
             </a>
         </nav>
     </div>

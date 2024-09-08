@@ -29,14 +29,16 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ff6600, #ff9933);
+            background: linear-gradient(135deg, #FFEBCC, #FFEBCC);
             padding: 20px;
+            
+
         }
 
         .container {
             width: 100%;
             max-width: 1000px;
-            background-color: #fff;
+            background-color: #FFEBCC;
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
             padding: 30px;

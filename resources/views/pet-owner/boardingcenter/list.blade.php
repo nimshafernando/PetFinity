@@ -15,7 +15,7 @@
             font-family: 'Nunito', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #ff6600, #ff9933);
+            background: #FFEBCC;;
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -52,6 +52,8 @@
             margin-bottom: 30px;
             font-weight: bold;
             font-size: 36px;
+            font-family: 'Fredoka One', cursive;
+
         }
 
         .card {
@@ -349,7 +351,7 @@
         
                     <a href="{{ route('boarding-centers.index') }}" class="nav-link {{ request()->routeIs('boarding-centers.index') ? 'active' : '' }}">
                         <div class="nav-icon"><i class="fas fa-bed"></i></div>
-                        Pet Boarding Centers
+                        Boarding
                     </a>
         
                     <a href="{{ route('appointments.upcoming') }}" class="nav-link {{ request()->routeIs('appointments.upcoming') ? 'active' : '' }}">
@@ -359,7 +361,7 @@
         
                     <a href="{{ route('appointments.history') }}" class="nav-link {{ request()->routeIs('appointments.history') ? 'active' : '' }}">
                         <div class="nav-icon"><i class="fas fa-history"></i></div>
-                        Past Bookings
+                        History
                     </a>
                 </nav>
             </div>
@@ -389,7 +391,7 @@
                             </div>
                             <p class="card-text"><span>Operating Hours:</span> {{ $center->operating_hours }}</p>
                             <p class="card-text"><span>City:</span> {{ $center->city }}</p>
-                            <p class="card-text"><span>Price Per Night:</span> ${{ number_format($center->price_per_night, 2) }}</p>
+                            <p class="card-text"><span>Price Per Night:</span> LKR {{ number_format($center->price_per_night, 2) }}</p>
                             <a href="{{ route('boarding-centers.show', $center->id) }}" class="btn btn-primary">View More Details</a>
                         </div>
                     </div>

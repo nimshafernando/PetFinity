@@ -223,6 +223,10 @@
         <form action="{{ route('stripe') }}" method="post">
             @csrf
             <!-- Include product details and user details in hidden fields -->
+
+            <input type="hidden" name="id" value="{{ $appointment->id }}"> <!-- Pass the correct appointment ID -->
+            <input type="hidden" name="payment_method" id="payment-method">
+
             <input type="hidden" name="product_name" value="Pet Boarding - {{ $appointment->pet->pet_name }}">
             <input type="hidden" name="quantity" value="1">
             <input type="hidden" name="price" value="{{ $appointment->total_price }}">
@@ -245,29 +249,39 @@
 
     <script>
         function selectPayment(method) {
-            const stripeButton = document.getElementById('stripe-payment-button');
-            const cashButton = document.getElementById('cash-payment-button');
+    const stripeButton = document.getElementById('stripe-payment-button');
+    const cashButton = document.getElementById('cash-payment-button');
+    const paymentMethodField = document.getElementById('payment-method');
 
-            // Reset styles for all options
-            document.getElementById('card-option').classList.remove('active');
-            document.getElementById('cash-option').classList.remove('active');
+    // Reset styles for all options
+    document.getElementById('card-option').classList.remove('active');
+    document.getElementById('cash-option').classList.remove('active');
 
-            // Hide both buttons initially
-            stripeButton.style.display = 'none';
-            cashButton.style.display = 'none';
+    // Hide both buttons initially
+    stripeButton.style.display = 'none';
+    cashButton.style.display = 'none';
 
-            // Conditionally display the selected button and set active class
-            if (method === 'card') {
-                document.getElementById('card-option').classList.add('active');
-                stripeButton.style.display = 'block';
-            } else if (method === 'cash') {
-                document.getElementById('cash-option').classList.add('active');
-                cashButton.style.display = 'block';
-                cashButton.onclick = function () {
-                    window.location.href = '{{ route("cash.payment") }}';
-                };
-            }
-        }
+    // Set the selected payment method
+    paymentMethodField.value = method;
+
+    // Conditionally display the selected button and set active class
+    if (method === 'card') {
+        document.getElementById('card-option').classList.add('active');
+        stripeButton.style.display = 'block';
+    } else if (method === 'cash') {
+        document.getElementById('cash-option').classList.add('active');
+        cashButton.style.display = 'block';
+        
+        // Get the appointment ID from the form's hidden field
+        const appointmentId = document.querySelector('input[name="id"]').value;
+
+        // Set the button to redirect to the cash payment route
+        cashButton.onclick = function () {
+            window.location.href = `/cash/payment/${appointmentId}`;
+        };
+    }
+}
+
     </script>
 
 </body>

@@ -119,16 +119,6 @@
             backdrop-filter: blur(10px);
         }
 
-        .navbar {
-            background-color: rgba(33, 150, 243, 0.9);
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 10px;
-        }
-
         .welcome-message {
             background: linear-gradient(to right, #4CAF50, #2196F3);
             color: white;
@@ -167,74 +157,72 @@
         }
 
         .card {
-    background-color: #e0f7fa;
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    padding: 20px; /* Adjusted padding for more space within the card */
-    text-align: center;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Ensure even spacing between elements */
-}
+            background-color: #e0f7fa;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            padding: 20px;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-.card p {
-    text-align: center; /* Center align the text */
-    margin-bottom: 10px; /* Add some space below the text */
-}
+        .card p {
+            text-align: center;
+            margin-bottom: 10px;
+        }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-}
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
 
-.card-header {
-    font-size: 1.7rem;
-    color: #035a2e;
-    font-family: 'Fredoka One', cursive;
-    margin-bottom: 15px;
-    text-align: center;
-}
+        .card-header {
+            font-size: 1.7rem;
+            color: #035a2e;
+            font-family: 'Fredoka One', cursive;
+            margin-bottom: 15px;
+            text-align: center;
+        }
 
-.card img {
-    max-width: 180px; /* Set a maximum width */
-    height: auto; /* Maintain the aspect ratio */
-    border-radius: 10px; /* Add rounded corners */
-    margin: 0 auto 20px auto; /* Add space below the image */
-    display: block; /* Ensure the image is a block element */
-    transition: transform 0.3s ease-in-out;
-}
+        .card img {
+            max-width: 180px;
+            height: auto;
+            border-radius: 10px;
+            margin: 0 auto 20px auto;
+            display: block;
+            transition: transform 0.3s ease-in-out;
+        }
 
-.card img:hover {
-    transform: scale(1.05); /* Enlarge the image on hover */
-}
+        .card img:hover {
+            transform: scale(1.05);
+        }
 
-.btn-primary {
-    background-color: #035a2e;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 20px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-top: 15px; /* Ensure there is space above the button */
-}
+        .btn-primary {
+            background-color: #035a2e;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 15px;
+        }
 
-.btn-primary:hover {
-    background-color: #02874a;
-    transform: scale(1.05);
-}
+        .btn-primary:hover {
+            background-color: #02874a;
+            transform: scale(1.05);
+        }
 
-        /* Two Rows of Two Cards */
         .two-rows-of-two-cards .card {
             margin-bottom: 20px;
         }
 
-        /* Additional Section Styling */
         .additional-sections .section {
             background-color: #e0f7fa;
             border-radius: 15px;
@@ -406,23 +394,14 @@
     </div>
 
     <div class="main-content">
-        <div class="navbar">
-            <div>For all your infinite needs!</div>
-            <div>Available For Bookings</div>
-        </div>
-
         <div class="welcome-message">
             Welcome to PetFinity
         </div>
 
-        <!-- Section Headers -->
         <h2 class="section-header">Quick Access</h2>
 
-        <!-- Two Rows of Two Cards -->
         <div class="two-rows-of-two-cards">
-            <!-- Row 1 -->
             <div class="row">
-                <!-- Views Analytics Card -->
                 <div class="mb-4 col-md-6">
                     <div class="card card-analytics h-100">
                         <div class="card-header">
@@ -439,31 +418,22 @@
                 </div>
 
                 <div class="mb-4 col-md-6">
-                    <div class="card card-price h-100">
+                    <div class="card card-chat h-100">
                         <div class="card-header">
-                            <span class="fas fa-dollar-sign"></span> Set or Update Price Per Night
+                            <span class="fas fa-comments"></span> Chat with Pet Owners
                         </div>
                         <div class="card-body d-flex flex-column align-items-center">
-                            <p class="flex-grow-1">Adjust the pricing for your pet boarding services. Ensure your prices are up-to-date.</p>
-                            <form action="{{ route('boarding-center.update-price') }}" method="POST" class="mt-auto text-center">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="price_per_night">Price Per Night ($)</label>
-                                    <input type="number" step="0.01" name="price_per_night" id="price_per_night" class="form-control" value="{{ Auth::user()->price_per_night }}" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary align-button">
-                                    <span class="fas fa-save"></span> Update Price
-                                </button>
-                            </form>
+                            <p class="flex-grow-1">Get in touch with pet owners and answer any questions they may have about your boarding services.</p>
+                            <img src="{{ asset('images/boarder/live-chat.png') }}" alt="Chat with Pet Owners" class="img-fluid">
+                            <a href="{{ route('pet-boardingcenter.chats') }}" class="mt-auto btn btn-primary align-button">
+                                <span class="fas fa-comments"></span> Start Chatting
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-                
 
-            <!-- Row 2 -->
             <div class="row">
-                <!-- Manage Tasks Section -->
                 <div class="mb-4 col-md-6">
                     <div class="card card-tasks h-100">
                         <div class="card-header">
@@ -479,7 +449,6 @@
                     </div>
                 </div>
 
-                <!-- Check Reviews Section -->
                 <div class="mb-4 col-md-6">
                     <div class="card card-reviews h-100">
                         <div class="card-header">
@@ -487,7 +456,7 @@
                         </div>
                         <div class="card-body d-flex flex-column align-items-center">
                             <p class="flex-grow-1">View and respond to reviews left by pet owners for your boarding services.</p>
-                            <img src="{{ asset('images/boarder/rating.png') }}"alt="Check Reviews">
+                            <img src="{{ asset('images/boarder/rating.png') }}" alt="Check Reviews">
                             <a href="{{ route('boarding-center.reviews') }}" class="mt-auto btn btn-primary align-button">
                                 <span class="fas fa-eye"></span> View Reviews
                             </a>
@@ -497,12 +466,30 @@
             </div>
         </div>
 
-        <!-- New Layout for Additional Sections -->
+        <div class="mb-4 d-flex justify-content-center">
+            <div class="card card-price h-100 col-md-6 col-lg-4">
+                <div class="text-center card-header">
+                    <span class="fas fa-dollar-sign"></span> Set or Update Price Per Night
+                </div>
+                <div class="card-body d-flex flex-column align-items-center">
+                    <p class="text-center flex-grow-1">Adjust the pricing for your pet boarding services. Ensure your prices are up-to-date.</p>
+                    <form action="{{ route('boarding-center.update-price') }}" method="POST" class="mt-auto text-center w-100">
+                        @csrf
+                        <div class="form-group">
+                            <label for="price_per_night">Price Per Night (LKR)</label>
+                            <input type="number" step="0.01" name="price_per_night" id="price_per_night" class="form-control" value="{{ Auth::user()->price_per_night }}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary align-button">
+                            <span class="fas fa-save"></span> Update Price
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="additional-sections">
-            <!-- Section Header -->
             <h2 class="section-header">Training & Certification</h2>
 
-            <!-- Training and Certification Section -->
             <div class="section">
                 <img src="{{ asset('images/boarder/certificate.png') }}" alt="Training and Certification">
                 <div class="text-content">
@@ -514,10 +501,8 @@
                 </div>
             </div>
 
-            <!-- Section Header -->
             <h2 class="section-header">Upcoming Business Trends</h2>
 
-            <!-- Upcoming Business Trends Section -->
             <div class="section">
                 <img src="{{ asset('images/boarder/increase.png') }}" alt="Business Trends">
                 <div class="text-content">
@@ -529,10 +514,8 @@
                 </div>
             </div>
 
-            <!-- Section Header -->
             <h2 class="section-header">Pet Healthcare</h2>
 
-            <!-- Pet Healthcare Section -->
             <div class="section">
                 <img src="{{ asset('images/boarder/pet-care (4).png') }}" alt="Pet Healthcare">
                 <div class="text-content">

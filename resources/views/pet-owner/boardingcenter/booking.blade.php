@@ -179,13 +179,12 @@
             <input type="hidden" name="total_price" id="total_price_hidden">
             
             <div class="mb-3">
-                <label for="total_price" class="form-label">Total Price (LKR)</label>
+                <label for="total_price" class="form-label">Total Price</label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                    <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                     <input type="text" id="total_price" class="form-control" readonly>
                 </div>
             </div>
-            
             
             <script>
                 const startDateInput = document.getElementById('start_date');
@@ -195,49 +194,34 @@
                 const pricePerNight = parseFloat(document.getElementById('price_per_night').value);
                 const totalPriceInput = document.getElementById('total_price');
                 const totalPriceHiddenInput = document.getElementById('total_price_hidden');
-
-                function validateDates() {
-                    const startDate = new Date(startDateInput.value);
-                    const endDate = new Date(endDateInput.value);
-
-                    if (endDate < startDate) {
-                        // Automatically adjust the end date to be the same as the start date
-                        endDateInput.value = startDateInput.value;
-                    }
-                    calculateTotalPrice();
-                }
-
                 function calculateTotalPrice() {
-                    const startDate = new Date(startDateInput.value + 'T' + checkInTimeInput.value);
-                    const endDate = new Date(endDateInput.value + 'T' + checkOutTimeInput.value);
+                const startDate = new Date(startDateInput.value + ' ' + checkInTimeInput.value);
+                const endDate = new Date(endDateInput.value + ' ' + checkOutTimeInput.value);
 
-                    if (startDate && endDate && endDate > startDate) {
-                        // Calculate the difference in days
-                        let timeDiff = endDate.getTime() - startDate.getTime();
-                        let nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                if (startDate && endDate && endDate >= startDate) {
+                    const timeDiff = endDate - startDate;
+                    const days = timeDiff / (1000 * 3600 * 24);
+                    let totalNights = Math.ceil(days);
 
-                        // Adjust nights if the check-out time is earlier than the check-in time on the last day
-                        if (checkOutTimeInput.value <= checkInTimeInput.value) {
-                            nights += 1;
-                        }
-
-                        const totalPrice = (nights * pricePerNight).toFixed(2);
-                        totalPriceInput.value = totalPrice;
-                        totalPriceHiddenInput.value = totalPrice;
-                    } else {
-                        totalPriceInput.value = '';
-                        totalPriceHiddenInput.value = '';
+                    if (checkOutTimeInput.value < checkInTimeInput.value) {
+                        totalNights -= 1;
                     }
-                }
 
-                startDateInput.addEventListener('change', validateDates);
-                endDateInput.addEventListener('change', validateDates);
+                    const totalPrice = (totalNights * pricePerNight).toFixed(2);
+                    totalPriceInput.value = "LKR " + totalPrice;
+                    totalPriceHiddenInput.value = totalPrice;
+                } else {
+                    totalPriceInput.value = '';
+                    totalPriceHiddenInput.value = '';
+                }
+            }
+
+            
+                startDateInput.addEventListener('change', calculateTotalPrice);
+                endDateInput.addEventListener('change', calculateTotalPrice);
                 checkInTimeInput.addEventListener('change', calculateTotalPrice);
                 checkOutTimeInput.addEventListener('change', calculateTotalPrice);
-
             </script>
-            
-            
             
             
 

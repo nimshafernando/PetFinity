@@ -44,16 +44,18 @@ class BoardingCenterDashboardController extends Controller
         ->join('pet_owners', 'appointments.petowner_id', '=', 'pet_owners.id')
         ->where('pet_boarding_centers.id', $user_id)  // Assuming boarding centers are identified by user_id
         ->select(
-            'pets.*',
-            'appointments.special_notes',
+            'pets.id',
+            'pets.age',
+            'pets.breed',
+            'pets.type',
+            'pets.pet_name',
             'pets.profile_picture'
         )
-        ->distinct()
+        ->groupBy('pets.id', 'pets.pet_name', 'pets.profile_picture') // Grouping by distinct pet fields
         ->get();
 
     return view('pet-boardingcenter.showpetprofile', compact('pets'));
 }
-
 
 
 

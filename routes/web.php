@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\CashController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\ReviewController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Api\MissingPetController;
 use App\Http\Controllers\BookingHistoryController;
 use App\Http\Controllers\TaskCompletionController;
+//use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Api\FoundReportController;
 //use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PendingBookingsController;
@@ -113,6 +115,8 @@ Route::get('cancel', [StripeController::class, 'cancel'])->name('cancel');
 Route::middleware(['auth:petowner'])->group(function () {
     //petowner dashboard
     Route::get('petowner/dashboard', [PetOwnerController::class, 'index'])->name('pet-owner.dashboard');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
    //*petowner pet profile 
    Route::get('mypets', [PetController::class, 'addpetform'])->name('mypets'); // section which says add a pet and the pets you currently have
@@ -153,16 +157,19 @@ Route::middleware(['auth:petowner'])->group(function () {
     Route::post('/missing-pets', [MissingPetController::class, 'store'])->name('missing_pets.store');
     Route::get('/missing-pets/map', [MissingPetController::class, 'map'])->name('missing_pets.map');
 
+    Route::get('/payment-gateway', [testcontroller::class, 'index'])->name('payment.gateway');
+    Route::get('/test', [testcontroller::class, 'showTest'])->name('test.show');
+
 
     //test-cash route
-    Route::get('/cash', function () {
-        return view('cash');
-    })->name('cash.payment');
+    // Route::get('/cash', function () {
+    //     return view('cash');
+    // })->name('cash.payment');
 
-    //cash-route
-    Route::get('/cash-payment', [PaymentController::class, 'showCashPayment'])->name('cash.payment');
+    // //cash-route
+    // Route::get('/cash-payment', [PaymentController::class, 'showCashPayment'])->name('cash.payment');
 
-
+    Route::get('/cash/payment/{id}', [AppointmentController::class, 'cashPayment'])->name('cash.payment');
 
 
 
@@ -179,8 +186,9 @@ Route::middleware(['auth:petowner'])->group(function () {
     
     // Make sure that the parameter name in the route matches the variable in the controller method
     
-    // Route to show the test page for the current pet owner
-    Route::get('/test', [testcontroller::class, 'showTest'])->name('test.show');
+    
+    // // Route to show the test page for the current pet owner
+    // Route::get('/test', [testcontroller::class, 'showTest'])->name('test.show');
 
     Route::get('/pay', 'PaymentController@processCashPayment')->name('cash');
 
@@ -196,6 +204,21 @@ Route::middleware(['auth:petowner'])->group(function () {
     //nimsha test analytics code
     Route::get('/petowner/lost-and-found-analytics', [PetOwnerAnalyticsController::class, 'showLostAndFoundAnalytics'])->name('petowner.analytics.lostandfound');
 
+    //chat routes
+    Route::get('/petowner/chats', [ChatController::class, 'fetchMessages'])->name('pet-owner.chats');
+  
+
+    // Route for sending messages between Pet Owner and Pet Boarder
+    Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send.messageBetweenPetOwnerAndBoarder');
+
+    // Route for fetching messages between Pet Owner and Pet Boarder
+    Route::get('/fetch-messages', [ChatController::class, 'fetchMessages'])->name('fetch.messagesBetweenPetOwnerAndBoarder');
+
+    Route::post('/appointment/{id}/remove-declined', [AppointmentController::class, 'removeDeclinedAppointment'])->name('appointment.removeDeclined');
+
+  
+
+
 });
 
 //!MIDDLEWARE FOR PET TRAINING CENTER
@@ -208,6 +231,8 @@ Route::middleware(['auth:trainingcenter'])->group(function () {
 
 //!MIDDLEWARE FOR PET BOARDING CENTER
 Route::middleware(['auth:boardingcenter'])->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
     //pet boarding center dashboard
     Route::get('petboardingcenter/dashboard', [PetBoardingCenterController::class, 'index'])->name('pet-boardingcenter.dashboard');
@@ -259,6 +284,15 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
     Route::post('/boarding-center/update-price', [PetBoardingCenterController::class, 'updatePricePerNight'])->name('boarding-center.update-price');
 
     Route::get('/petboarder/analytics', [PetBoarderAnalyticsController::class, 'index'])->name('petboarder.analytics');
+
+        // Chat routes for Pet Boarders
+    Route::get('/pet-boardingcenter/chats', [ChatController::class, 'fetchMessagesForBoarder'])->name('pet-boardingcenter.chats');
+    Route::post('/pet-boardingcenter/send-message', [ChatController::class, 'sendMessageForBoarder'])->name('pet-boardingcenter.send-message');
+
+    Route::get('/pet-boardingcenter/fetch-messages', [ChatController::class, 'fetchMessagesForBoarder'])->name('fetch.messagesForBoarder');
+
+
+
 });
 
 

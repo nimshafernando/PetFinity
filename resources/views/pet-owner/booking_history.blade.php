@@ -14,7 +14,7 @@
 
         .main-container {
             padding: 20px;
-            background-color: #F7E9DE;
+            background-color: #f0ab77;
             min-height: 100vh;
         }
 
@@ -139,7 +139,7 @@
                     </div>
                     
                     <div>
-                        <span class="heading">Total Price:</span> <span>${{ number_format($appointment->total_price, 2) }}</span>
+                        <span class="heading">Total Price:</span> <span>LKR {{ number_format($appointment->total_price, 2) }}</span>
                     </div>
                     
                     {{-- <div class="status {{ $appointment->status }}">

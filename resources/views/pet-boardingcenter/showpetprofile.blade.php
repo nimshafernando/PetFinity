@@ -25,20 +25,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 10px 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 10;
+            backdrop-filter: blur(10px);
         }
 
         .top-navbar .logo {
             font-family: 'Fredoka One', cursive;
             font-size: 32px;
             color: #035a2e;
-            margin-left: 20px;
         }
 
         .top-navbar .profile {
@@ -47,7 +47,7 @@
             color: #333;
             cursor: pointer;
             font-size: 18px;
-            margin-right: 50px;
+            margin-left: auto;
             font-weight: bold;
         }
 
@@ -292,7 +292,7 @@
                 <p>No pet profiles found.</p>
             @else
                 @foreach($pets as $pet)
-                    <div class="card mb-3">
+                    <div class="mb-3 card">
                         <img src="{{ Storage::url($pet->profile_picture) }}" alt="{{ $pet->pet_name }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $pet->pet_name }}</h5>
@@ -300,7 +300,6 @@
                                 <strong>Type:</strong> {{ $pet->type }}<br>
                                 <strong>Breed:</strong> {{ $pet->breed }}<br>
                                 <strong>Age:</strong> {{ $pet->age }}<br>
-                                <strong>Special Note:</strong> {{ $pet->special_notes }}<br>
                             </p>
                         </div>
                     </div>
@@ -311,12 +310,11 @@
 
     <div class="bottom-navbar">
         <ul>
-            <li><a href="{{ route('pet-boardingcenter.dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="{{ route('pet-boardingcenter.pendingbookings') }}"><i class="fas fa-clock"></i> Pending Requests</a></li>
-            <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> My Schedule</a></li>
+            <li><a href="{{ route('pet-boardingcenter.dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{{ route('pet-boardingcenter.pendingbookings') }}"><i class="fas fa-clock"></i> Requests</a></li>
+            <li><a href="{{ route('boarding-center.upcoming') }}"><i class="fas fa-calendar-check"></i> Schedule</a></li>
             <li><a href="{{ route('boarding-center.pet-profiles') }}"><i class="fas fa-dog"></i> Pets</a></li>
-            <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> Appointment History</a></li>
-            
+            <li><a href="{{ route('boarding-center.appointment-history') }}"><i class="fas fa-history"></i> History</a></li>
         </ul>
     </div>
 </body>
