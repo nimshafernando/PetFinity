@@ -1227,19 +1227,19 @@
         <div class="accepted-appointments-container">
             <h2 class="section-title">Appointment Status</h2>
         
-            <!-- Accepted Appointments Section -->
-            @if($acceptedAppointments->isEmpty())
-                <p>No accepted bookings.</p>
-            @else
-                @foreach($acceptedAppointments as $appointment)
-                <div class="accepted-appointments-container">
-                    <a href="{{ route('test.show') }}" class="btn btn-primary">
-                      Booking Accepted for {{ $appointment->boardingcenter->business_name }} for {{ $appointment->pet->pet_name }}
-                    </a>
-                  </div>
-                  
-                @endforeach
-            @endif
+          <!-- Accepted Appointments Section -->
+@if($acceptedAppointments->isEmpty())
+<p>No accepted bookings.</p>
+@else
+@foreach($acceptedAppointments as $appointment)
+<div class="accepted-appointments-container">
+    <a href="{{ route('test.show', $appointment->id) }}" class="btn btn-primary">
+        Booking Accepted for {{ $appointment->boardingcenter->business_name }} for {{ $appointment->pet->pet_name }}
+    </a>
+</div>
+@endforeach
+@endif
+
         
             <!-- Pending Appointments Section -->
             @if($pendingAppointments->isEmpty())

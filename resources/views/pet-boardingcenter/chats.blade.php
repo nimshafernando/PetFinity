@@ -116,11 +116,12 @@
         }
 
         .chat-input input {
-            flex: 1;
+            flex-grow: 1;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 20px;
             margin-right: 10px;
+            width: 100%;
         }
 
         .chat-input button {
@@ -129,6 +130,8 @@
             padding: 10px 20px;
             border-radius: 20px;
             color: white;
+            align-self: center;
+            white-space: nowrap;
         }
 
         @media (max-width: 768px) {
@@ -251,7 +254,7 @@
 
         @if(isset($selectedOwner))
             <div class="chat-input">
-                <form id="sendMessageForm">
+                <form id="sendMessageForm" style="display: flex; width: 100%;">
                     @csrf
                     <input type="hidden" name="receiver_id" value="{{ $selectedOwner->id }}" />
                     <input type="text" name="message" class="form-control" placeholder="Type your message here..." required />
@@ -276,7 +279,7 @@
                 messageElement.innerText = message.message;
                 chatBox.appendChild(messageElement);
             });
-            chatBox.scrollTop = chatBox.scrollHeight;
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom after messages are fetched
         });
     }
 
@@ -292,7 +295,7 @@
         .then(data => {
             if (data.success) {
                 this.reset();
-                fetchMessages();
+                location.reload(); // Reload the page after sending the message
             }
         });
     });

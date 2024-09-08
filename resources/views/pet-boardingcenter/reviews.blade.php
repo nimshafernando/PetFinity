@@ -48,6 +48,7 @@
             text-align: center;
             margin-bottom: 20px;
             font-size: 2rem;
+            
         }
 
         p {

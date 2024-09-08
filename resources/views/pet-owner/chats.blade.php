@@ -111,7 +111,7 @@
         }
 
         .chat-input input {
-            flex: 1;
+            flex-grow: 1;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 20px;
@@ -124,22 +124,24 @@
             padding: 10px 20px;
             border-radius: 20px;
             color: white;
+            white-space: nowrap;
+            align-self: center;
         }
 
         .chat-sidebar h4 {
-                font-size: 1.8rem;
-                font-weight: 700; /* Thick font */
-                color: #ff6600; /* Orange color */
-                margin-bottom: 20px;
-                text-align: center; /* Center align the heading */
-            }
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
         @media (max-width: 768px) {
             .chat-sidebar {
                 position: absolute;
                 top: 0;
-                left: -300px; /* Initially hidden */
-                width: 300px; /* Fixed width */
+                left: -300px;
+                width: 300px;
                 height: 100%;
                 z-index: 1000;
                 background-color: #fff;
@@ -147,7 +149,7 @@
             }
 
             .chat-sidebar.show {
-                left: 0; /* Slide in from the left */
+                left: 0;
             }
 
             .chat-main {
@@ -159,7 +161,6 @@
                 justify-content: space-between;
                 align-items: center;
             }
-
 
             .toggle-sidebar {
                 display: block;
@@ -230,11 +231,11 @@
 
         @if(isset($selectedBoarder))
             <div class="chat-input">
-                <form id="sendMessageForm">
+                <form id="sendMessageForm" style="display: flex; width: 100%;">
                     @csrf
                     <input type="hidden" name="receiver_id" value="{{ $selectedBoarder->id }}" />
-                    <input type="text" name="message" class="form-control" placeholder="Type your message here..." required />
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <input type="text" name="message" class="form-control chat-input-field" placeholder="Type your message here..." required />
+                    <button type="submit" class="btn btn-primary send-btn">Send</button>
                 </form>
             </div>
         @endif
@@ -255,7 +256,7 @@
                 messageElement.innerText = message.message;
                 chatBox.appendChild(messageElement);
             });
-            chatBox.scrollTop = chatBox.scrollHeight;
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom after messages are fetched
         });
     }
 
@@ -271,13 +272,19 @@
         .then(data => {
             if (data.success) {
                 this.reset();
-                fetchMessages();
+                location.reload(); // Reload the entire page after sending the message
             }
         });
     });
 
-    setInterval(fetchMessages, 2000); // Fetch messages every 2 seconds
+    setInterval(fetchMessages, 1000); // Fetch messages every 2 seconds
     @endif
+
+    // Scroll to bottom after page reloads
+    window.onload = () => {
+        const chatBox = document.getElementById('chatBox');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    };
 
     // Toggle chat sidebar on mobile
     const toggleSidebar = document.querySelector('.toggle-sidebar');
@@ -286,7 +293,6 @@
     toggleSidebar.addEventListener('click', function () {
         chatSidebar.classList.toggle('show');
     });
-
 
 </script>
 

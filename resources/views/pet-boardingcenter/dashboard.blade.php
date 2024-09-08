@@ -402,36 +402,55 @@
 
         <div class="two-rows-of-two-cards">
             <div class="row">
-                <div class="mb-4 col-md-6">
-                    <div class="card card-analytics h-100">
-                        <div class="card-header">
-                            <span class="fas fa-chart-line"></span> View Analytics
-                        </div>
-                        <div class="card-body d-flex flex-column align-items-center">
-                            <p class="flex-grow-1">Analyze your pet boarding center’s performance with detailed statistics and insights.</p>
-                            <img src="{{ asset('images/boarder/analysis.png') }}" alt="Analytics">
-                            <a href="{{ route('petboarder.analytics') }}" class="mt-auto btn btn-primary align-button">
-                                <span class="fas fa-chart-line"></span> View Analytics
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4 col-md-6">
-                    <div class="card card-chat h-100">
-                        <div class="card-header">
-                            <span class="fas fa-comments"></span> Chat with Pet Owners
-                        </div>
-                        <div class="card-body d-flex flex-column align-items-center">
-                            <p class="flex-grow-1">Get in touch with pet owners and answer any questions they may have about your boarding services.</p>
-                            <img src="{{ asset('images/boarder/live-chat.png') }}" alt="Chat with Pet Owners" class="img-fluid">
-                            <a href="{{ route('pet-boardingcenter.chats') }}" class="mt-auto btn btn-primary align-button">
-                                <span class="fas fa-comments"></span> Start Chatting
-                            </a>
-                        </div>
-                    </div>
-                </div>
+    <!-- Card 1: Analytics -->
+    <div class="mb-4 col-md-6 col-lg-4">
+        <div class="card card-analytics h-100">
+            <div class="card-header">
+                <span class="fas fa-chart-line"></span> View Analytics
             </div>
+            <div class="card-body d-flex flex-column align-items-center">
+                <p class="flex-grow-1">Analyze your pet boarding center’s performance with detailed statistics and insights.</p>
+                <img src="{{ asset('images/boarder/analysis.png') }}" alt="Analytics">
+                <a href="{{ route('petboarder.analytics') }}" class="mt-auto btn btn-primary align-button">
+                    <span class="fas fa-chart-line"></span> View Analytics
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: Cash Payment Appointments -->
+    <div class="mb-4 col-md-6 col-lg-4">
+        <div class="card card-cash h-100">
+            <div class="card-header">
+                <span class="fas fa-dollar-sign"></span> On-Visit Payment Appointments
+            </div>
+            <div class="card-body d-flex flex-column align-items-center">
+                <p class="flex-grow-1">Manage on-visit payment appointments and mark them as paid.</p>
+                <img src="{{ asset('images/boarder/payment-method.png') }}" alt="Cash Payments" class="img-fluid">
+                <a href="{{ route('boarding-center.cash-appointments') }}" class="mt-auto btn btn-primary align-button">
+                    <span class="fas fa-dollar-sign"></span> View Appointments
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3: Chat with Pet Owners -->
+    <div class="mb-4 col-md-6 col-lg-4">
+        <div class="card card-chat h-100">
+            <div class="card-header">
+                <span class="fas fa-comments"></span> Chat with Pet Owners
+            </div>
+            <div class="card-body d-flex flex-column align-items-center">
+                <p class="flex-grow-1">Get in touch with pet owners and answer any questions they may have about your boarding services.</p>
+                <img src="{{ asset('images/boarder/live-chat.png') }}" alt="Chat with Pet Owners" class="img-fluid">
+                <a href="{{ route('pet-boardingcenter.chats') }}" class="mt-auto btn btn-primary align-button">
+                    <span class="fas fa-comments"></span> Start Chatting
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
             <div class="row">
                 <div class="mb-4 col-md-6">
