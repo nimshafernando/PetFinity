@@ -335,7 +335,7 @@
                 <p class="no-appointments">No upcoming appointments.</p>
             @else
                 @foreach($appointments as $appointment)
-                    <div class="card mb-3">
+                    <div class="mb-3 card">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-calendar-alt icon"></i> Appointment for {{ $appointment->pet_name }}</h5>
                             <p class="card-text">
@@ -344,6 +344,9 @@
                                 <i class="fas fa-calendar-day icon"></i> <strong>End Date:</strong> {{ $appointment->end_date }}<br>
                                 <i class="fas fa-clock icon"></i> <strong>Check-in Time:</strong> {{ $appointment->check_in_time }}<br>
                                 <i class="fas fa-clock icon"></i> <strong>Check-out Time:</strong> {{ $appointment->check_out_time }}<br>
+                                <i class="fas fa-clock icon"></i> <strong>Payment Status:</strong> {{ $appointment->payment_status }}<br>
+                                <i class="fas fa-clock icon"></i> <strong>Payment Method:</strong> {{ $appointment->payment_method }}<br>
+
                                 <i class="fas fa-sticky-note icon"></i> <strong>Special Notes:</strong> {{ $appointment->special_notes }}
                             </p>
                         </div>
