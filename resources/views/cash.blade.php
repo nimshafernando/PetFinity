@@ -20,7 +20,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(270deg, #ff6600, #f27e1f, #aa4603);
+            background: linear-gradient(270deg, #ff6600, #ff9054, #ff6600);
             background-size: 600% 600%;
             animation: moveBackground 15s ease infinite;
         }
@@ -212,7 +212,7 @@
         <div class="important-note">
             <p><strong>Status: On Visit Payment</strong></p>
             <p>Please pay the amount mentioned above to the cashier when you arrive.</p>
-            <p>Remember to safeguard the receipt as proof of payment.</p>
+            <p>Remember to safeguard and show the receipt as proof of payment upon arrival.</p>
             <p>Ensure you bring <strong>{{ $appointment->pet->pet_name }}</strong> to the location at least 10 minutes before the scheduled check-in time.</p>
         </div>
 

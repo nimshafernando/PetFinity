@@ -29,9 +29,12 @@
             overflow-y: auto;
             padding: 20px;
             transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
         }
 
         .chat-sidebar h4 {
+            font-family: 'Fredoka One', cursive;
             font-size: 1.8rem;
             font-weight: 700;
             color: #00c251;
@@ -58,6 +61,24 @@
         .chat-sidebar a.active {
             background-color: #00c251;
             color: white;
+        }
+
+        /* Go Back to Dashboard button */
+        .go-back-btn {
+            background-color: #00c251;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: auto;
+            display: block;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .go-back-btn:hover {
+            background-color: #009c3b;
         }
 
         .chat-main {
@@ -116,11 +137,12 @@
         }
 
         .chat-input input {
-            flex: 1;
+            flex-grow: 1;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 20px;
             margin-right: 10px;
+            width: 100%;
         }
 
         .chat-input button {
@@ -129,8 +151,11 @@
             padding: 10px 20px;
             border-radius: 20px;
             color: white;
+            align-self: center;
+            white-space: nowrap;
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
             .chat-container {
                 flex-direction: column;
@@ -227,6 +252,9 @@
                 </a>
             @endforeach
         @endif
+
+        <!-- Go Back to Dashboard button at the bottom of the sidebar -->
+        <a href="{{ route('pet-boardingcenter.dashboard') }}" class="go-back-btn">Go Back to Dashboard</a>
     </div>
 
     <div class="chat-main">
@@ -236,7 +264,7 @@
             @else
                 Select a pet owner to chat
             @endif
-            <button class="toggle-sidebar d-md-none">Pet Owners</button>
+            <button class="toggle-sidebar d-md-none">Pet Owners</button> <!-- Button to toggle contacts on mobile -->
         </div>
 
         <div id="chatBox">
@@ -251,7 +279,7 @@
 
         @if(isset($selectedOwner))
             <div class="chat-input">
-                <form id="sendMessageForm">
+                <form id="sendMessageForm" style="display: flex; width: 100%;">
                     @csrf
                     <input type="hidden" name="receiver_id" value="{{ $selectedOwner->id }}" />
                     <input type="text" name="message" class="form-control" placeholder="Type your message here..." required />
@@ -276,7 +304,7 @@
                 messageElement.innerText = message.message;
                 chatBox.appendChild(messageElement);
             });
-            chatBox.scrollTop = chatBox.scrollHeight;
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom after messages are fetched
         });
     }
 
@@ -292,7 +320,7 @@
         .then(data => {
             if (data.success) {
                 this.reset();
-                fetchMessages();
+                location.reload(); // Reload the page after sending the message
             }
         });
     });

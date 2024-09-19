@@ -180,17 +180,19 @@
             @if(isset($appointment))
                 <div class="details">
                     <p><strong>Pet Name:</strong> {{ $appointment->pet->pet_name }}</p>
-                    <p><strong>Start Date:</strong> {{ $appointment->start_date }}</p>
-                    <p><strong>Check-in Time:</strong> {{ $appointment->check_in_time}}</p>
-                    <p><strong>End Date:</strong> {{ $appointment->end_date }}</p>
-                    <p><strong>Check-out Time:</strong> {{ $appointment->check_out_time }}</p>
+                    <p><strong>Start Date:</strong> {{ \Carbon\Carbon::parse($appointment->start_date)->format('d M Y') }}</p>
+                    <p><strong>Check-in Time:</strong> {{ \Carbon\Carbon::parse($appointment->check_in_time)->format('H:i') }}</p>
+                    <p><strong>End Date:</strong> {{ \Carbon\Carbon::parse($appointment->end_date)->format('d M Y') }}</p>
+                    <p><strong>Check-out Time:</strong> {{ \Carbon\Carbon::parse($appointment->check_out_time)->format('H:i') }}</p>
                     <p><strong>Boarding Center:</strong> {{ $appointment->boardingCenter->business_name }}</p>
-                    <p><strong>Total Price:</strong> LKR {{ $appointment->total_price }}</p>
+                    <p><strong>Total Price:</strong> LKR {{ number_format($appointment->total_price, 2) }}</p>
                 </div>
             @else
                 <p>Appointment details not available.</p>
             @endif
         </div>
+        
+        
 
         <!-- Payment Method Section -->
         <div class="payment-method-section">

@@ -158,7 +158,20 @@ Route::middleware(['auth:petowner'])->group(function () {
     Route::get('/missing-pets/map', [MissingPetController::class, 'map'])->name('missing_pets.map');
 
     Route::get('/payment-gateway', [testcontroller::class, 'index'])->name('payment.gateway');
-    Route::get('/test', [testcontroller::class, 'showTest'])->name('test.show');
+    Route::get('/test/{id}', [testcontroller::class, 'showTest'])->name('test.show');
+
+
+    //petboardersmakrpaidcode
+    // In web.php
+
+
+    // Define route for showing cash payment appointments
+    Route::get('pet-boardingcenter/cash-appointments', [AppointmentController::class, 'showCashPaymentAppointments'])->name('boarding-center.cash-appointments');
+    
+    // Define route for marking an appointment as paid
+    Route::post('pet-boardingcenter/mark-as-paid/{id}', [AppointmentController::class, 'markAsPaid'])->name('boarding-center.mark-as-paid');
+    
+    Route::get('pet-boardingcenter/cash-appointments', [AppointmentController::class, 'showCashPaymentAppointments'])->name('boarding-center.cash-appointments');
 
 
     //test-cash route
@@ -264,6 +277,9 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
 
     Route::post('/complete-appointment', [AppointmentController::class, 'completeAppointment'])->name('complete-appointment');
 
+
+    //
+    
     // Route to display the tasks for a specific appointment
     Route::get('/boarding-center/managetasks/{id}', [AppointmentController::class, 'showTasks'])->name('pet.boardingcenter.managetasks');
 

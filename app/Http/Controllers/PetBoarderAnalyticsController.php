@@ -61,7 +61,12 @@ $bookingStatusDistribution = Appointment::where('boardingcenter_id', $boardingCe
     ->groupBy('status')
     ->get();
 
-
+    $monthlyPayments = Appointment::where('boardingcenter_id', $boardingCenterId)
+    ->selectRaw('MONTH(start_date) as month, payment_method, COUNT(*) as total')
+    ->groupBy('month', 'payment_method')
+    ->orderBy('month')
+    ->get()
+    ->groupBy('month');  // Group results by month
 
 
 
@@ -90,7 +95,7 @@ $bookingStatusDistribution = Appointment::where('boardingcenter_id', $boardingCe
         return view('pet-boardingcenter.analytics.petboarderanalytics', compact(
             'totalBookings', 'completedTasks', 'averageRating', 'reviewsCount',
             'petsHandled', 'monthlyBookings', 'totalRevenue', 'monthlyRevenue', 'averageLengthOfStay', 'occupancyRate',
-            'topBreeds', 'bookingStatusDistribution' // Add this line
+            'topBreeds', 'monthlyPayments','bookingStatusDistribution' // Add this line
         ));
     }
 }

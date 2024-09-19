@@ -349,6 +349,9 @@
                                 <i class="fas fa-calendar-day icon"></i> <strong>End Date:</strong> {{ $appointment->end_date }}<br>
                                 <i class="fas fa-clock icon"></i> <strong>Check-in Time:</strong> {{ $appointment->check_in_time }}<br>
                                 <i class="fas fa-clock icon"></i> <strong>Check-out Time:</strong> {{ $appointment->check_out_time }}<br>
+                                <i class="fas fa-clock icon"></i> <strong>Payment Status:</strong> {{ $appointment->payment_status }}<br>
+                                <i class="fas fa-clock icon"></i> <strong>Payment Method:</strong> {{ $appointment->payment_method }}<br>
+
                                 <i class="fas fa-sticky-note icon"></i> <strong>Special Notes:</strong> {{ $appointment->special_notes }}
                             </p>
                         </div>

@@ -36,7 +36,7 @@ class MissingPetController extends Controller
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Use Google Maps Geocoding API to get latitude and longitude
+        
         $geocodeUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($request->last_seen_location) . '&key=' . env('GOOGLE_MAPS_API_KEY');
 
         $response = file_get_contents($geocodeUrl);

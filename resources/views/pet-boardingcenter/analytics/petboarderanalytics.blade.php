@@ -402,7 +402,71 @@
                 </div>
             @endforeach
            
+<!-- Payment Methods Monthly Distribution -->
+<div id="payments" class="card">
+    <div class="card-header">Monthly Payment Method Distribution</div>
+    <div class="card-body">
+        <div class="chart-container">
+            <canvas id="paymentMethodChart"></canvas>
+        </div>
+    </div>
+</div>
+<script>
+    // Monthly Payment Method Chart
+    const paymentMethodCtx = document.getElementById('paymentMethodChart').getContext('2d');
+    const months = {!! json_encode(array_keys($monthlyPayments->toArray())) !!}; // Get the months
+    const cashData = [];
+    const cardData = [];
 
+    // Loop through each month and assign values to cashData and cardData arrays
+    months.forEach(month => {
+        const payments = {!! json_encode($monthlyPayments->toArray()) !!}[month];
+        let cashCount = 0;
+        let cardCount = 0;
+
+        payments.forEach(payment => {
+            if (payment.payment_method === 'cash') {
+                cashCount = payment.total;
+            } else if (payment.payment_method === 'card') {
+                cardCount = payment.total;
+            }
+        });
+
+        cashData.push(cashCount);
+        cardData.push(cardCount);
+    });
+
+    const paymentMethodChart = new Chart(paymentMethodCtx, {
+        type: 'bar',
+        data: {
+            labels: months.map(month => new Date(0, month - 1).toLocaleString('en', { month: 'long' })),
+            datasets: [
+                {
+                    label: 'On-Visit (Cash)',
+                    data: cashData,
+                    backgroundColor: '#4CAF50',  // Green for cash
+                    borderColor: '#4CAF50',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Card Payments',
+                    data: cardData,
+                    backgroundColor: '#FF6347',  // Red for card
+                    borderColor: '#FF6347',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
         <!-- Average Length of Stay -->
         <div id="stay-length" class="card">
             <div class="card-header">Average Length of Stay</div>
@@ -430,13 +494,7 @@
         </div>
         
         <!-- Occupancy Rate -->
-        <div id="occupancy" class="card">
-            <div class="card-header">Occupancy Rate</div>
-            <div class="card-body">
-                <div class="stat">{{ number_format($occupancyRate, 2) }}%</div>
-                <div class="stat-label">Occupancy Rate</div>
-            </div>
-        </div>
+    
 
         <!-- Pets Handled Section -->
         <div id="pets" class="card">
