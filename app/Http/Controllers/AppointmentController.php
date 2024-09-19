@@ -171,13 +171,19 @@ class AppointmentController extends Controller
 
     public function showCashPaymentAppointments(Request $request)
     {
-        // Calculate total revenue from paid appointments
-        $totalRevenue = Appointment::where('payment_status', 'paid')->sum('total_price');
-
-        // Fetch cash payment appointments that are still unpaid
-        $query = Appointment::where('payment_method', 'cash')
+        // Get the currently authenticated boarding center's ID
+        $boardingCenterId = Auth::id(); 
+    
+        // Calculate total revenue from paid appointments for this specific boarding center
+        $totalRevenue = Appointment::where('payment_status', 'paid')
+                                   ->where('boardingcenter_id', $boardingCenterId)
+                                   ->sum('total_price');
+    
+        // Fetch cash payment appointments for this specific boarding center that are still unpaid
+        $query = Appointment::where('boardingcenter_id', $boardingCenterId)
+                            ->where('payment_method', 'cash')
                             ->where('payment_status', 'onvisit'); // Filter for pending cash payments
-
+    
         // Apply search filters if available
         if ($request->filled('search')) {
             $searchTerm = $request->input('search');
@@ -185,11 +191,12 @@ class AppointmentController extends Controller
                 $q->where('pet_name', 'like', '%' . $searchTerm . '%');
             });
         }
-
+    
         $cashAppointments = $query->with('pet', 'boardingcenter')->get();
-
+    
         return view('pet-boardingcenter.cash-appointments', compact('cashAppointments', 'totalRevenue'));
     }
+    
 
     //* Mark appointment as paid
     public function markAsPaid($id)

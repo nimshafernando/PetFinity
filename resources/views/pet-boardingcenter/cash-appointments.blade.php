@@ -269,6 +269,7 @@
             </div>
             <a href="{{ route('petboarder.analytics') }}" class="btn-analytics">Go to Analytics</a>
         </div>
+        
     </div>
 </body>
 

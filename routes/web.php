@@ -176,15 +176,6 @@ Route::middleware(['auth:petowner'])->group(function () {
     // In web.php
 
 
-    // Define route for showing cash payment appointments
-    Route::get('pet-boardingcenter/cash-appointments', [AppointmentController::class, 'showCashPaymentAppointments'])->name('boarding-center.cash-appointments');
-    
-    // Define route for marking an appointment as paid
-    Route::post('pet-boardingcenter/mark-as-paid/{id}', [AppointmentController::class, 'markAsPaid'])->name('boarding-center.mark-as-paid');
-    
-    Route::get('pet-boardingcenter/cash-appointments', [AppointmentController::class, 'showCashPaymentAppointments'])->name('boarding-center.cash-appointments');
-
-
     //test-cash route
     // Route::get('/cash', function () {
     //     return view('cash');
@@ -317,6 +308,15 @@ Route::middleware(['auth:boardingcenter'])->group(function () {
     Route::post('/pet-boardingcenter/send-message', [ChatController::class, 'sendMessageForBoarder'])->name('pet-boardingcenter.send-message');
 
     Route::get('/pet-boardingcenter/fetch-messages', [ChatController::class, 'fetchMessagesForBoarder'])->name('fetch.messagesForBoarder');
+
+    
+    // Define route for showing cash payment appointments
+    Route::get('pet-boardingcenter/cash-appointments', [AppointmentController::class, 'showCashPaymentAppointments'])->name('boarding-center.cash-appointments');
+    
+    // Define route for marking an appointment as paid
+    Route::post('pet-boardingcenter/mark-as-paid/{id}', [AppointmentController::class, 'markAsPaid'])->name('boarding-center.mark-as-paid');
+    
+    Route::get('pet-boardingcenter/cash-appointments', [AppointmentController::class, 'showCashPaymentAppointments'])->name('boarding-center.cash-appointments');
 
 
 
