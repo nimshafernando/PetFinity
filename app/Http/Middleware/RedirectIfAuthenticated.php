@@ -20,9 +20,9 @@ class RedirectIfAuthenticated
                     return redirect()->route('pet-boardingcenter.dashboard');
                 }
                 break;
-            case 'trainingcenter':
-                if (Auth::guard('trainingcenter')->check()) {
-                    return redirect()->route('pet-trainingcenter.dashboard');
+            case 'admin':
+                if (Auth::guard('admin')->check()) {
+                    return redirect()->route('admin.dashboard');
                 }
                 break;
         }

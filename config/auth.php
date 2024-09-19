@@ -35,10 +35,15 @@ return [
     |
     */
 
+
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
         ],
         'petowner' => [
             'driver' => 'session',
@@ -83,6 +88,10 @@ return [
         'trainingcenters' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\PetTrainingCenter::class),
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Admin::class),
         ],
         'boardingcenters' => [
             'driver' => 'eloquent',

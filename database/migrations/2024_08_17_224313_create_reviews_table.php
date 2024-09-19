@@ -14,6 +14,7 @@ class CreateReviewsTable extends Migration
             $table->foreignId('boardingcenter_id')->constrained('pet_boarding_centers')->onDelete('cascade');
             $table->integer('rating'); // Assuming 1-5 stars
             $table->text('review')->nullable();
+            $table->enum('status', ['pending', 'approved', 'declined'])->default('pending'); // Add status field
             $table->timestamps();
         });
     }

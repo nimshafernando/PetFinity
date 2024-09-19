@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Pet;
+use App\Models\Admin;
 use App\Models\PetBoardingCenter;
 use App\Models\PetTrainingCenter;
 use Illuminate\Support\Facades\Auth;
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\CashController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\ReviewController;
@@ -19,11 +21,11 @@ use App\Http\Controllers\UpcomingController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Api\MissingPetController;
+//use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\BookingHistoryController;
+//use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\TaskCompletionController;
-//use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Api\FoundReportController;
-//use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PendingBookingsController;
 use App\Http\Controllers\PetOwnerProfileController;
 use App\Http\Controllers\PetBoardingCenterController;
@@ -74,6 +76,15 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('admin/approveratings', [AdminController::class, 'viewApprovalRating'])->name('admin.approveratings');
+    // Approve a specific review
+    Route::post('/approve-review/{id}', [AdminController::class, 'approve'])->name('reviews.approve');
+
+    // Decline a specific review
+    Route::post('/decline-review/{id}', [AdminController::class, 'decline'])->name('reviews.decline');
+});
 //*login page 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);

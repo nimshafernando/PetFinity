@@ -14,8 +14,9 @@ class ReviewController extends Controller
         $user_id = Auth::id();
 
         // Fetch reviews for the logged-in boarding center
-        $reviews = Review::where('boardingcenter_id', $user_id)->paginate(10);
-
+        $reviews = Review::where('boardingcenter_id', $user_id)
+        ->where('status', 'approved')
+        ->paginate(10);
         return view('pet-boardingcenter.reviews', compact('reviews'));
     }
 

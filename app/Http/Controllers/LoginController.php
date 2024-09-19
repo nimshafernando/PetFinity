@@ -25,8 +25,8 @@ class LoginController extends Controller
             return redirect()->route('pet-owner.dashboard');
         } elseif (Auth::guard('boardingcenter')->attempt($credentials, $remember)) {
             return redirect()->route('pet-boardingcenter.dashboard');
-        } elseif (Auth::guard('trainingcenter')->attempt($credentials, $remember)) {
-            return redirect()->route('pet-trainingcenter.dashboard');
+        } elseif (Auth::guard('admin')->attempt($credentials, $remember)) {
+            return redirect()->route('admin.dashboard');
         }
     
         return redirect()->back()->withErrors(['email' => 'Invalid credentials.']);
