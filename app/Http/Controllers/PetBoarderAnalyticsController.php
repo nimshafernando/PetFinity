@@ -99,5 +99,3 @@ $bookingStatusDistribution = Appointment::where('boardingcenter_id', $boardingCe
         ));
     }
 }
-
-

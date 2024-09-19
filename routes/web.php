@@ -80,10 +80,10 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('admin/approveratings', [AdminController::class, 'viewApprovalRating'])->name('admin.approveratings');
     // Approve a specific review
-    Route::post('/approve-review/{id}', [AdminController::class, 'approve'])->name('admin.approve');
+    Route::post('/approve-review/{id}', [AdminController::class, 'approve'])->name('reviews.approve');
 
     // Decline a specific review
-    Route::post('/decline-review/{id}', [AdminController::class, 'decline'])->name('admin.decline');
+    Route::post('/decline-review/{id}', [AdminController::class, 'decline'])->name('reviews.decline');
 });
 //*login page 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
