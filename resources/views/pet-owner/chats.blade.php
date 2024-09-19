@@ -32,6 +32,17 @@
             transition: all 0.3s ease-in-out;
             position: relative;
             z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-sidebar h4 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff6600; /* Fredoka Orange */
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .chat-sidebar a {
@@ -53,6 +64,24 @@
         .chat-sidebar a.active {
             background-color: #ff6600;
             color: white;
+        }
+
+        /* Go Back to Dashboard button */
+        .go-back-btn {
+            background-color: #ff6600;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: auto;
+            display: block;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .go-back-btn:hover {
+            background-color: #e65c00;
         }
 
         .chat-main {
@@ -128,14 +157,7 @@
             align-self: center;
         }
 
-        .chat-sidebar h4 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #ff6600;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
             .chat-sidebar {
                 position: absolute;
@@ -207,6 +229,9 @@
                 {{ $boarder->business_name }}
             </a>
         @endforeach
+
+        <!-- Go Back to Dashboard button at the bottom of the sidebar -->
+        <a href="{{ route('pet-owner.dashboard') }}" class="go-back-btn">Go Back to Dashboard</a>
     </div>
 
     <div class="chat-main">

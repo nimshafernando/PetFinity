@@ -48,10 +48,10 @@ class ChatController extends Controller
     {
         $request->validate([
             'message' => 'required|string',
-            'receiver_id' => 'required|integer', // Ensure receiver_id is explicitly provided
+            'receiver_id' => 'required|integer', 
         ]);
 
-        // Get the authenticated PetOwner's ID
+        
         $senderId = Auth::guard('petowner')->check() ? Auth::guard('petowner')->id() : null;
 
        
@@ -60,7 +60,7 @@ class ChatController extends Controller
         $chat->sender_user_type = 'petowner';
         
         $chat->sender_id = $senderId;
-        $chat->receiver_id = $request->input('receiver_id'); // Set the receiver ID explicitly
+        $chat->receiver_id = $request->input('receiver_id'); 
         $chat->message = $request->input('message');
         $chat->seen = false;
         $chat->save();
