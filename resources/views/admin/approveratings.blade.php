@@ -42,7 +42,7 @@
             .top-navbar .logo {
                 font-family: 'Fredoka One', cursive;
                 font-size: 32px;
-                color: #035a2e;
+                color: #01919b;
             }
 
             .top-navbar .profile {
@@ -93,7 +93,7 @@
             }
 
             .sidebar ul li:hover {
-                background-color: #0d8c0b;
+                background-color: #01919b;
                 color: #fff;
             }
 
@@ -120,7 +120,7 @@
             }
 
             .welcome-message {
-                background: linear-gradient(to right, #4CAF50, #2196F3);
+                background: linear-gradient(to right, #01919b, #01919b);
                 color: white;
                 padding: 40px;
                 border-radius: 8px;
