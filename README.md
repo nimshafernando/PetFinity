@@ -74,11 +74,6 @@ Contributions are welcome! Feel free to fork this repository, make changes, and 
 
 ## 📜 License  
 This project is licensed under the **MIT License**.  
-
-## 📧 Contact  
-For inquiries, reach out at: **petfinity02@gmail.com**  
-Visit the project on GitHub: [Petfinity Repository](https://github.com/your-username/petfinity)  
-
 ---  
 
 **Petfinity**: Bridging the gap between pet owners and boarders with innovation and care.  
