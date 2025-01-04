@@ -2,7 +2,7 @@
 # Petfinity 🐾  
 **A Seamless Platform for Pet Care Management**  
 
-Petfinity is a **Progressive Web Application (PWA)** built with **Laravel**, designed to simplify pet care for both **pet owners** and **pet boarders**. By providing a feature-rich platform, Petfinity enhances communication, streamlines logistics, and fosters a reliable pet care network.  
+This was developed as a group assignment , Petfinity is a **Progressive Web Application (PWA)** built with **Laravel**, designed to simplify pet care for both **pet owners** and **pet boarders**. By providing a feature-rich platform, Petfinity enhances communication, streamlines logistics, and fosters a reliable pet care network.  
 
 ## 🌟 Features  
 
